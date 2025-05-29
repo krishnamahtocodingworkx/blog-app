@@ -7,19 +7,17 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  Link,
   Divider,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "../index.css";
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleSubmit = () => {
-    console.log("Logging in with", { email, password });
+    console.log("Confirm password", { password });
   };
 
   const togglePasswordVisibility = () => {
@@ -31,34 +29,38 @@ const Login = () => {
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
-          <Typography variant="h5" gutterBottom align="center">
-            Sign In to your account
+          <Typography variant="h5" gutterBottom align="left">
+            Reset Password
+          </Typography>
+          <Typography variant="p" gutterBottom align="left">
+            Enter the new password to secure your account
           </Typography>
           <Divider />
 
           <form onSubmit={handleSubmit} className="form-field-container">
             <div className="form-field">
               <Typography variant="subtitle1" gutterBottom>
-                Email Address
+                New Password
               </Typography>
               <TextField
                 fullWidth
-                placeholder="Enter email address"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter new password"
                 variant="outlined"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
             <div className="form-field">
               <Typography variant="subtitle1" gutterBottom>
-                Password
+                Confirm Password
               </Typography>
               <TextField
                 fullWidth
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter Password"
+                placeholder="Enter confirm password"
                 variant="outlined"
                 name="password"
                 value={password}
@@ -76,15 +78,12 @@ const Login = () => {
             </div>
 
             <div className="form-field" style={{ textAlign: "left" }}>
-              <Link href="/forgotPassword" underline="hover" variant="body2">
-                Forgot password?
-              </Link>
               <Button
                 type="submit"
                 variant="contained"
                 style={{ float: "inline-end" }}
               >
-                Login
+                Save
               </Button>
             </div>
           </form>
