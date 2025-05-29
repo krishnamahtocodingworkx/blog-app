@@ -12,7 +12,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "../index.css";
 
-export default function Login() {
+const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
@@ -91,4 +91,6 @@ export default function Login() {
       </Container>
     </React.Fragment>
   );
-}
+};
+
+export default Login;
