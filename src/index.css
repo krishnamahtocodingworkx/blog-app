@@ -6,11 +6,11 @@
 }
 
 .form-container {
+  border: 1px solid black;
   background: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   padding: 20px;
   margin-top: 50px;
-  border: 1px solid black;
 }
 
 .form-field-container {

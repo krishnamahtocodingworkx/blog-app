@@ -49,22 +49,25 @@ const Login = () => {
       <CssBaseline />
       <Container
         style={{
+          border: "1px solid black",
+          height: "100vh",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "space-evenly",
         }}
       >
         <div className="form-container">
-          <form onSubmit={formik.handleSubmit} className="form-field-container">
+          <div className="form-field-container">
             <Typography
               variant="h6"
               gutterBottom
               align="left"
               style={{
+                border: "1px solid black",
                 display: "flex",
                 justifyContent: "flex-start",
                 position: "absolute",
-                fontSize: "18px",
+                fontSize: "16px",
               }}
             >
               Diving Activities
@@ -73,18 +76,25 @@ const Login = () => {
               height="500"
               src={divingActivities}
               style={{
-                borderRadius: "50px 20px 50px 50px",
+                border: "5px solid red",
+                borderRadius: "50% 10% 30% 30%",
                 width: "100%",
               }}
               alt="divingActivitiesImg"
             />
 
-            <div className="form-field" style={{ textAlign: "left" }}>
+            <div
+              className="form-field"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: 0,
+              }}
+            >
               <Button
                 type="submit"
                 variant="contained"
                 style={{
-                  float: "inline-start",
                   backgroundColor: "#fff",
                   color: "black",
                   borderRadius: "22px",
@@ -97,7 +107,6 @@ const Login = () => {
                 type="submit"
                 variant="contained"
                 style={{
-                  float: "inline-end",
                   borderRadius: "22px",
                   padding: "8px 50px",
                 }}
@@ -105,7 +114,7 @@ const Login = () => {
                 <ArrowForwardIcon />
               </Button>
             </div>
-          </form>
+          </div>
         </div>
 
         <div className="form-container">
