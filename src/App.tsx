@@ -12,7 +12,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />}></Route>
           <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
-          <Route path="/otpVerification" element={<OtpVerification />}></Route>
+          <Route
+            path="/otpVerification"
+            element={<OtpVerification email="xyz@gmail.com" />}
+          ></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
         </Routes>
       </BrowserRouter>

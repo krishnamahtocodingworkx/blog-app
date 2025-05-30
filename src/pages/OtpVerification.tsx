@@ -10,11 +10,20 @@ import {
 } from "@mui/material";
 import "../index.css";
 
-const OtpVerification = () => {
+interface OtpVerificationProps {
+  email: string;
+}
+
+const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
   const [otp, setOtp] = React.useState("");
 
   const handleChange = (newValue: string): void => {
     setOtp(newValue);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Submitted OTP:", otp);
   };
 
   return (
@@ -28,9 +37,12 @@ const OtpVerification = () => {
           <Typography variant="h6" gutterBottom align="left">
             We have sent a code to
           </Typography>
+          <Typography variant="body1" gutterBottom align="left">
+            <strong>{email}</strong>.
+          </Typography>
           <Divider />
 
-          <form className="form-field-container">
+          <form onSubmit={handleSubmit} className="form-field-container">
             <MuiOtpInput value={otp} onChange={handleChange} />
             <div className="form-field" style={{ textAlign: "left" }}>
               <Link href="/OtpVerification" underline="hover" variant="body2">

@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 const ForgotPassword = () => {
   let navigate = useNavigate();
@@ -51,6 +52,7 @@ const ForgotPassword = () => {
 
             <div className="form-field" style={{ textAlign: "left" }}>
               <Link href="/" underline="hover" variant="body2">
+                <KeyboardArrowLeftIcon />
                 Back to Log in
               </Link>
               <Button
