@@ -11,6 +11,8 @@ import {
   Link,
   Avatar,
 } from "@mui/material";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import "../index.css";
 
 interface OtpVerificationProps {
@@ -18,27 +20,26 @@ interface OtpVerificationProps {
 }
 
 const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
-  const [otp, setOtp] = React.useState("");
-
-  const handleChange = (newValue: string): void => {
-    setOtp(newValue);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Submitted OTP:", otp);
-  };
+  const formik = useFormik({
+    initialValues: {
+      otp: "",
+    },
+    validationSchema: Yup.object({
+      otp: Yup.string()
+        .required("OTP is required")
+        .matches(/^\d{6}$/, "OTP must be exactly 6 digits"),
+    }),
+    onSubmit: (values) => {
+      console.log("Submitted OTP:", values.otp);
+    },
+  });
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
-          <Avatar
-            sx={{
-              mb: "10%",
-            }}
-          >
+          <Avatar sx={{ mb: "10%" }}>
             <AccountCircleOutlinedIcon />
           </Avatar>
           <Typography variant="h5" gutterBottom align="left">
@@ -52,9 +53,28 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
           </Typography>
           <Divider />
 
-          <form onSubmit={handleSubmit} className="form-field-container">
-            <MuiOtpInput value={otp} onChange={handleChange} />
-            <div className="form-field" style={{ textAlign: "left" }}>
+          <form onSubmit={formik.handleSubmit} className="form-field-container">
+            <MuiOtpInput
+              value={formik.values.otp}
+              onChange={(value) => formik.setFieldValue("otp", value)}
+              onBlur={() => formik.setFieldTouched("otp", true)}
+              length={6}
+              TextFieldsProps={{
+                error: formik.touched.otp && Boolean(formik.errors.otp),
+                helperText: formik.touched.otp ? formik.errors.otp : "",
+              }}
+            />
+
+            {formik.touched.otp && formik.errors.otp && (
+              <Typography color="error" variant="caption" sx={{ mt: 1 }}>
+                {formik.errors.otp}
+              </Typography>
+            )}
+
+            <div
+              className="form-field"
+              style={{ textAlign: "left", marginTop: "1rem" }}
+            >
               <Link href="/OtpVerification" underline="hover" variant="body2">
                 Resend OTP
               </Link>
