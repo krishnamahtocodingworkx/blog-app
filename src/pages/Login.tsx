@@ -1,4 +1,6 @@
 import * as React from "react";
+import divingActivities from "./bg/DivingActivites.png";
+import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
   Container,
@@ -9,14 +11,12 @@ import {
   IconButton,
   Link,
   Divider,
-  Avatar,
 } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-
 import { useFormik } from "formik";
 import * as Yup from "yup";
-
 import "../index.css";
 
 const Login = () => {
@@ -47,12 +47,93 @@ const Login = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
         <div className="form-container">
-          <Avatar sx={{ ml: "50%", mb: "10%" }}>
-            <AccountCircleOutlinedIcon />
-          </Avatar>
-          <Typography variant="h5" gutterBottom align="center">
+          <form onSubmit={formik.handleSubmit} className="form-field-container">
+            <Typography
+              variant="h6"
+              gutterBottom
+              align="left"
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                position: "absolute",
+                fontSize: "18px",
+              }}
+            >
+              Diving Activities
+            </Typography>
+            <img
+              height="500"
+              src={divingActivities}
+              style={{
+                borderRadius: "50px 20px 50px 50px",
+                width: "100%",
+              }}
+              alt="divingActivitiesImg"
+            />
+
+            <div className="form-field" style={{ textAlign: "left" }}>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{
+                  float: "inline-start",
+                  backgroundColor: "#fff",
+                  color: "black",
+                  borderRadius: "22px",
+                  padding: "8px 20px",
+                }}
+              >
+                <ArrowBackIcon />
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{
+                  float: "inline-end",
+                  borderRadius: "22px",
+                  padding: "8px 50px",
+                }}
+              >
+                <ArrowForwardIcon />
+              </Button>
+            </div>
+          </form>
+        </div>
+
+        <div className="form-container">
+          <Typography
+            variant="h5"
+            gutterBottom
+            align="left"
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <img src={vectorImg} alt="vectorImg" />
+            DiveBuddies
+          </Typography>
+          <Typography
+            variant="h6"
+            gutterBottom
+            align="left"
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              margin: "20px",
+              gap: "20px",
+            }}
+          >
             Sign In to your account
           </Typography>
           <Divider />
@@ -95,7 +176,11 @@ const Login = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton onClick={togglePasswordVisibility} edge="end">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        edge="end"
+                        aria-label="toggle password visibility"
+                      >
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
@@ -104,14 +189,29 @@ const Login = () => {
               />
             </div>
 
-            <div className="form-field" style={{ textAlign: "left" }}>
-              <Link href="/forgotPassword" underline="hover" variant="body2">
+            <div
+              className="form-field"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <Link
+                href="/forgotPassword"
+                underline="hover"
+                variant="body2"
+                style={{ marginTop: "18px" }}
+              >
                 Forgot password?
               </Link>
               <Button
                 type="submit"
                 variant="contained"
-                style={{ float: "inline-end" }}
+                style={{
+                  float: "inline-end",
+                  padding: "8px 50px",
+                  marginTop: "10px",
+                }}
               >
                 Login
               </Button>
