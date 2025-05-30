@@ -7,10 +7,12 @@ import {
   Typography,
   Link,
   Divider,
+  Avatar,
 } from "@mui/material";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 const ForgotPassword = () => {
   let navigate = useNavigate();
@@ -25,6 +27,13 @@ const ForgotPassword = () => {
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
+          <Avatar
+            sx={{
+              mb: "10%",
+            }}
+          >
+            <AccountCircleOutlinedIcon />
+          </Avatar>
           <Typography variant="h5" gutterBottom align="left">
             Forgot Password?
           </Typography>

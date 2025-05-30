@@ -1,5 +1,7 @@
 import * as React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+
 import {
   CssBaseline,
   Container,
@@ -7,6 +9,7 @@ import {
   Typography,
   Divider,
   Link,
+  Avatar,
 } from "@mui/material";
 import "../index.css";
 
@@ -31,6 +34,13 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
+          <Avatar
+            sx={{
+              mb: "10%",
+            }}
+          >
+            <AccountCircleOutlinedIcon />
+          </Avatar>
           <Typography variant="h5" gutterBottom align="left">
             OTP Verification
           </Typography>
