@@ -9,8 +9,11 @@ import {
   IconButton,
   Link,
   Divider,
+  Avatar,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+
 import "../index.css";
 
 const Login = () => {
@@ -31,6 +34,14 @@ const Login = () => {
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
+          <Avatar
+            sx={{
+              ml: "50%",
+              mb: "10%",
+            }}
+          >
+            <AccountCircleOutlinedIcon />
+          </Avatar>
           <Typography variant="h5" gutterBottom align="center">
             Sign In to your account
           </Typography>
