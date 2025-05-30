@@ -14,24 +14,33 @@ import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
-const ForgotPassword = () => {
-  let navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-  const handleSubmit = () => {
-    console.log("Logging in with", { email });
-  };
+const ForgotPassword = () => {
+  const navigate = useNavigate();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+    }),
+    onSubmit: (values) => {
+      console.log("Submitting email:", values.email);
+      navigate("/otpVerification");
+    },
+  });
 
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
         <div className="form-container">
-          <Avatar
-            sx={{
-              mb: "10%",
-            }}
-          >
+          <Avatar sx={{ mb: "10%" }}>
             <AccountCircleOutlinedIcon />
           </Avatar>
           <Typography variant="h5" gutterBottom align="left">
@@ -44,7 +53,7 @@ const ForgotPassword = () => {
           </Typography>
           <Divider />
 
-          <form onSubmit={handleSubmit} className="form-field-container">
+          <form onSubmit={formik.handleSubmit} className="form-field-container">
             <div className="form-field">
               <Typography variant="subtitle1" gutterBottom>
                 Email Address
@@ -54,8 +63,11 @@ const ForgotPassword = () => {
                 placeholder="Enter email address"
                 variant="outlined"
                 name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
             </div>
 
@@ -65,9 +77,6 @@ const ForgotPassword = () => {
                 Back to Log in
               </Link>
               <Button
-                onClick={() => {
-                  navigate("/otpVerification");
-                }}
                 type="submit"
                 variant="contained"
                 style={{ float: "inline-end" }}
