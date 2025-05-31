@@ -104,7 +104,7 @@ const ResetPassword = () => {
             gutterBottom
             style={{
               position: "absolute",
-              bottom: "30%",
+              bottom: "20%",
               display: "flex",
               color: "#fff",
               margin: "16px",
