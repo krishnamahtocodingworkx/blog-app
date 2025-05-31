@@ -1,5 +1,5 @@
 import * as React from "react";
-import divingActivities from "./bg/DivingActivites.png";
+import divingActivities from "./bg/DivingActivities.png";
 import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
@@ -152,7 +152,7 @@ const Login = () => {
           </div>
         </div>
 
-        {/* form-container  */}
+        {/* right-container  */}
         <div
           style={{
             border: "1px solid black",
@@ -189,13 +189,12 @@ const Login = () => {
               display: "flex",
               justifyContent: "flex-start",
               marginBottom: "20px",
-              gap: "20px",
             }}
           >
             Sign In to your account
           </Typography>
           {/* ********************************form-section start********************************  */}
-          <form onSubmit={formik.handleSubmit}>
+          <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
             {/* *************************form-field for email start*******************************  */}
             <div
               style={{
@@ -226,7 +225,6 @@ const Login = () => {
               style={{
                 border: "1px solid black",
                 marginTop: "16px",
-                width: "60vh",
               }}
             >
               {/* password-label  */}
