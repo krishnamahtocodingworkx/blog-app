@@ -1,4 +1,5 @@
 import * as React from "react";
+import divingActivities from "./bg/DivingActivites.png";
 import {
   CssBaseline,
   Container,
@@ -10,6 +11,8 @@ import {
 } from "@mui/material";
 import "../index.css";
 import { useNavigate } from "react-router-dom";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 import { useFormik } from "formik";
@@ -37,6 +40,66 @@ const ForgotPassword = () => {
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
+        <div className="form-container">
+          <div className="form-field-container">
+            <Typography
+              variant="h6"
+              gutterBottom
+              align="left"
+              style={{
+                border: "1px solid black",
+                display: "flex",
+                justifyContent: "flex-start",
+                position: "absolute",
+                fontSize: "16px",
+              }}
+            >
+              Diving Activities
+            </Typography>
+            <img
+              height="500"
+              src={divingActivities}
+              style={{
+                border: "5px solid red",
+                borderRadius: "50% 10% 30% 30%",
+                width: "100%",
+              }}
+              alt="divingActivitiesImg"
+            />
+
+            <div
+              className="form-field"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                paddingTop: 0,
+              }}
+            >
+              <Button
+                type="submit"
+                variant="contained"
+                style={{
+                  backgroundColor: "#fff",
+                  color: "black",
+                  borderRadius: "22px",
+                  padding: "8px 20px",
+                }}
+              >
+                <ArrowBackIcon />
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                style={{
+                  borderRadius: "22px",
+                  padding: "8px 50px",
+                }}
+              >
+                <ArrowForwardIcon />
+              </Button>
+            </div>
+          </div>
+        </div>
         <div className="form-container">
           <Typography variant="h5" gutterBottom align="left">
             Forgot Password?

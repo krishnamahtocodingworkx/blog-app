@@ -10,7 +10,6 @@ import {
   InputAdornment,
   IconButton,
   Link,
-  Divider,
 } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -47,114 +46,170 @@ const Login = () => {
   return (
     <React.Fragment>
       <CssBaseline />
+      {/* parent-container  */}
       <Container
         style={{
           border: "1px solid black",
           height: "100vh",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-evenly",
+          justifyContent: "space-between",
         }}
       >
-        <div className="form-container">
-          <div className="form-field-container">
+        {/* left-container  */}
+        <div
+          style={{
+            border: "1px solid black",
+            display: "flex",
+            position: "relative",
+            borderRadius: "10px",
+            padding: "20px",
+            margin: "50px",
+          }}
+        >
+          {/* diving-activities heading  */}
+          <div
+            style={{
+              border: "1px solid black",
+              padding: "16px",
+              position: "absolute",
+              borderRadius: "0 16px 16px 16px",
+              backgroundColor: "white",
+            }}
+          >
             <Typography
               variant="h6"
               gutterBottom
-              align="left"
               style={{
                 border: "1px solid black",
-                display: "flex",
-                justifyContent: "flex-start",
-                position: "absolute",
+                borderRadius: "16px",
+                padding: "16px 30px",
                 fontSize: "16px",
               }}
             >
               Diving Activities
             </Typography>
-            <img
-              height="500"
-              src={divingActivities}
+          </div>
+          {/* left-image  */}
+          <img
+            width="100%"
+            src={divingActivities}
+            alt="divingActivitiesImg"
+            style={{ borderTopRightRadius: "5%" }}
+          />
+          {/* back-btn  */}
+          <div
+            style={{
+              border: "1px solid black",
+              position: "absolute",
+              display: "flex",
+              bottom: "18px",
+              padding: "18px",
+              borderRadius: "18px 18px 18px 0",
+              backgroundColor: "#fff",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
               style={{
-                border: "5px solid red",
-                borderRadius: "50% 10% 30% 30%",
-                width: "100%",
-              }}
-              alt="divingActivitiesImg"
-            />
-
-            <div
-              className="form-field"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                paddingTop: 0,
+                border: "1px solid black",
+                backgroundColor: "#fff",
+                color: "black",
+                borderRadius: "10px",
+                padding: "8px",
+                fontSize: "32px",
+                cursor: "pointer",
               }}
             >
-              <Button
-                type="submit"
-                variant="contained"
-                style={{
-                  backgroundColor: "#fff",
-                  color: "black",
-                  borderRadius: "22px",
-                  padding: "8px 20px",
-                }}
-              >
-                <ArrowBackIcon />
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                style={{
-                  borderRadius: "22px",
-                  padding: "8px 50px",
-                }}
-              >
-                <ArrowForwardIcon />
-              </Button>
-            </div>
+              <ArrowBackIcon />
+            </Button>
+          </div>
+          {/* forward-btn  */}
+          <div
+            style={{
+              border: "1px solid black",
+              position: "absolute",
+              display: "flex",
+              bottom: "18px",
+              right: "18px",
+              padding: "18px",
+              borderRadius: "18px 18px 0 18px",
+              backgroundColor: "#fff",
+            }}
+          >
+            <Button
+              type="submit"
+              variant="contained"
+              style={{
+                border: "1px solid black",
+                borderRadius: "10px",
+                padding: "8px 50px",
+              }}
+            >
+              <ArrowForwardIcon />
+            </Button>
           </div>
         </div>
 
-        <div className="form-container">
+        {/* form-container  */}
+        <div
+          style={{
+            border: "1px solid black",
+            borderRadius: "10px",
+            padding: "20px",
+            margin: "50px",
+          }}
+        >
+          {/* DiveBuddies image and heading  */}
           <Typography
             variant="h5"
             gutterBottom
             align="left"
             style={{
+              fontWeight: "bold",
+              border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
               alignItems: "center",
+              marginBottom: "20px",
               gap: "10px",
             }}
           >
-            <img src={vectorImg} alt="vectorImg" />
+            <img width="50" src={vectorImg} alt="vectorImg" />
             DiveBuddies
           </Typography>
+          {/* signin heading  */}
           <Typography
             variant="h6"
             gutterBottom
             align="left"
             style={{
+              border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
-              margin: "20px",
+              marginBottom: "20px",
               gap: "20px",
             }}
           >
             Sign In to your account
           </Typography>
-          <Divider />
-
-          <form onSubmit={formik.handleSubmit} className="form-field-container">
-            <div className="form-field">
+          {/* ********************************form-section start********************************  */}
+          <form onSubmit={formik.handleSubmit}>
+            {/* *************************form-field for email start*******************************  */}
+            <div
+              style={{
+                border: "1px solid black",
+              }}
+            >
+              {/* email-label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Email Address
               </Typography>
+              {/* email-TextField  */}
               <TextField
                 fullWidth
-                placeholder="Enter email address"
+                placeholder="Enter Email Address"
                 variant="outlined"
                 name="email"
                 value={formik.values.email}
@@ -164,11 +219,21 @@ const Login = () => {
                 helperText={formik.touched.email && formik.errors.email}
               />
             </div>
+            {/* ****************************form-field for email end ***************************************  */}
 
-            <div className="form-field">
+            {/* *************************form-field for password start************************************* */}
+            <div
+              style={{
+                border: "1px solid black",
+                marginTop: "16px",
+                width: "60vh",
+              }}
+            >
+              {/* password-label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Password
               </Typography>
+              {/* password-TextField  */}
               <TextField
                 fullWidth
                 type={showPassword ? "text" : "password"}
@@ -182,50 +247,61 @@ const Login = () => {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
                 helperText={formik.touched.password && formik.errors.password}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={togglePasswordVisibility}
-                        edge="end"
-                        aria-label="toggle password visibility"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={togglePasswordVisibility}
+                          edge="end"
+                          aria-label="toggle password visibility"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  },
                 }}
               />
             </div>
+            {/* *************************form-field for password end************************************* */}
 
+            {/* form-field for forgot-password and login-btn start */}
             <div
-              className="form-field"
               style={{
+                border: "1px solid black",
                 display: "flex",
                 justifyContent: "space-between",
+                alignItems: "center",
+                padding: "8px",
+                marginTop: "20px",
               }}
             >
+              {/* forgot-password link  */}
               <Link
                 href="/forgotPassword"
                 underline="hover"
                 variant="body2"
-                style={{ marginTop: "18px" }}
+                style={{ padding: "8px" }}
               >
                 Forgot password?
               </Link>
+              {/* login-btn  */}
               <Button
                 type="submit"
                 variant="contained"
                 style={{
                   float: "inline-end",
                   padding: "8px 50px",
-                  marginTop: "10px",
+                  borderRadius: "10px",
                 }}
               >
                 Login
               </Button>
             </div>
+            {/* form-field for forgot-password and login-btn end */}
           </form>
+          {/* **********************************form-section end**********************************  */}
         </div>
       </Container>
     </React.Fragment>
