@@ -91,6 +91,22 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             style={{ borderTopRightRadius: "5%" }}
           />
           {/* ********************diving-activitiesImage end*************************  */}
+          {/* Dive-in heading start */}
+          <Typography
+            variant="h4"
+            gutterBottom
+            style={{
+              position: "absolute",
+              bottom: "30%",
+              display: "flex",
+              color: "#fff",
+              margin: "16px",
+              border: "1px solid white",
+            }}
+          >
+            Ocean Adventures Await-Dive In!
+          </Typography>
+          {/* Dive-in heading end */}
 
           {/* *********************************back-btn start******************************  */}
           <div
