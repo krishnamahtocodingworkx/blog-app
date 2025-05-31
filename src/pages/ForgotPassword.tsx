@@ -161,7 +161,7 @@ const ForgotPassword = () => {
             margin: "50px",
           }}
         >
-          {/* DiveBuddies image and heading  */}
+          {/* *****************DiveBuddies image and heading start************************* */}
           <Typography
             variant="h5"
             gutterBottom
@@ -179,7 +179,9 @@ const ForgotPassword = () => {
             <img width="50" src={vectorImg} alt="vectorImg" />
             DiveBuddies
           </Typography>
-          {/* forgot-password heading  */}
+          {/* *****************DiveBuddies image and heading end************************* */}
+
+          {/* ******************forgot-password heading start*******************  */}
           <Typography
             variant="h6"
             gutterBottom
@@ -193,12 +195,16 @@ const ForgotPassword = () => {
           >
             Forgot Password?
           </Typography>
-          {/* reset password link  */}
+          {/* ******************forgot-password heading end******************  */}
+
+          {/* ****************************reset password link start*******************************  */}
           <Typography variant="h6" gutterBottom align="left">
             <Link href="/resetPassword" underline="hover" variant="body2">
               You can reset your password here
             </Link>
           </Typography>
+          {/* ****************************reset password link end*******************************  */}
+
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
             {/* ***************************form-field for email start************************* */}
@@ -222,7 +228,7 @@ const ForgotPassword = () => {
             </div>
             {/* ***************************form-field for email end************************* */}
 
-            {/* back-to login */}
+            {/* back-to login link */}
             <div
               style={{
                 border: "1px solid black",

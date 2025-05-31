@@ -160,7 +160,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             margin: "50px",
           }}
         >
-          {/* DiveBuddies image and heading  */}
+          {/* ********************DiveBuddies image and heading start*******************  */}
           <Typography
             variant="h5"
             gutterBottom
@@ -175,9 +175,11 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
               gap: "10px",
             }}
           >
-            <img width="50" src={vectorImg} alt="vectorImg" />
+            {/* importing from bg folder */}
+            <img width="50" src={vectorImg} alt="DivingBuddiesLogoImg" />
             DiveBuddies
           </Typography>
+          {/* ********************DiveBuddies image and heading end*******************  */}
 
           <Typography variant="h6" gutterBottom align="left">
             OTP Verification
@@ -195,6 +197,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             <MuiOtpInput
               style={{
                 border: "1px solid black",
+                padding: "5px",
                 marginTop: "20px",
               }}
               value={formik.values.otp}
@@ -249,7 +252,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
               </Button>
             </div>
           </form>
+          {/* ********************************form-section end********************************  */}
         </div>
+        {/* ************************right-container end**************************  */}
       </Container>
     </React.Fragment>
   );

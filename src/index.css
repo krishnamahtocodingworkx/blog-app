@@ -4,18 +4,3 @@
   box-sizing: border-box;
   font-family: "roboto", sans-serif;
 }
-
-.form-container {
-  border-radius: 10px;
-  padding: 20px;
-  margin: 50px;
-}
-
-.form-field-container {
-  padding: 16px;
-  width: 60vh;
-}
-
-.form-field {
-  padding: 8px;
-}
