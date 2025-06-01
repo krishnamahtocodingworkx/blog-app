@@ -1,5 +1,4 @@
 import * as React from "react";
-import divingActivities from "./bg/DivingActivities.png";
 import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
@@ -11,12 +10,11 @@ import {
   IconButton,
   Link,
 } from "@mui/material";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../index.css";
+import LeftContainer from "../components/LeftContainer";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -46,7 +44,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      {/* parent-container  */}
+      {/* parent-container start  */}
       <Container
         style={{
           border: "1px solid black",
@@ -56,118 +54,8 @@ const Login = () => {
           justifyContent: "space-between",
         }}
       >
-        {/* left-container  */}
-        <div
-          style={{
-            border: "1px solid black",
-            display: "flex",
-            position: "relative",
-            borderRadius: "10px",
-            padding: "20px",
-            margin: "50px",
-          }}
-        >
-          {/* diving-activities heading  */}
-          <div
-            style={{
-              border: "1px solid black",
-              padding: "16px",
-              position: "absolute",
-              borderRadius: "0 16px 16px 16px",
-              backgroundColor: "white",
-            }}
-          >
-            <Typography
-              variant="h6"
-              gutterBottom
-              style={{
-                border: "1px solid black",
-                borderRadius: "16px",
-                padding: "16px 30px",
-                fontSize: "16px",
-              }}
-            >
-              Diving Activities
-            </Typography>
-          </div>
-          {/* left-image  */}
-          <img
-            width="100%"
-            src={divingActivities}
-            alt="divingActivitiesImg"
-            style={{ borderTopRightRadius: "5%" }}
-          />
-          {/* Dive-in heading start */}
-          <Typography
-            variant="h4"
-            gutterBottom
-            style={{
-              position: "absolute",
-              bottom: "20%",
-              display: "flex",
-              color: "#fff",
-              margin: "16px",
-              border: "1px solid white",
-            }}
-          >
-            Ocean Adventures Await-Dive In!
-          </Typography>
-          {/* Dive-in heading end */}
-
-          {/* back-btn  */}
-          <div
-            style={{
-              border: "1px solid black",
-              position: "absolute",
-              display: "flex",
-              bottom: "18px",
-              padding: "18px",
-              borderRadius: "18px 18px 18px 0",
-              backgroundColor: "#fff",
-            }}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              style={{
-                border: "1px solid black",
-                backgroundColor: "#fff",
-                color: "black",
-                borderRadius: "10px",
-                padding: "8px",
-                fontSize: "32px",
-                cursor: "pointer",
-              }}
-            >
-              <ArrowBackIcon />
-            </Button>
-          </div>
-          {/* forward-btn  */}
-          <div
-            style={{
-              border: "1px solid black",
-              position: "absolute",
-              display: "flex",
-              bottom: "18px",
-              right: "18px",
-              padding: "18px",
-              borderRadius: "18px 18px 0 18px",
-              backgroundColor: "#fff",
-            }}
-          >
-            <Button
-              type="submit"
-              variant="contained"
-              style={{
-                border: "1px solid black",
-                borderRadius: "10px",
-                padding: "8px 50px",
-              }}
-            >
-              <ArrowForwardIcon />
-            </Button>
-          </div>
-        </div>
+        {/* left-container component */}
+        <LeftContainer />
 
         {/* right-container  */}
         <div
@@ -319,6 +207,7 @@ const Login = () => {
           {/* **********************************form-section end**********************************  */}
         </div>
       </Container>
+      {/* parent-container end  */}
     </React.Fragment>
   );
 };
