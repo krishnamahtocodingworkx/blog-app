@@ -42,7 +42,6 @@ const ForgotPassword = () => {
           border: "1px solid black",
           height: "100vh",
           display: "flex",
-          flexDirection: "row",
           justifyContent: "space-between",
         }}
       >
