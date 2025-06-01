@@ -47,7 +47,7 @@ const Login = () => {
       {/* parent-container start  */}
       <Container
         style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -59,7 +59,7 @@ const Login = () => {
         {/* right-container  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             padding: "20px",
             margin: "50px",
           }}
@@ -72,7 +72,7 @@ const Login = () => {
             gutterBottom
             align="left"
             style={{
-              border: "1px solid black",
+              // border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
               marginBottom: "20px",
@@ -84,9 +84,11 @@ const Login = () => {
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
             {/* *************************form-field for email start*******************************  */}
             <div
-              style={{
-                border: "1px solid black",
-              }}
+              style={
+                {
+                  // border: "1px solid black",
+                }
+              }
             >
               {/* email-label  */}
               <Typography variant="subtitle1" gutterBottom>
@@ -117,7 +119,7 @@ const Login = () => {
             {/* *************************form-field for password start************************************* */}
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 marginTop: "16px",
               }}
             >
@@ -168,7 +170,7 @@ const Login = () => {
             {/* form-field for forgot-password and login-btn start */}
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
