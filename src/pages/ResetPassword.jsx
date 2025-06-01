@@ -122,7 +122,7 @@ const ResetPassword = () => {
             {/* new-password field end */}
 
             {/* confirm-password field start  */}
-            <div className="form-field">
+            <div style={{ paddingTop: "30px" }}>
               {/* confirm-password label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Confirm Password
