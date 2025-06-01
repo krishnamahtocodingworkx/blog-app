@@ -1,6 +1,5 @@
 import * as React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
   Container,
@@ -12,6 +11,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../index.css";
 import LeftContainer from "../components/LeftContainer";
+import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
 interface OtpVerificationProps {
   email: string;
@@ -56,26 +56,8 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             margin: "50px",
           }}
         >
-          {/* ********************DiveBuddies image and heading start*******************  */}
-          <Typography
-            variant="h5"
-            gutterBottom
-            align="left"
-            style={{
-              fontWeight: "bold",
-              border: "1px solid black",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              marginBottom: "20px",
-              gap: "10px",
-            }}
-          >
-            {/* importing from bg folder */}
-            <img width="50" src={vectorImg} alt="DivingBuddiesLogoImg" />
-            DiveBuddies
-          </Typography>
-          {/* ********************DiveBuddies image and heading end*******************  */}
+          {/* DiveBuddiesHead Component */}
+          <DiveBuddiesHead />
 
           <Typography variant="h6" gutterBottom align="left">
             OTP Verification

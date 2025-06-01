@@ -1,5 +1,4 @@
 import * as React from "react";
-import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
   Container,
@@ -14,6 +13,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../index.css";
 import LeftContainer from "../components/LeftContainer";
+import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
 const ResetPassword = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -62,25 +62,8 @@ const ResetPassword = () => {
           padding: "20px",
           margin: "50px",
         }}>
-          {/* *****************DiveBuddies image and heading start************************* */}
-          <Typography
-            variant="h5"
-            gutterBottom
-            align="left"
-            style={{
-              fontWeight: "bold",
-              border: "1px solid black",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              marginBottom: "20px",
-              gap: "10px",
-            }}
-          >
-            <img width="50" src={vectorImg} alt="vectorImg" />
-            DiveBuddies
-          </Typography>
-          {/* *****************DiveBuddies image and heading end************************* */}
+          {/* DiveBuddiesHead Component*/}
+          <DiveBuddiesHead />
 
           {/* **************************resetPassword heading start**************************/}
           <Typography variant="h5" gutterBottom align="left"

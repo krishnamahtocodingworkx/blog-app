@@ -1,5 +1,4 @@
 import * as React from "react";
-import vectorImg from "./bg/Vector.png";
 import {
   CssBaseline,
   Container,
@@ -15,6 +14,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../index.css";
 import LeftContainer from "../components/LeftContainer";
+import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
 const Login = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -66,24 +66,8 @@ const Login = () => {
             margin: "50px",
           }}
         >
-          {/* DiveBuddies image and heading  */}
-          <Typography
-            variant="h5"
-            gutterBottom
-            align="left"
-            style={{
-              fontWeight: "bold",
-              border: "1px solid black",
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              marginBottom: "20px",
-              gap: "10px",
-            }}
-          >
-            <img width="50" src={vectorImg} alt="vectorImg" />
-            DiveBuddies
-          </Typography>
+          {/* DiveBuddiesHead Component  */}
+          <DiveBuddiesHead />
           {/* signin heading  */}
           <Typography
             variant="h6"
