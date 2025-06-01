@@ -73,7 +73,7 @@ const LeftContainer: React.FC = () => {
             position: "absolute",
             display: "flex",
             bottom: "18px",
-            padding: "18px",
+            padding: "10px",
             borderRadius: "18px 18px 18px 0",
             backgroundColor: "#fff",
           }}
@@ -82,10 +82,10 @@ const LeftContainer: React.FC = () => {
             type="submit"
             variant="contained"
             style={{
+              // border: "1px solid black",
               backgroundColor: "#fff",
               color: "black",
               borderRadius: "10px",
-              padding: "8px",
               fontSize: "32px",
             }}
           >
@@ -102,7 +102,7 @@ const LeftContainer: React.FC = () => {
             display: "flex",
             bottom: "18px",
             right: "18px",
-            padding: "18px",
+            padding: "10px",
             borderRadius: "18px 18px 0 18px",
             backgroundColor: "#fff",
           }}
