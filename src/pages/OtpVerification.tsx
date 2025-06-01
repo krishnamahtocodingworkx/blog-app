@@ -51,7 +51,6 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
         <div
           style={{
             border: "1px solid black",
-            borderRadius: "10px",
             padding: "20px",
             margin: "50px",
           }}
@@ -72,28 +71,37 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
           </Typography>
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
+            {/* **************************otp input section start********************** */}
             <MuiOtpInput
               style={{
                 border: "1px solid black",
-                padding: "5px",
-                marginTop: "20px",
+                marginTop: "30px",
               }}
               value={formik.values.otp}
               onChange={(value) => formik.setFieldValue("otp", value)}
               onBlur={() => formik.setFieldTouched("otp", true)}
               length={4}
               TextFieldsProps={{
+                inputProps: {
+                  style: {
+                    backgroundColor: "rgba(230, 230, 230, 1)",
+                    borderRadius: "10px",
+                    width: "32px",
+                  },
+                },
                 error: formik.touched.otp && Boolean(formik.errors.otp),
                 helperText: formik.touched.otp ? formik.errors.otp : "",
               }}
             />
+            {/* **************************otp input section end********************** */}
 
+            {/* error section */}
             {formik.touched.otp && formik.errors.otp && (
               <Typography color="error" variant="caption" sx={{ mt: 1 }}>
                 {formik.errors.otp}
               </Typography>
             )}
-
+            {/* *******************************Resend OTP and Verify btn start******************************* */}
             <div
               style={{
                 border: "1px solid black",
@@ -101,9 +109,10 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "8px",
-                marginTop: "20px",
+                marginTop: "50px",
               }}
             >
+              {/* Resend OTP link start */}
               <Link
                 href="/OtpVerification"
                 underline="hover"
@@ -117,6 +126,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
               >
                 Resend OTP
               </Link>
+              {/* Resend OTP link end  */}
+
+              {/* Verify-btn start  */}
               <Button
                 type="submit"
                 variant="contained"
@@ -128,7 +140,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
               >
                 Verify
               </Button>
+              {/* Verify-btn end  */}
             </div>
+            {/* *******************************Resend OTP and Verify btn end******************************* */}
           </form>
           {/* ********************************form-section end********************************  */}
         </div>

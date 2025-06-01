@@ -58,7 +58,6 @@ const ResetPassword = () => {
         {/* ************************right-container start**************************  */}
         <div style={{
           border: "1px solid black",
-          borderRadius: "10px",
           padding: "20px",
           margin: "50px",
         }}>

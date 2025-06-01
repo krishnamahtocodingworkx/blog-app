@@ -61,7 +61,6 @@ const Login = () => {
         <div
           style={{
             border: "1px solid black",
-            borderRadius: "10px",
             padding: "20px",
             margin: "50px",
           }}
@@ -96,6 +95,13 @@ const Login = () => {
               </Typography>
               {/* email-TextField  */}
               <TextField
+                sx={{
+                  // Root class for the input field
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    height: "40px",
+                  },
+                }}
                 fullWidth
                 placeholder="Enter Email Address"
                 variant="outlined"
@@ -122,6 +128,13 @@ const Login = () => {
               </Typography>
               {/* password-TextField  */}
               <TextField
+                sx={{
+                  // Root class for the input field
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    height: "40px",
+                  },
+                }}
                 fullWidth
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"

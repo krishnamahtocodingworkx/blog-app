@@ -12,7 +12,6 @@ const LeftContainer = () => {
           border: "1px solid black",
           display: "flex",
           position: "relative",
-          borderRadius: "10px",
           padding: "20px",
           margin: "50px",
         }}
@@ -21,19 +20,19 @@ const LeftContainer = () => {
         <div
           style={{
             border: "1px solid black",
-            padding: "16px",
             position: "absolute",
             borderRadius: "0 16px 16px 16px",
-            backgroundColor: "white",
+            backgroundColor: "#fff",
           }}
         >
           <Typography
             variant="h6"
             gutterBottom
             style={{
-              border: "1px solid black",
+              border: "1px solid rgb(203, 199, 199)",
               borderRadius: "16px",
-              padding: "16px 30px",
+              margin: "10px",
+              padding: "10px 20px",
               fontSize: "16px",
             }}
           >
@@ -60,7 +59,7 @@ const LeftContainer = () => {
             display: "flex",
             color: "#fff",
             margin: "16px",
-            border: "1px solid white",
+            border: "1px solid #fff",
           }}
         >
           Ocean Adventures Await-Dive In!
@@ -83,13 +82,11 @@ const LeftContainer = () => {
             type="submit"
             variant="contained"
             style={{
-              border: "1px solid black",
               backgroundColor: "#fff",
               color: "black",
               borderRadius: "10px",
               padding: "8px",
               fontSize: "32px",
-              cursor: "pointer",
             }}
           >
             <ArrowBackIcon />
@@ -114,9 +111,8 @@ const LeftContainer = () => {
             type="submit"
             variant="contained"
             style={{
-              border: "1px solid black",
               borderRadius: "10px",
-              padding: "8px 50px",
+              padding: "8px 30px",
             }}
           >
             <ArrowForwardIcon />

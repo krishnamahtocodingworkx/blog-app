@@ -53,7 +53,6 @@ const ForgotPassword = () => {
         <div
           style={{
             border: "1px solid black",
-            borderRadius: "10px",
             padding: "20px",
             margin: "50px",
           }}
@@ -95,6 +94,13 @@ const ForgotPassword = () => {
               </Typography>
               {/* TextField for email input  */}
               <TextField
+                sx={{
+                  // Root class for the input field
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    height: "40px",
+                  },
+                }}
                 fullWidth
                 placeholder="Enter Email Address"
                 variant="outlined"
