@@ -39,7 +39,7 @@ const ForgotPassword = () => {
       {/* *****************************parent-container start*************************  */}
       <Container
         style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         {/* ************************right-container start**************************  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             padding: "20px",
             margin: "50px",
           }}
@@ -65,7 +65,7 @@ const ForgotPassword = () => {
             gutterBottom
             align="left"
             style={{
-              border: "1px solid black",
+              // border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
               marginBottom: "20px",
@@ -86,7 +86,13 @@ const ForgotPassword = () => {
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
             {/* ***************************form-field for email start************************* */}
-            <div style={{ border: "1px solid black" }}>
+            <div
+              style={
+                {
+                  // border: "1px solid black",
+                }
+              }
+            >
               {/* email-label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Email Address
@@ -116,7 +122,7 @@ const ForgotPassword = () => {
             {/* back-to login link */}
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
