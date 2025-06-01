@@ -16,7 +16,7 @@ import "../index.css";
 import LeftContainer from "../components/LeftContainer";
 import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
-const Login = () => {
+const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePasswordVisibility = () => {

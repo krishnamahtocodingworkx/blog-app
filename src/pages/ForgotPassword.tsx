@@ -15,7 +15,7 @@ import * as Yup from "yup";
 import LeftContainer from "../components/LeftContainer";
 import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
-const ForgotPassword = () => {
+const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
 
   const formik = useFormik({

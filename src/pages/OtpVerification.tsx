@@ -25,7 +25,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
     validationSchema: Yup.object({
       otp: Yup.string()
         .required("OTP is required")
-        .matches(/^\d{6}$/, "OTP must be exactly 6 digits"),
+        .matches(/^\d{4}$/, "OTP must be exactly 4 digits"),
     }),
     onSubmit: (values) => {
       console.log("Submitted OTP:", values.otp);
@@ -87,16 +87,22 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
                     borderRadius: "10px",
                     width: "32px",
                   },
+                  error: formik.touched.otp && Boolean(formik.errors.otp),
+                  helperText: formik.touched.otp ? formik.errors.otp : "",
                 },
-                error: formik.touched.otp && Boolean(formik.errors.otp),
-                helperText: formik.touched.otp ? formik.errors.otp : "",
               }}
             />
             {/* **************************otp input section end********************** */}
 
             {/* error section */}
             {formik.touched.otp && formik.errors.otp && (
-              <Typography color="error" variant="caption" sx={{ mt: 1 }}>
+              <Typography
+                color="error"
+                variant="caption"
+                sx={{
+                  mt: 1,
+                }}
+              >
                 {formik.errors.otp}
               </Typography>
             )}

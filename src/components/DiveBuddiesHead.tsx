@@ -1,6 +1,6 @@
 import vectorImg from "../pages/bg/Vector.png";
 import { Typography } from "@mui/material";
-const DiveBuddiesHead = () => {
+const DiveBuddiesHead: React.FC = () => {
   return (
     <>
       {/* DiveBuddies image and heading  */}

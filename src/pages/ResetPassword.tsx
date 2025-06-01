@@ -15,7 +15,7 @@ import "../index.css";
 import LeftContainer from "../components/LeftContainer";
 import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
-const ResetPassword = () => {
+const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const togglePasswordVisibility = () => {
@@ -50,50 +50,68 @@ const ResetPassword = () => {
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
-        }}>
+        }}
+      >
         {/* left-container component */}
         <LeftContainer />
 
         {/* ************************right-container start**************************  */}
-        <div style={{
-          // border: "1px solid black",
-          padding: "20px",
-          margin: "50px",
-        }}>
+        <div
+          style={{
+            // border: "1px solid black",
+            padding: "20px",
+            margin: "50px",
+          }}
+        >
           {/* DiveBuddiesHead Component*/}
           <DiveBuddiesHead />
 
           {/* **************************resetPassword heading start**************************/}
-          <Typography variant="h5" gutterBottom align="left"
+          <Typography
+            variant="h5"
+            gutterBottom
+            align="left"
             style={{
               // border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
               marginBottom: "20px",
-            }}>
+            }}
+          >
             Reset Password
           </Typography>
           {/* **************************resetPassword heading end**************************/}
 
           {/* **************************Enter New Password heading start**************************/}
-          <Typography variant="body1" gutterBottom align="left"
-            style={{
-              // border: "1px solid black"
-            }}>
+          <Typography
+            variant="body1"
+            gutterBottom
+            align="left"
+            style={
+              {
+                // border: "1px solid black"
+              }
+            }
+          >
             Enter the new password to secure your account
           </Typography>
           {/* **************************Enter New Password heading end**************************/}
 
           {/* ******************************form-section start********************************* */}
-          <form onSubmit={formik.handleSubmit} style={{
-            width: "60vh"
-          }}>
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{
+              width: "60vh",
+            }}
+          >
             {/* ********************form-field section start********************* */}
             {/* new-password field start */}
-            <div style={{
-              // border: "1px solid black",
-              marginTop: "16px",
-            }}>
+            <div
+              style={{
+                // border: "1px solid black",
+                marginTop: "16px",
+              }}
+            >
               {/* new-password label  */}
               <Typography variant="subtitle1" gutterBottom>
                 New Password
@@ -115,7 +133,9 @@ const ResetPassword = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.password && Boolean(formik.errors.password)}
+                error={
+                  formik.touched.password && Boolean(formik.errors.password)
+                }
                 helperText={formik.touched.password && formik.errors.password}
               />
             </div>
@@ -129,6 +149,13 @@ const ResetPassword = () => {
               </Typography>
               {/* TextField for confirm-password input  start */}
               <TextField
+                sx={{
+                  // Root class for the input field
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    height: "40px",
+                  },
+                }}
                 fullWidth
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter confirm password"
@@ -137,8 +164,14 @@ const ResetPassword = () => {
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
-                helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
                 slotProps={{
                   input: {
                     endAdornment: (
@@ -168,7 +201,8 @@ const ResetPassword = () => {
                 alignItems: "center",
                 padding: "8px",
                 marginTop: "20px",
-              }}>
+              }}
+            >
               <Button
                 type="submit"
                 variant="contained"

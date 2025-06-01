@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const LeftContainer = () => {
+const LeftContainer: React.FC = () => {
   return (
     <>
       {/* ***************************left-container start**********************  */}
