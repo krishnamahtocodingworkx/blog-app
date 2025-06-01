@@ -174,8 +174,7 @@ const Login: React.FC = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "8px",
-                marginTop: "20px",
+                marginTop: "50px",
               }}
             >
               {/* forgot-password link  */}

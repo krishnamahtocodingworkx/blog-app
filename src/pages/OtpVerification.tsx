@@ -113,7 +113,6 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "8px",
                 marginTop: "50px",
               }}
             >
@@ -124,7 +123,6 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
                 variant="body2"
                 style={{
                   // border: "1px solid black",
-                  padding: "8px",
                   display: "flex",
                   alignItems: "center",
                 }}

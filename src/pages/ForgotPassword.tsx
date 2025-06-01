@@ -126,8 +126,7 @@ const ForgotPassword: React.FC = () => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                padding: "8px",
-                marginTop: "20px",
+                marginTop: "50px",
               }}
             >
               <Link
@@ -135,7 +134,6 @@ const ForgotPassword: React.FC = () => {
                 underline="hover"
                 variant="body2"
                 style={{
-                  padding: "8px",
                   display: "flex",
                   alignItems: "center",
                 }}
