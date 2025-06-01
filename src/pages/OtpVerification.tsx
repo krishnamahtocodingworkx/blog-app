@@ -37,7 +37,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
       <CssBaseline />
       <Container
         style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -49,7 +49,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
         {/* ************************right-container start**************************  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             padding: "20px",
             margin: "50px",
           }}
@@ -73,7 +73,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             {/* **************************otp input section start********************** */}
             <MuiOtpInput
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 marginTop: "30px",
               }}
               value={formik.values.otp}
@@ -103,7 +103,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
             {/* *******************************Resend OTP and Verify btn start******************************* */}
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -117,7 +117,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
                 underline="hover"
                 variant="body2"
                 style={{
-                  border: "1px solid black",
+                  // border: "1px solid black",
                   padding: "8px",
                   display: "flex",
                   alignItems: "center",
