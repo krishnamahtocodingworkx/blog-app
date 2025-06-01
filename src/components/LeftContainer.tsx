@@ -9,7 +9,7 @@ const LeftContainer = () => {
       {/* ***************************left-container start**********************  */}
       <div
         style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           display: "flex",
           position: "relative",
           padding: "20px",
@@ -19,7 +19,7 @@ const LeftContainer = () => {
         {/* *************************diving-activities heading start**********************************  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             position: "absolute",
             borderRadius: "0 16px 16px 16px",
             backgroundColor: "#fff",
@@ -59,7 +59,7 @@ const LeftContainer = () => {
             display: "flex",
             color: "#fff",
             margin: "16px",
-            border: "1px solid #fff",
+            // border: "1px solid #fff",
           }}
         >
           Ocean Adventures Await-Dive In!
@@ -69,7 +69,7 @@ const LeftContainer = () => {
         {/* *********************************back-btn start******************************  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             position: "absolute",
             display: "flex",
             bottom: "18px",
@@ -97,7 +97,7 @@ const LeftContainer = () => {
         {/* *********************************forward-btn start***********************************  */}
         <div
           style={{
-            border: "1px solid black",
+            // border: "1px solid black",
             position: "absolute",
             display: "flex",
             bottom: "18px",
