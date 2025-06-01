@@ -17,7 +17,7 @@ interface OtpVerificationProps {
   email: string;
 }
 
-const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
+const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
   const formik = useFormik({
     initialValues: {
       otp: "",
@@ -66,7 +66,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = ({ email }) => {
           </Typography>
 
           <Typography variant="body1" gutterBottom align="left">
-            {email}
+            {props.email}
           </Typography>
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
