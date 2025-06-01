@@ -10,7 +10,7 @@ const DiveBuddiesHead = () => {
         align="left"
         style={{
           fontWeight: "bold",
-          border: "1px solid black",
+          // border: "1px solid black",
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
