@@ -96,6 +96,13 @@ const ResetPassword = () => {
               </Typography>
               {/* TextField for new password input  */}
               <TextField
+                sx={{
+                  // Root class for the input field
+                  "& .MuiOutlinedInput-root": {
+                    borderRadius: "10px",
+                    height: "40px",
+                  },
+                }}
                 fullWidth
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter new password"
