@@ -46,7 +46,7 @@ const ResetPassword = () => {
       {/* *****************************parent-container start*************************  */}
       <Container
         style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -56,7 +56,7 @@ const ResetPassword = () => {
 
         {/* ************************right-container start**************************  */}
         <div style={{
-          border: "1px solid black",
+          // border: "1px solid black",
           padding: "20px",
           margin: "50px",
         }}>
@@ -66,7 +66,7 @@ const ResetPassword = () => {
           {/* **************************resetPassword heading start**************************/}
           <Typography variant="h5" gutterBottom align="left"
             style={{
-              border: "1px solid black",
+              // border: "1px solid black",
               display: "flex",
               justifyContent: "flex-start",
               marginBottom: "20px",
@@ -77,7 +77,9 @@ const ResetPassword = () => {
 
           {/* **************************Enter New Password heading start**************************/}
           <Typography variant="body1" gutterBottom align="left"
-            style={{ border: "1px solid black" }}>
+            style={{
+              // border: "1px solid black"
+            }}>
             Enter the new password to secure your account
           </Typography>
           {/* **************************Enter New Password heading end**************************/}
@@ -88,7 +90,10 @@ const ResetPassword = () => {
           }}>
             {/* ********************form-field section start********************* */}
             {/* new-password field start */}
-            <div style={{ border: "1px solid black", marginTop: "16px", }}>
+            <div style={{
+              // border: "1px solid black",
+              marginTop: "16px",
+            }}>
               {/* new-password label  */}
               <Typography variant="subtitle1" gutterBottom>
                 New Password
@@ -157,7 +162,7 @@ const ResetPassword = () => {
             {/* save-btn start */}
             <div
               style={{
-                border: "1px solid black",
+                // border: "1px solid black",
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "center",
