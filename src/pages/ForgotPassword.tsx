@@ -15,7 +15,11 @@ import * as Yup from "yup";
 import LeftContainer from "../components/LeftContainer";
 import DiveBuddiesHead from "../components/DiveBuddiesHead";
 
-const ForgotPassword: React.FC = () => {
+type Props = {
+  setEmail: (email: string) => void;
+};
+
+const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
   const navigate = useNavigate();
 
   const formik = useFormik({
@@ -29,6 +33,9 @@ const ForgotPassword: React.FC = () => {
     }),
     onSubmit: (values) => {
       console.log("Submitting email:", values.email);
+      // setEmail(values.email);
+      sessionStorage.setItem("email", values.email);
+
       navigate("/otpVerification");
     },
   });

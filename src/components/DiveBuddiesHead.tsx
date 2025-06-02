@@ -1,4 +1,4 @@
-import vectorImg from "../pages/bg/Vector.png";
+import vectorImg from "../assets/images/Vector.png";
 import { Typography } from "@mui/material";
 const DiveBuddiesHead: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import divingActivities from "../pages/bg/DivingActivities.jpg";
+import divingActivities from "../assets/images/DivingActivities.jpg";
 import { Button, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";

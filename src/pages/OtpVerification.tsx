@@ -18,6 +18,9 @@ interface OtpVerificationProps {
 }
 
 const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
+  const email = sessionStorage.getItem("email");
+
+  console.log("my email ::: ", email);
   const formik = useFormik({
     initialValues: {
       otp: "",
