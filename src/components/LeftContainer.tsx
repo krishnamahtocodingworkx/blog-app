@@ -1,4 +1,4 @@
-import divingActivities from "../pages/bg/DivingActivities.png";
+import divingActivities from "../pages/bg/DivingActivities.jpg";
 import { Button, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -19,7 +19,7 @@ const LeftContainer: React.FC = () => {
         {/* *************************diving-activities heading start**********************************  */}
         <div
           style={{
-            // border: "1px solid black",
+            // border: "1px solid rgb(203, 199, 199)",
             position: "absolute",
             borderRadius: "0 16px 16px 16px",
             backgroundColor: "#fff",
@@ -32,7 +32,7 @@ const LeftContainer: React.FC = () => {
               border: "1px solid rgb(203, 199, 199)",
               borderRadius: "16px",
               margin: "10px",
-              padding: "10px 20px",
+              padding: "10px 30px",
               fontSize: "16px",
             }}
           >
@@ -46,7 +46,7 @@ const LeftContainer: React.FC = () => {
           width="100%"
           src={divingActivities}
           alt="divingActivitiesImg"
-          style={{ borderTopRightRadius: "5%" }}
+          // style={{ borderTopRightRadius: "5%" }}
         />
         {/* ********************diving-activitiesImage end*************************  */}
         {/* Dive-in heading start */}
@@ -69,11 +69,12 @@ const LeftContainer: React.FC = () => {
         {/* *********************************back-btn start******************************  */}
         <div
           style={{
-            // border: "1px solid black",
+            border: "1px solid rgb(203, 199, 199)",
             position: "absolute",
-            display: "flex",
-            bottom: "18px",
+            bottom: "30px",
+            left: "10px",
             padding: "10px",
+            margin: "10px 10px 0 0",
             borderRadius: "18px 18px 18px 0",
             backgroundColor: "#fff",
           }}
@@ -86,7 +87,7 @@ const LeftContainer: React.FC = () => {
               backgroundColor: "#fff",
               color: "black",
               borderRadius: "10px",
-              fontSize: "32px",
+              padding: "10px",
             }}
           >
             <ArrowBackIcon />
@@ -97,11 +98,11 @@ const LeftContainer: React.FC = () => {
         {/* *********************************forward-btn start***********************************  */}
         <div
           style={{
-            // border: "1px solid black",
+            border: "1px solid rgb(203, 199, 199)",
             position: "absolute",
-            display: "flex",
             bottom: "18px",
             right: "18px",
+            margin: "10px",
             padding: "10px",
             borderRadius: "18px 18px 0 18px",
             backgroundColor: "#fff",
