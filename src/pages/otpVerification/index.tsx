@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "../index.css";
-import LeftContainer from "../components/LeftContainer";
-import DiveBuddiesHead from "../components/DiveBuddiesHead";
+import "../../index.css";
+import Tutorial from "../../components/Tutorial";
+import Title from "../../components/Title";
+import { useNavigate } from "react-router-dom";
 
 interface OtpVerificationProps {
   email: string;
@@ -19,6 +20,7 @@ interface OtpVerificationProps {
 
 const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
   const email = sessionStorage.getItem("email");
+  const navigate = useNavigate();
 
   console.log("my email ::: ", email);
   const formik = useFormik({
@@ -47,7 +49,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
         }}
       >
         {/* left-container component  */}
-        <LeftContainer />
+        <Tutorial />
 
         {/* ************************right-container start**************************  */}
         <div
@@ -57,8 +59,8 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
             margin: "50px",
           }}
         >
-          {/* DiveBuddiesHead Component */}
-          <DiveBuddiesHead />
+          {/* DiveBuddiesTitle Component */}
+          <Title />
 
           <Typography variant="h6" gutterBottom align="left">
             OTP Verification
@@ -136,6 +138,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
 
               {/* Verify-btn start  */}
               <Button
+                onClick={() => {
+                  navigate("/resetPassword");
+                }}
                 type="submit"
                 variant="contained"
                 style={{

@@ -7,13 +7,13 @@ import {
   Typography,
   Link,
 } from "@mui/material";
-import "../index.css";
+import "../../index.css";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import LeftContainer from "../components/LeftContainer";
-import DiveBuddiesHead from "../components/DiveBuddiesHead";
+import Tutorial from "../../components/Tutorial";
+import Title from "../../components/Title";
 
 type Props = {
   setEmail: (email: string) => void;
@@ -33,7 +33,7 @@ const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
     }),
     onSubmit: (values) => {
       console.log("Submitting email:", values.email);
-      // setEmail(values.email);
+      setEmail(values.email);
       sessionStorage.setItem("email", values.email);
 
       navigate("/otpVerification");
@@ -53,7 +53,7 @@ const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
         }}
       >
         {/* left-container  */}
-        <LeftContainer />
+        <Tutorial />
 
         {/* ************************right-container start**************************  */}
         <div
@@ -63,8 +63,8 @@ const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
             margin: "50px",
           }}
         >
-          {/* DiveBuddiesHead Component */}
-          <DiveBuddiesHead />
+          {/* DiveBuddiesTitle Component */}
+          <Title />
 
           {/* ******************forgot-password heading start*******************  */}
           <Typography
@@ -83,15 +83,16 @@ const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
           {/* ******************forgot-password heading end******************  */}
 
           {/* ****************************reset password link start*******************************  */}
-          <Typography variant="h6" gutterBottom align="left">
-            <Link href="/resetPassword" underline="hover" variant="body2">
-              You can reset your password here
-            </Link>
+          <Typography variant="body2" gutterBottom align="left">
+            You can reset your password here
           </Typography>
           {/* ****************************reset password link end*******************************  */}
 
           {/* ********************************form-section start********************************  */}
-          <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
+          <form
+            onSubmit={formik.handleSubmit}
+            style={{ width: "60vh", marginTop: "30px" }}
+          >
             {/* ***************************form-field for email start************************* */}
             <div
               style={

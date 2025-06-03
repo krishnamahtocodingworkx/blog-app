@@ -11,12 +11,14 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import "../index.css";
-import LeftContainer from "../components/LeftContainer";
-import DiveBuddiesHead from "../components/DiveBuddiesHead";
+import "../../index.css";
+import LeftContainer from "../../components/Tutorial";
+import DiveBuddiesHead from "../../components/Title";
+import { useNavigate } from "react-router-dom";
 
 const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -204,6 +206,9 @@ const ResetPassword: React.FC = () => {
               }}
             >
               <Button
+                onClick={() => {
+                  navigate("/home");
+                }}
                 type="submit"
                 variant="contained"
                 style={{

@@ -1,9 +1,9 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Login from "./pages/Login";
-import ForgotPassword from "./pages/ForgotPassword";
-import OtpVerification from "./pages/OtpVerification";
-import ResetPassword from "./pages/ResetPassword";
+import Login from "./pages/login";
+import ForgotPassword from "./pages/forgotPassword";
+import OtpVerification from "./pages/otpVerification";
+import ResetPassword from "./pages/resetPassword";
 import React from "react";
 
 const App: React.FC = () => {

@@ -1,9 +1,9 @@
-import divingActivities from "../assets/images/DivingActivities.jpg";
+import bgImage from "../assets/images/bg.jpg";
 import { Button, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const LeftContainer: React.FC = () => {
+const Tutorial: React.FC = () => {
   return (
     <>
       {/* ***************************left-container start**********************  */}
@@ -41,15 +41,15 @@ const LeftContainer: React.FC = () => {
         </div>
         {/* ****************************diving-activities heading end*************************************  */}
 
-        {/* ********************diving-activitiesImage start*************************  */}
+        {/* ********************backgroundImage start*************************  */}
         <img
           width="100%"
-          src={divingActivities}
-          alt="divingActivitiesImg"
+          src={bgImage}
+          alt="bgImage"
           // style={{ borderTopRightRadius: "5%" }}
         />
-        {/* ********************diving-activitiesImage end*************************  */}
-        {/* Dive-in heading start */}
+        {/* ********************backgroundImage end*************************  */}
+        {/* headingOfBgImage start */}
         <Typography
           variant="h4"
           gutterBottom
@@ -64,7 +64,7 @@ const LeftContainer: React.FC = () => {
         >
           Ocean Adventures Await-Dive In!
         </Typography>
-        {/* Dive-in heading end */}
+        {/*  headingOfBgImage end */}
 
         {/* *********************************back-btn start******************************  */}
         <div
@@ -125,4 +125,4 @@ const LeftContainer: React.FC = () => {
     </>
   );
 };
-export default LeftContainer;
+export default Tutorial;

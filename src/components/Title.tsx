@@ -1,6 +1,6 @@
-import vectorImg from "../assets/images/Vector.png";
+import logo from "../assets/images/logo.png";
 import { Typography } from "@mui/material";
-const DiveBuddiesHead: React.FC = () => {
+const Title: React.FC = () => {
   return (
     <>
       {/* DiveBuddies image and heading  */}
@@ -18,11 +18,11 @@ const DiveBuddiesHead: React.FC = () => {
           gap: "10px",
         }}
       >
-        <img width="50" src={vectorImg} alt="vectorImg" />
+        <img width="50" src={logo} alt="logo" />
         DiveBuddies
       </Typography>
     </>
   );
 };
 
-export default DiveBuddiesHead;
+export default Title;
