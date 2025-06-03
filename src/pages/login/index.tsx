@@ -40,6 +40,7 @@ const Login: React.FC = () => {
     }),
     onSubmit: (values) => {
       console.log("Logging in with", values);
+      navigate("/home");
     },
   });
 
@@ -190,9 +191,6 @@ const Login: React.FC = () => {
               </Link>
               {/* login-btn  */}
               <Button
-                onClick={() => {
-                  navigate("/home");
-                }}
                 type="submit"
                 variant="contained"
                 style={{
