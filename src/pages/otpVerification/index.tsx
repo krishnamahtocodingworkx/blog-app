@@ -34,6 +34,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
     }),
     onSubmit: (values) => {
       console.log("Submitted OTP:", values.otp);
+      navigate("/resetPassword");
     },
   });
 
@@ -138,9 +139,6 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
 
               {/* Verify-btn start  */}
               <Button
-                onClick={() => {
-                  navigate("/resetPassword");
-                }}
                 type="submit"
                 variant="contained"
                 style={{
