@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
+import { setEmail } from "../../redux/slices/authSlice";
 import {
   CssBaseline,
   Container,
@@ -15,12 +17,11 @@ import * as Yup from "yup";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
 
-type Props = {
-  setEmail: (email: string) => void;
-};
+type Props = {};
 
-const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
+const ForgotPassword: React.FC<Props> = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -33,13 +34,11 @@ const ForgotPassword: React.FC<Props> = ({ setEmail }) => {
     }),
     onSubmit: (values) => {
       console.log("Submitting email:", values.email);
-      setEmail(values.email);
-      sessionStorage.setItem("email", values.email);
-
+      // sessionStorage.setItem("email", values.email);
+      dispatch(setEmail(values.email));
       navigate("/otpVerification");
     },
   });
-
   return (
     <React.Fragment>
       <CssBaseline />

@@ -8,16 +8,13 @@ import React from "react";
 import Home from "./pages/home";
 
 const App: React.FC = () => {
-  const [email, setEmail] = React.useState<string>("");
+  const [email] = React.useState<string>("");
   return (
     <>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          <Route
-            path="/forgotPassword"
-            element={<ForgotPassword setEmail={setEmail} />}
-          ></Route>
+          <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
           <Route
             path="/otpVerification"
             element={<OtpVerification email={email} />}

@@ -13,13 +13,16 @@ import "../../index.css";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface OtpVerificationProps {
   email: string;
 }
 
 const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
-  const email = sessionStorage.getItem("email");
+  // const email = sessionStorage.getItem("email");
+  const email = useSelector((state: RootState) => state.auth.email);
   const navigate = useNavigate();
 
   console.log("my email ::: ", email);
@@ -72,7 +75,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
           </Typography>
 
           <Typography variant="body1" gutterBottom align="left">
-            {props.email}
+            {email}
           </Typography>
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
