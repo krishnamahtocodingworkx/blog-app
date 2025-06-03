@@ -39,6 +39,7 @@ const ResetPassword: React.FC = () => {
     }),
     onSubmit: (values) => {
       console.log("Resetting password with", values.password);
+      navigate("/");
     },
   });
 
@@ -206,9 +207,6 @@ const ResetPassword: React.FC = () => {
               }}
             >
               <Button
-                onClick={() => {
-                  navigate("/home");
-                }}
                 type="submit"
                 variant="contained"
                 style={{
