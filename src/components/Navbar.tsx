@@ -11,6 +11,7 @@ import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import logo from "../assets/images/logo.png";
 import dp from "../assets/images/dp.jpg";
+import { Link } from "react-router-dom";
 
 const user = {
   name: "Mukul Karnwal",
@@ -52,6 +53,62 @@ function Navbar() {
           <img width="50" src={logo} alt="logo" />
           DiveBuddies
         </Typography>
+
+        {/* Navigation Links */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mr: 3 }}>
+          <Typography
+            component={Link}
+            to="/home"
+            sx={{
+              textDecoration: "none",
+              color: "text.primary",
+              fontWeight: 500,
+              mx: 1,
+              "&:hover": { color: "primary.main" },
+            }}
+          >
+            Home
+          </Typography>
+          <Typography
+            component={Link}
+            to="/about"
+            sx={{
+              textDecoration: "none",
+              color: "text.primary",
+              fontWeight: 500,
+              mx: 1,
+              "&:hover": { color: "primary.main" },
+            }}
+          >
+            About
+          </Typography>
+          <Typography
+            component={Link}
+            to="/contact"
+            sx={{
+              textDecoration: "none",
+              color: "text.primary",
+              fontWeight: 500,
+              mx: 1,
+              "&:hover": { color: "primary.main" },
+            }}
+          >
+            Contact
+          </Typography>
+          <Typography
+            component={Link}
+            to="/blogs"
+            sx={{
+              textDecoration: "none",
+              color: "text.primary",
+              fontWeight: 500,
+              mx: 1,
+              "&:hover": { color: "primary.main" },
+            }}
+          >
+            Blogs
+          </Typography>
+        </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
           <Box

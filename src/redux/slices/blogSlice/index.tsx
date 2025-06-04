@@ -1,22 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export interface Blog {
+  id: string;
+  title: string;
+  image: string;
+}
+
 interface BlogState {
-  blog: string;
+  blogs: Blog[];
 }
 
 const initialState: BlogState = {
-  blog: "",
+  blogs: [],
 };
 
 const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    setBlog(state, action: PayloadAction<string>) {
-      state.blog = action.payload;
+    setBlogs(state, action: PayloadAction<Blog[]>) {
+      state.blogs = action.payload;
+    },
+    addBlog(state, action: PayloadAction<Blog>) {
+      state.blogs.push(action.payload);
     },
   },
 });
 
-export const { setBlog } = blogSlice.actions;
+export const { setBlogs, addBlog } = blogSlice.actions;
 export default blogSlice.reducer;

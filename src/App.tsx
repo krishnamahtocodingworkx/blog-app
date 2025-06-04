@@ -6,6 +6,7 @@ import OtpVerification from "./pages/otpVerification";
 import ResetPassword from "./pages/resetPassword";
 import React from "react";
 import Home from "./pages/home";
+import Blogs from "./pages/blogs/Blogs";
 
 const App: React.FC = () => {
   const [email] = React.useState<string>("");
@@ -21,6 +22,7 @@ const App: React.FC = () => {
           ></Route>
           <Route path="/resetPassword" element={<ResetPassword />}></Route>
           <Route path="/home" element={<Home />}></Route>
+          <Route path="/blogs" element={<Blogs />}></Route>
         </Routes>
       </BrowserRouter>
     </>
