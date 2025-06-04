@@ -10,10 +10,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import logo from "../assets/images/logo.png";
+import dp from "../assets/images/dp.jpg";
 
 const user = {
   name: "Mukul Karnwal",
-  photo: "",
+  photo: { dp },
 };
 
 function Navbar() {
@@ -69,7 +70,7 @@ function Navbar() {
             onClick={handleMenuOpen}
           >
             <Avatar
-              src={user.photo}
+              src={user.photo.dp}
               alt={user.name}
               sx={{ width: 32, height: 32, mr: 1 }}
             />
