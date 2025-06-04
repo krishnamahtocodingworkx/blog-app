@@ -7,8 +7,9 @@ import {
   Button,
   TextField,
   Typography,
-  Link,
+  Link as MuiLink,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import "../../index.css";
 import { useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
@@ -36,7 +37,7 @@ const ForgotPassword: React.FC<Props> = () => {
       console.log("Submitting email:", values.email);
       // sessionStorage.setItem("email", values.email);
       dispatch(setEmail(values.email));
-      navigate("/otpVerification");
+      navigate("/otp-verification");
     },
   });
   return (
@@ -136,8 +137,9 @@ const ForgotPassword: React.FC<Props> = () => {
                 marginTop: "50px",
               }}
             >
-              <Link
-                href="/"
+              <MuiLink
+                component={RouterLink}
+                to="/"
                 underline="hover"
                 variant="body2"
                 style={{
@@ -147,7 +149,7 @@ const ForgotPassword: React.FC<Props> = () => {
               >
                 <KeyboardArrowLeftIcon />
                 Back to Log in
-              </Link>
+              </MuiLink>
               {/* sendOTP-btn  */}
               <Button
                 type="submit"

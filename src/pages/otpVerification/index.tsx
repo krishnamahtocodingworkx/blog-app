@@ -7,6 +7,7 @@ import {
   Typography,
   Link,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
@@ -37,7 +38,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
     }),
     onSubmit: (values) => {
       console.log("Submitted OTP:", values.otp);
-      navigate("/resetPassword");
+      navigate("/reset-password");
     },
   });
 
@@ -75,7 +76,7 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
           </Typography>
 
           <Typography variant="body1" gutterBottom align="left">
-            {email}
+            {props.email}
           </Typography>
           {/* ********************************form-section start********************************  */}
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
@@ -125,9 +126,9 @@ const OtpVerification: React.FC<OtpVerificationProps> = (props) => {
                 marginTop: "50px",
               }}
             >
-              {/* Resend OTP link start */}
               <Link
-                href="/OtpVerification"
+                component={RouterLink}
+                to="/otp-verification"
                 underline="hover"
                 variant="body2"
                 style={{

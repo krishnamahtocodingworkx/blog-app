@@ -12,9 +12,9 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
-import LeftContainer from "../../components/Tutorial";
-import DiveBuddiesHead from "../../components/Title";
 import { useNavigate } from "react-router-dom";
+import Tutorial from "../../components/Tutorial";
+import Title from "../../components/Title";
 
 const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -56,7 +56,7 @@ const ResetPassword: React.FC = () => {
         }}
       >
         {/* left-container component */}
-        <LeftContainer />
+        <Tutorial />
 
         {/* ************************right-container start**************************  */}
         <div
@@ -67,7 +67,7 @@ const ResetPassword: React.FC = () => {
           }}
         >
           {/* DiveBuddiesHead Component*/}
-          <DiveBuddiesHead />
+          <Title />
 
           {/* **************************resetPassword heading start**************************/}
           <Typography

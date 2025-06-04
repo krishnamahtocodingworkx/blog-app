@@ -7,8 +7,9 @@ import {
   Typography,
   InputAdornment,
   IconButton,
-  Link,
+  Link as MuiLink,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -180,15 +181,15 @@ const Login: React.FC = () => {
                 marginTop: "50px",
               }}
             >
-              {/* forgot-password link  */}
-              <Link
-                href="/forgotPassword"
+              <MuiLink
+                component={RouterLink}
+                to="/forgot-password"
                 underline="hover"
                 variant="body2"
                 style={{ padding: "8px" }}
               >
                 Forgot password?
-              </Link>
+              </MuiLink>
               {/* login-btn  */}
               <Button
                 type="submit"

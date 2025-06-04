@@ -15,12 +15,12 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Login />}></Route>
-          <Route path="/forgotPassword" element={<ForgotPassword />}></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
           <Route
-            path="/otpVerification"
+            path="/otp-verification"
             element={<OtpVerification email={email} />}
           ></Route>
-          <Route path="/resetPassword" element={<ResetPassword />}></Route>
+          <Route path="/reset-password" element={<ResetPassword />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/blogs" element={<Blogs />}></Route>
         </Routes>
