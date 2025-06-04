@@ -1,4 +1,4 @@
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo.jpg";
 import { Typography } from "@mui/material";
 const Title: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const Title: React.FC = () => {
         }}
       >
         <img width="50" src={logo} alt="logo" />
-        DiveBuddies
+        Blog Book
       </Typography>
     </>
   );

@@ -22,10 +22,10 @@ const CardsItem: React.FC = () => {
       }}
     >
       {blogs.map((blog) => (
-        <Card key={blog.id} sx={{ width: 320, borderRadius: 3, boxShadow: 3 }}>
+        <Card key={blog.id} sx={{ width: 390, borderRadius: 3, boxShadow: 3 }}>
           <CardMedia
             component="img"
-            height="180"
+            height="170"
             image={blog.image}
             alt={blog.title}
           />

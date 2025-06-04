@@ -9,7 +9,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import logo from "../assets/images/logo.png";
+import logo from "../assets/images/logo.jpg";
 import dp from "../assets/images/dp.jpg";
 import { Link } from "react-router-dom";
 
@@ -47,11 +47,12 @@ function Navbar() {
             flexGrow: 1,
             fontWeight: 700,
             display: "flex",
+            alignItems: "center",
             gap: "10px",
           }}
         >
           <img width="50" src={logo} alt="logo" />
-          DiveBuddies
+          Blog Book
         </Typography>
 
         {/* Navigation Links */}
