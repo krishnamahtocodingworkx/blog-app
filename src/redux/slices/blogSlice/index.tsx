@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Blog {
-  id: string;
+  id: number;
   title: string;
-  image: string;
+  coverImageUrl: string;
 }
 
 interface BlogState {

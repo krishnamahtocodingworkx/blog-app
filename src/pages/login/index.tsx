@@ -17,10 +17,13 @@ import "../../index.css";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -36,10 +39,11 @@ const Login: React.FC = () => {
         .email("Invalid email address")
         .required("Email is required"),
       password: Yup.string()
-        .min(6, "Password must be at least 6 characters")
+        .min(8, "Password must be at least 8 characters")
         .required("Password is required"),
     }),
     onSubmit: (values) => {
+      dispatch(login(values.email));
       console.log("Logging in with", values);
       navigate("/home");
     },
@@ -199,6 +203,7 @@ const Login: React.FC = () => {
                   padding: "8px 50px",
                   borderRadius: "10px",
                 }}
+                disabled={!(formik.isValid && formik.dirty)}
               >
                 Login
               </Button>

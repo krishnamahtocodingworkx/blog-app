@@ -4,19 +4,16 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import PlaceIcon from "@mui/icons-material/Place";
-import LocationCityIcon from "@mui/icons-material/LocationCity";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { useTheme } from "@mui/material/styles";
+import ListAltIcon from "@mui/icons-material/ListAlt";
+import ViewModuleIcon from "@mui/icons-material/ViewModule";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import { Link } from "react-router-dom";
 
 const menuItems = [
-  { icon: <DashboardIcon />, text: "Dashboard" },
-  { icon: <PeopleIcon />, text: "Users" },
-  { icon: <PlaceIcon />, text: "Sites" },
-  { icon: <LocationCityIcon />, text: "Cities" },
-  { icon: <SettingsIcon />, text: "Settings" },
+  { icon: <ListAltIcon />, text: "BlogList", path: "/blog-list" },
+  { icon: <ViewModuleIcon />, text: "BlogCards", path: "/blog-cards" },
+  { icon: <AddBoxIcon />, text: "AddBlog", path: "/add-blog" },
 ];
 
 const Menu: React.FC = () => {
@@ -38,6 +35,8 @@ const Menu: React.FC = () => {
         {menuItems.map((item) => (
           <ListItemButton
             key={item.text}
+            component={Link}
+            to={item.path}
             sx={{
               borderRadius: 2,
               mb: 1,

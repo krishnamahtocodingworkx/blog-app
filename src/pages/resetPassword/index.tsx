@@ -13,10 +13,13 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
 
 const ResetPassword: React.FC = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
 
@@ -38,8 +41,11 @@ const ResetPassword: React.FC = () => {
         .oneOf([Yup.ref("password")], "Passwords must match"),
     }),
     onSubmit: (values) => {
-      console.log("Resetting password with", values.password);
-      navigate("/home");
+      if (values.password === values.confirmPassword) {
+        console.log("Resetting password with", values.password);
+        dispatch(login(""));
+        navigate("/home");
+      }
     },
   });
 
@@ -213,6 +219,7 @@ const ResetPassword: React.FC = () => {
                   padding: "8px 50px",
                   borderRadius: "10px",
                 }}
+                disabled={!(formik.isValid && formik.dirty)}
               >
                 Save
               </Button>

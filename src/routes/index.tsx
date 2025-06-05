@@ -1,5 +1,76 @@
-function Demo() {
-  return <div></div>;
-}
+import React from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import Login from "../pages/login";
+import ForgotPassword from "../pages/forgotPassword";
+import OtpVerification from "../pages/otpVerification";
+import ResetPassword from "../pages/resetPassword";
+import Home from "../pages/home";
+import BlogCards from "../pages/blogCards";
+import AddBlog from "../components/AddBlog";
+import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
 
-export default Demo;
+const AppRoutes: React.FC = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/otp-verification"
+        element={
+          <PublicRoute>
+            <OtpVerification />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={
+          <PublicRoute>
+            <ResetPassword />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/home"
+        element={
+          <PrivateRoute>
+            <Home />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/blog-cards"
+        element={
+          <PrivateRoute>
+            <BlogCards />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/add-blog"
+        element={
+          <PrivateRoute>
+            <AddBlog />
+          </PrivateRoute>
+        }
+      />
+    </Routes>
+  </BrowserRouter>
+);
+
+export default AppRoutes;

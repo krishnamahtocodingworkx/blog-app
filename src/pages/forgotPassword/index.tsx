@@ -159,6 +159,7 @@ const ForgotPassword: React.FC<Props> = () => {
                   padding: "8px 50px",
                   borderRadius: "10px",
                 }}
+                disabled={!(formik.isValid && formik.dirty)}
               >
                 Send OTP
               </Button>

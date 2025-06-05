@@ -2,8 +2,6 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -70,59 +68,9 @@ function Navbar() {
           >
             Home
           </Typography>
-          <Typography
-            component={Link}
-            to="/about"
-            sx={{
-              textDecoration: "none",
-              color: "text.primary",
-              fontWeight: 500,
-              mx: 1,
-              "&:hover": { color: "primary.main" },
-            }}
-          >
-            About
-          </Typography>
-          <Typography
-            component={Link}
-            to="/contact"
-            sx={{
-              textDecoration: "none",
-              color: "text.primary",
-              fontWeight: 500,
-              mx: 1,
-              "&:hover": { color: "primary.main" },
-            }}
-          >
-            Contact
-          </Typography>
-          <Typography
-            component={Link}
-            to="/blogs"
-            sx={{
-              textDecoration: "none",
-              color: "text.primary",
-              fontWeight: 500,
-              mx: 1,
-              "&:hover": { color: "primary.main" },
-            }}
-          >
-            Blogs
-          </Typography>
         </Box>
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-          <Box
-            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
-          >
-            <IconButton color="inherit">
-              <NotificationsIcon />
-            </IconButton>
-            <Typography variant="body1" color="textPrimary">
-              Notification
-            </Typography>
-          </Box>
-
           <Box
             sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
             onClick={handleMenuOpen}
