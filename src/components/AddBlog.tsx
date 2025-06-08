@@ -12,6 +12,7 @@ import {
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CloseIcon from "@mui/icons-material/Close";
 import Navbar from "./Navbar";
+import Menu from "./Menu";
 import { useDispatch } from "react-redux";
 import { addBlog } from "../redux/slices/blogSlice";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   coverImage: Yup.mixed().required("Cover image is required"),
   description: Yup.string()
-    .min(200, "Description must be 200 characters")
+    .min(50, "Description must be 50 characters")
     .required("Description is required"),
 });
 
@@ -97,276 +98,288 @@ const AddBlog: React.FC = () => {
   };
 
   return (
-    <>
+    <Box sx={{ minHeight: "100vh" }}>
       <Navbar />
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          // minHeight: "calc(100vh - 64px)",
-        }}
-      >
-        <Paper
-          elevation={3}
+      <Box sx={{ display: "flex" }}>
+        <Menu />
+        <Box
           sx={{
-            p: 4,
-            width: 900,
+            flex: 1,
             display: "flex",
-            flexDirection: "column",
+            justifyContent: "center",
             alignItems: "flex-start",
+            pt: 0.5,
+            minHeight: "calc(100vh - 64px)",
           }}
         >
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "bold", mb: 3, textAlign: "left", width: "100%" }}
+          <Paper
+            elevation={3}
+            sx={{
+              p: 4,
+              width: 900,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              bgcolor: "#fff",
+            }}
           >
-            Create New Blog
-          </Typography>
-          <FormikProvider value={formik}>
-            <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
-              {/* Title */}
-              <Box>
-                <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                  Title{" "}
-                  <span style={{ color: "red", fontWeight: "bold" }}>*</span>
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="title"
-                  value={formik.values.title}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={formik.touched.title && Boolean(formik.errors.title)}
-                  helperText={formik.touched.title && formik.errors.title}
-                  required
-                />
-              </Box>
-              {/* Cover Image */}
-              <Box>
-                <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                  Cover Image{" "}
-                  <span style={{ color: "red", fontWeight: "bold" }}>*</span>
-                </Typography>
-                <Button
-                  variant="outlined"
-                  component="label"
-                  startIcon={<AddPhotoAlternateIcon />}
-                  sx={{
-                    borderRadius: 2,
-                    textTransform: "none",
-                    mb: 1,
-                  }}
-                >
-                  Choose file to upload
-                  <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onChange={handleCoverImageChange}
-                  />
-                </Button>
-                {formik.touched.coverImage && formik.errors.coverImage && (
-                  <Typography color="error" variant="caption">
-                    {formik.errors.coverImage as string}
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                mb: 3,
+                textAlign: "left",
+                width: "100%",
+              }}
+            >
+              Create New Blog
+            </Typography>
+            <FormikProvider value={formik}>
+              <form onSubmit={formik.handleSubmit} style={{ width: "100%" }}>
+                {/* Title */}
+                <Box>
+                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                    Title{" "}
+                    <span style={{ color: "red", fontWeight: "bold" }}>*</span>
                   </Typography>
-                )}
-                {coverImagePreview && (
-                  <Box sx={{ mt: 1, mb: 1 }}>
-                    <img
-                      src={coverImagePreview}
-                      alt="Cover Preview"
-                      style={{
-                        width: "100%",
-                        maxWidth: 250,
-                        borderRadius: 8,
-                        objectFit: "cover",
-                      }}
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    name="title"
+                    value={formik.values.title}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={formik.touched.title && Boolean(formik.errors.title)}
+                    helperText={formik.touched.title && formik.errors.title}
+                    required
+                  />
+                </Box>
+                {/* Cover Image */}
+                <Box>
+                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                    Cover Image{" "}
+                    <span style={{ color: "red", fontWeight: "bold" }}>*</span>
+                  </Typography>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    startIcon={<AddPhotoAlternateIcon />}
+                    sx={{
+                      borderRadius: 2,
+                      textTransform: "none",
+                      mb: 1,
+                    }}
+                  >
+                    Choose file to upload
+                    <input
+                      type="file"
+                      accept="image/*"
+                      hidden
+                      onChange={handleCoverImageChange}
                     />
-                  </Box>
-                )}
-              </Box>
-              {/* Description */}
-              <Box>
-                <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                  Description{" "}
-                  <span style={{ color: "red", fontWeight: "bold" }}>*</span>
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  multiline
-                  minRows={4}
-                  name="description"
-                  value={formik.values.description}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.description &&
-                    Boolean(formik.errors.description)
-                  }
-                  helperText={
-                    formik.touched.description && formik.errors.description
-                  }
-                  required
-                />
-              </Box>
-              {/* Author Name */}
-              <Box>
-                <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                  Author Name
-                </Typography>
-                <TextField
-                  variant="outlined"
-                  fullWidth
-                  name="author"
-                  value={formik.values.author}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </Box>
-              {/* Sections */}
-              <FieldArray
-                name="sections"
-                render={(arrayHelpers) => (
-                  <Box>
-                    <Typography sx={{ fontWeight: 500, mb: 1 }}>
-                      Sections
+                  </Button>
+                  {formik.touched.coverImage && formik.errors.coverImage && (
+                    <Typography color="error" variant="caption">
+                      {formik.errors.coverImage as string}
                     </Typography>
-                    {formik.values.sections.map((section, idx) => (
-                      <Box
-                        key={idx}
+                  )}
+                  {coverImagePreview && (
+                    <Box sx={{ mt: 1, mb: 1 }}>
+                      <img
+                        src={coverImagePreview}
+                        alt="Cover Preview"
+                        style={{
+                          width: "100%",
+                          maxWidth: 250,
+                          borderRadius: 8,
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Box>
+                {/* Description */}
+                <Box>
+                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                    Description{" "}
+                    <span style={{ color: "red", fontWeight: "bold" }}>*</span>
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    multiline
+                    minRows={4}
+                    name="description"
+                    value={formik.values.description}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.description &&
+                      Boolean(formik.errors.description)
+                    }
+                    helperText={
+                      formik.touched.description && formik.errors.description
+                    }
+                    required
+                  />
+                </Box>
+                {/* Author Name */}
+                <Box>
+                  <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                    Author Name
+                  </Typography>
+                  <TextField
+                    variant="outlined"
+                    fullWidth
+                    name="author"
+                    value={formik.values.author}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                </Box>
+                {/* Sections */}
+                <FieldArray
+                  name="sections"
+                  render={(arrayHelpers) => (
+                    <Box>
+                      <Typography sx={{ fontWeight: 500, mb: 1 }}>
+                        Sections
+                      </Typography>
+                      {formik.values.sections.map((section, idx) => (
+                        <Box
+                          key={idx}
+                          sx={{
+                            border: "1px solid #e0e0e0",
+                            borderRadius: 2,
+                            p: 2,
+                            mb: 2,
+                            position: "relative",
+                          }}
+                        >
+                          <IconButton
+                            size="small"
+                            sx={{
+                              position: "absolute",
+                              top: 8,
+                              right: 8,
+                              color: "red",
+                            }}
+                            onClick={() => arrayHelpers.remove(idx)}
+                            disabled={formik.values.sections.length === 0}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                          <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                            Heading
+                          </Typography>
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            name={`sections[${idx}].heading`}
+                            value={section.heading}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                          />
+                          <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
+                            Content
+                          </Typography>
+                          <TextField
+                            variant="outlined"
+                            fullWidth
+                            multiline
+                            minRows={3}
+                            name={`sections[${idx}].content`}
+                            value={section.content}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                          />
+                          <Typography sx={{ fontWeight: 500, mb: 0.5, mt: 2 }}>
+                            Section Image
+                          </Typography>
+                          <Button
+                            variant="outlined"
+                            component="label"
+                            startIcon={<AddPhotoAlternateIcon />}
+                            sx={{
+                              borderRadius: 2,
+                              textTransform: "none",
+                              mb: 1,
+                              bgcolor: "#fff",
+                            }}
+                          >
+                            Choose file to upload
+                            <input
+                              type="file"
+                              accept="image/*"
+                              hidden
+                              onChange={(e) => handleSectionImageChange(e, idx)}
+                            />
+                          </Button>
+                          {sectionImagePreviews[idx] && (
+                            <Box sx={{ mt: 1 }}>
+                              <img
+                                src={sectionImagePreviews[idx]}
+                                alt="Section Preview"
+                                style={{
+                                  width: "100%",
+                                  maxWidth: 200,
+                                  borderRadius: 8,
+                                  objectFit: "cover",
+                                }}
+                              />
+                            </Box>
+                          )}
+                        </Box>
+                      ))}
+                      <Button
+                        variant="outlined"
+                        onClick={() =>
+                          arrayHelpers.push({
+                            heading: "",
+                            content: "",
+                            image: null,
+                            imagePreview: "",
+                          })
+                        }
                         sx={{
-                          border: "1px solid #e0e0e0",
                           borderRadius: 2,
-                          p: 2,
-                          mb: 2,
-                          position: "relative",
+                          textTransform: "none",
+                          mt: 1,
+                          bgcolor: "#1976d2",
+                          color: "#fff",
+                          "&:hover": {
+                            bgcolor: "#1565c0",
+                          },
                         }}
                       >
-                        <IconButton
-                          size="small"
-                          sx={{
-                            position: "absolute",
-                            top: 8,
-                            right: 8,
-                            color: "red",
-                          }}
-                          onClick={() => arrayHelpers.remove(idx)}
-                          disabled={formik.values.sections.length === 0}
-                        >
-                          <CloseIcon />
-                        </IconButton>
-                        <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                          Heading
-                        </Typography>
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          name={`sections[${idx}].heading`}
-                          value={section.heading}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        <Typography sx={{ fontWeight: 500, mb: 0.5 }}>
-                          Content
-                        </Typography>
-                        <TextField
-                          variant="outlined"
-                          fullWidth
-                          multiline
-                          minRows={3}
-                          name={`sections[${idx}].content`}
-                          value={section.content}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                        />
-                        <Typography sx={{ fontWeight: 500, mb: 0.5, mt: 2 }}>
-                          Section Image
-                        </Typography>
-                        <Button
-                          variant="outlined"
-                          component="label"
-                          startIcon={<AddPhotoAlternateIcon />}
-                          sx={{
-                            borderRadius: 2,
-                            textTransform: "none",
-                            mb: 1,
-                            bgcolor: "#fff",
-                          }}
-                        >
-                          Choose file to upload
-                          <input
-                            type="file"
-                            accept="image/*"
-                            hidden
-                            onChange={(e) => handleSectionImageChange(e, idx)}
-                          />
-                        </Button>
-                        {sectionImagePreviews[idx] && (
-                          <Box sx={{ mt: 1 }}>
-                            <img
-                              src={sectionImagePreviews[idx]}
-                              alt="Section Preview"
-                              style={{
-                                width: "100%",
-                                maxWidth: 200,
-                                borderRadius: 8,
-                                objectFit: "cover",
-                              }}
-                            />
-                          </Box>
-                        )}
-                      </Box>
-                    ))}
-                    <Button
-                      variant="outlined"
-                      onClick={() =>
-                        arrayHelpers.push({
-                          heading: "",
-                          content: "",
-                          image: null,
-                          imagePreview: "",
-                        })
-                      }
-                      sx={{
-                        borderRadius: 2,
-                        textTransform: "none",
-                        mt: 1,
-                        bgcolor: "#1976d2",
-                        color: "#fff",
-                        "&:hover": {
-                          bgcolor: "#1565c0",
-                        },
-                      }}
-                    >
-                      + Add Section
-                    </Button>
-                  </Box>
-                )}
-              />
-              {/* Submit */}
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  mt: 2,
-                  borderRadius: 2,
-                  fontWeight: "bold",
-                  bgcolor: "green",
-                  color: "#fff",
-                  width: "15%",
-                  "&:hover": {
-                    bgcolor: "#388e3c",
-                  },
-                }}
-                disabled={!formik.isValid || !formik.dirty}
-              >
-                Submit
-              </Button>
-            </form>
-          </FormikProvider>
-        </Paper>
+                        + Add Section
+                      </Button>
+                    </Box>
+                  )}
+                />
+                {/* Submit */}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    mt: 2,
+                    borderRadius: 2,
+                    fontWeight: "bold",
+                    bgcolor: "green",
+                    color: "#fff",
+                    width: "15%",
+                    "&:hover": {
+                      bgcolor: "#388e3c",
+                    },
+                  }}
+                  disabled={!formik.isValid || !formik.dirty}
+                >
+                  Submit
+                </Button>
+              </form>
+            </FormikProvider>
+          </Paper>
+        </Box>
       </Box>
       <Snackbar
         open={openSnackbar}
@@ -378,7 +391,7 @@ const AddBlog: React.FC = () => {
           Blog Added Successfully
         </Alert>
       </Snackbar>
-    </>
+    </Box>
   );
 };
 

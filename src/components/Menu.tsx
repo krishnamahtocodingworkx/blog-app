@@ -8,7 +8,7 @@ import { useTheme } from "@mui/material/styles";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   { icon: <ListAltIcon />, text: "BlogList", path: "/blog-list" },
@@ -18,6 +18,7 @@ const menuItems = [
 
 const Menu: React.FC = () => {
   const theme = useTheme();
+  const location = useLocation();
 
   return (
     <Box
@@ -32,29 +33,44 @@ const Menu: React.FC = () => {
       }}
     >
       <List sx={{ flex: 1 }}>
-        {menuItems.map((item) => (
-          <ListItemButton
-            key={item.text}
-            component={Link}
-            to={item.path}
-            sx={{
-              borderRadius: 2,
-              mb: 1,
-              "&:hover": {
-                bgcolor: theme.palette.primary.main,
-                color: "#fff",
+        {menuItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <ListItemButton
+              key={item.text}
+              component={Link}
+              to={item.path}
+              sx={{
+                borderRadius: 2,
+                mb: 1,
+                bgcolor: isActive ? theme.palette.primary.main : "inherit",
+                color: isActive ? "#fff" : "inherit",
                 "& .MuiListItemIcon-root": {
-                  color: "#fff",
+                  color: isActive ? "#fff" : theme.palette.text.primary,
                 },
-              },
-            }}
-          >
-            <ListItemIcon sx={{ color: theme.palette.text.primary }}>
-              {item.icon}
-            </ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItemButton>
-        ))}
+                "& .MuiListItemText-primary": {
+                  fontWeight: isActive ? 700 : 400,
+                  textDecoration: isActive ? "underline" : "none",
+                  textUnderlineOffset: isActive ? "6px" : "none",
+                },
+                "&:hover": {
+                  bgcolor: theme.palette.primary.main,
+                  color: "#fff",
+                  "& .MuiListItemIcon-root": {
+                    color: "#fff",
+                  },
+                  "& .MuiListItemText-primary": {
+                    textDecoration: "underline",
+                    textUnderlineOffset: "6px",
+                  },
+                },
+              }}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} />
+            </ListItemButton>
+          );
+        })}
       </List>
     </Box>
   );
