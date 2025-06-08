@@ -7,6 +7,7 @@ import ResetPassword from "../pages/resetPassword";
 import Home from "../pages/home";
 import BlogCards from "../pages/blogCards";
 import AddBlog from "../components/AddBlog";
+import BlogList from "../components/BlogList";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 
@@ -66,6 +67,14 @@ const AppRoutes: React.FC = () => (
         element={
           <PrivateRoute>
             <AddBlog />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/blog-list"
+        element={
+          <PrivateRoute>
+            <BlogList />
           </PrivateRoute>
         }
       />

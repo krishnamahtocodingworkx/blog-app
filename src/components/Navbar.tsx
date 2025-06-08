@@ -9,7 +9,9 @@ import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import logo from "../assets/images/logo.jpg";
 import dp from "../assets/images/dp.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../redux/slices/authSlice";
 
 const user = {
   name: "Mukul Karnwal",
@@ -18,6 +20,8 @@ const user = {
 
 function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -25,6 +29,13 @@ function Navbar() {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logout());
+    localStorage.clear();
+    handleMenuClose();
+    navigate("/");
   };
 
   return (
@@ -93,7 +104,7 @@ function Navbar() {
             transformOrigin={{ vertical: "top", horizontal: "right" }}
           >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </Box>
       </Toolbar>

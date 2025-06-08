@@ -6,7 +6,7 @@ import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; 
 import logger from "redux-logger";
 
-// Combine reducers
+// reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   blog: blogReducer,

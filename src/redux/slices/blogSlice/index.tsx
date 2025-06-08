@@ -4,6 +4,8 @@ export interface Blog {
   id: number;
   title: string;
   coverImageUrl: string;
+  createdAt?: string;
+  location?: string;
 }
 
 interface BlogState {
@@ -24,8 +26,11 @@ const blogSlice = createSlice({
     addBlog(state, action: PayloadAction<Blog>) {
       state.blogs.push(action.payload);
     },
+    deleteBlog(state, action: PayloadAction<number>) {
+      state.blogs = state.blogs.filter((blog) => blog.id !== action.payload);
+    },
   },
 });
 
-export const { setBlogs, addBlog } = blogSlice.actions;
+export const { setBlogs, addBlog, deleteBlog } = blogSlice.actions;
 export default blogSlice.reducer;
