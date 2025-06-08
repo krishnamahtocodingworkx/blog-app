@@ -24,7 +24,11 @@ import Navbar from "./Navbar";
 import Menu from "./Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteBlog } from "../redux/slices/blogSlice";
+import { deleteBlog, updateBlog } from "../redux/slices/blogSlice";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
 
 const BlogList: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,6 +43,12 @@ const BlogList: React.FC = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [filterValue, setFilterValue] = useState("");
   const [appliedFilter, setAppliedFilter] = useState("");
+
+  // Edit dialog state
+  const [editOpen, setEditOpen] = useState(false);
+  const [editBlog, setEditBlog] = useState<any>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDate, setEditDate] = useState("");
 
   // Handle search and filter (both on blog title)
   const filteredBlogs = useMemo(() => {
@@ -65,13 +75,35 @@ const BlogList: React.FC = () => {
 
   // Actions
   const handleEdit = (blog: any) => {
-    alert(`Edit blog: ${blog.title}`);
+    setEditBlog(blog);
+    setEditTitle(blog.title);
+    setEditDate(blog.createdAt ? blog.createdAt.slice(0, 10) : "");
+    setEditOpen(true);
   };
 
   const handleDelete = (id: number) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
       dispatch(deleteBlog(id));
     }
+  };
+
+  const handleEditClose = () => {
+    setEditOpen(false);
+    setEditBlog(null);
+  };
+
+  const handleEditSave = () => {
+    if (editBlog) {
+      dispatch(
+        updateBlog({
+          ...editBlog,
+          title: editTitle,
+          createdAt: editDate,
+        })
+      );
+    }
+    setEditOpen(false);
+    setEditBlog(null);
   };
 
   // Table handlers
@@ -260,6 +292,38 @@ const BlogList: React.FC = () => {
           </Paper>
         </Box>
       </Box>
+      <Dialog open={editOpen} onClose={handleEditClose}>
+        <DialogTitle>Edit Blog</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Blog Title"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="Created Date"
+            type="date"
+            fullWidth
+            variant="outlined"
+            value={editDate}
+            onChange={(e) => setEditDate(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleEditSave} color="primary">
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
