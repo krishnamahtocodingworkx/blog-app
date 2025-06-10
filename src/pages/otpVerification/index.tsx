@@ -12,7 +12,8 @@ import { RootState } from "../../redux/store";
 import { loginApiServices } from "../../services/AxiosClient";
 
 const OtpVerification: React.FC = () => {
-  const { email } = useSelector((state: RootState) => state.auth);
+  const { email, id } = useSelector((state: RootState) => state.auth);
+  const storedId = id || sessionStorage.getItem("userId");
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -43,13 +44,18 @@ const OtpVerification: React.FC = () => {
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
+        if (!storedId) {
+          setErrors({ otp: "User ID not found. Please try again." });
+          return;
+        }
         const response = await loginApiServices.post(
           "/api/v1/user/verify-email",
           {
-            email,
+            id: storedId,
             otp: values.otp,
           }
         );
+        console.log("Verify Email Response:", response.data);
 
         if (response.data?.code === 200) {
           navigate("/reset-password");

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useDispatch } from "react-redux";
-import { setEmail } from "../../redux/slices/authSlice";
+import { setEmail, setId } from "../../redux/slices/authSlice";
+import { loginApiServices } from "../../services/AxiosClient";
 import {
   CssBaseline,
   Container,
@@ -33,11 +34,32 @@ const ForgotPassword: React.FC<Props> = () => {
         .email("Invalid email address")
         .required("Email is required"),
     }),
-    onSubmit: (values) => {
-      console.log("Submitting email:", values.email);
-      // sessionStorage.setItem("email", values.email);
-      dispatch(setEmail(values.email));
-      navigate("/otp-verification");
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        // resend-otp API with email only
+        const response = await loginApiServices.post(
+          "/api/v1/user/resend-otp",
+          {
+            email: values.email,
+          }
+        );
+
+        const id = response.data?.data?.id || response.data?.data?._id;
+        if (id) {
+          dispatch(setEmail(values.email));
+          dispatch(setId(id));
+          sessionStorage.setItem("userId", id);
+          navigate("/otp-verification");
+        } else {
+          setErrors({ email: response.data?.message || "Failed to send OTP." });
+        }
+      } catch (error: any) {
+        setErrors({
+          email: error?.response?.data?.message || "Failed to send OTP.",
+        });
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
   return (

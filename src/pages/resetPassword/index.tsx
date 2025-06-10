@@ -13,6 +13,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 // import { useDispatch } from "react-redux";
 // import { login } from "../../redux/slices/authSlice";
 import Tutorial from "../../components/Tutorial";
@@ -28,10 +30,12 @@ const ResetPassword: React.FC = () => {
     setShowPassword((prev) => !prev);
   };
 
+  const { id } = useSelector((state: RootState) => state.auth);
+  const storedId = id || sessionStorage.getItem("userId");
+
   const formik = useFormik({
     initialValues: {
       password: "",
-      confirmPassword: "",
     },
     validationSchema: Yup.object({
       password: Yup.string()
@@ -43,13 +47,18 @@ const ResetPassword: React.FC = () => {
     }),
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
+        if (!storedId) {
+          setErrors({ password: "User ID not found. Please try again." });
+          return;
+        }
         const response = await loginApiServices.post(
           "/api/v1/user/reset-password",
           {
+            id: storedId,
             password: values.password,
-            confirmPassword: values.confirmPassword,
           }
         );
+        console.log("Reset Password Response:", response.data);
         if (response.data && response.data.code === 200) {
           navigate("/home");
         } else {
@@ -186,17 +195,8 @@ const ResetPassword: React.FC = () => {
                 placeholder="Enter confirm password"
                 variant="outlined"
                 name="confirmPassword"
-                value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={
-                  formik.touched.confirmPassword &&
-                  Boolean(formik.errors.confirmPassword)
-                }
-                helperText={
-                  formik.touched.confirmPassword &&
-                  formik.errors.confirmPassword
-                }
                 slotProps={{
                   input: {
                     endAdornment: (

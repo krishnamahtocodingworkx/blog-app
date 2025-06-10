@@ -10,8 +10,10 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import logo from "../assets/images/logo.jpg";
 import dp from "../assets/images/dp.jpg";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
+import { RootState } from "../redux/store";
+import { loginApiServices } from "../services/AxiosClient";
 
 const user = {
   name: "Mukul Karnwal",
@@ -23,6 +25,10 @@ function Navbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const token =
+    useSelector((state: RootState) => state.auth.token) ||
+    localStorage.getItem("token");
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -31,11 +37,26 @@ function Navbar() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    localStorage.clear();
-    handleMenuClose();
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const response = await loginApiServices.post(
+        "/api/v1/user/logout",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Logout API response:", response.data);
+    } catch (error) {
+      console.error("Logout API error:", error);
+    } finally {
+      dispatch(logout());
+      localStorage.clear();
+      handleMenuClose();
+      navigate("/");
+    }
   };
 
   return (
