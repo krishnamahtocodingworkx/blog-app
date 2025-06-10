@@ -1,13 +1,6 @@
 import * as React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import {
-  CssBaseline,
-  Container,
-  Button,
-  Typography,
-  Link,
-} from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
+import { CssBaseline, Container, Button, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
@@ -19,16 +12,26 @@ import { RootState } from "../../redux/store";
 import { loginApiServices } from "../../services/AxiosClient";
 
 const OtpVerification: React.FC = () => {
-  // const email = sessionStorage.getItem("email");
   const { email } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+
   React.useEffect(() => {
     if (!email) {
       navigate("/forgot-password");
     }
   }, [email, navigate]);
 
-  console.log("my email ::: ", email);
+  const handleResendOtp = async () => {
+    try {
+      const response = await loginApiServices.post("/api/v1/user/resend-otp", {
+        email,
+      });
+      console.log("Resend OTP Response:", response.data);
+    } catch (error) {
+      console.error("Resend OTP Error:", error);
+    }
+  };
+
   const formik = useFormik({
     initialValues: {
       otp: "",
@@ -47,6 +50,7 @@ const OtpVerification: React.FC = () => {
             otp: values.otp,
           }
         );
+
         if (response.data?.code === 200) {
           navigate("/reset-password");
         } else {
@@ -69,24 +73,14 @@ const OtpVerification: React.FC = () => {
       <CssBaseline />
       <Container
         style={{
-          // border: "1px solid black",
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
         }}
       >
-        {/* left-container component  */}
         <Tutorial />
 
-        {/* ************************right-container start**************************  */}
-        <div
-          style={{
-            // border: "1px solid black",
-            padding: "20px",
-            margin: "50px",
-          }}
-        >
-          {/* DiveBuddiesTitle Component */}
+        <div style={{ padding: "20px", margin: "50px" }}>
           <Title />
 
           <Typography variant="h6" gutterBottom align="left">
@@ -100,14 +94,10 @@ const OtpVerification: React.FC = () => {
           <Typography variant="body1" gutterBottom align="left">
             {email}
           </Typography>
-          {/* ********************************form-section start********************************  */}
+
           <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
-            {/* **************************otp input section start********************** */}
             <MuiOtpInput
-              style={{
-                // border: "1px solid black",
-                marginTop: "30px",
-              }}
+              style={{ marginTop: "30px" }}
               value={formik.values.otp}
               onChange={(value) => formik.setFieldValue("otp", value)}
               onBlur={() => formik.setFieldTouched("otp", true)}
@@ -124,46 +114,25 @@ const OtpVerification: React.FC = () => {
                 },
               }}
             />
-            {/* **************************otp input section end********************** */}
 
-            {/* error section */}
             {formik.touched.otp && formik.errors.otp && (
-              <Typography
-                color="error"
-                variant="caption"
-                sx={{
-                  mt: 1,
-                }}
-              >
+              <Typography color="error" variant="caption" sx={{ mt: 1 }}>
                 {formik.errors.otp}
               </Typography>
             )}
-            {/* *******************************Resend OTP and Verify btn start******************************* */}
+
             <div
               style={{
-                // border: "1px solid black",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
                 marginTop: "50px",
               }}
             >
-              <Link
-                component={RouterLink}
-                to="/otp-verification"
-                underline="hover"
-                variant="body2"
-                style={{
-                  // border: "1px solid black",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
+              <Button variant="text" onClick={handleResendOtp}>
                 Resend OTP
-              </Link>
-              {/* Resend OTP link end  */}
+              </Button>
 
-              {/* Verify-btn start  */}
               <Button
                 type="submit"
                 variant="contained"
@@ -175,13 +144,9 @@ const OtpVerification: React.FC = () => {
               >
                 Verify
               </Button>
-              {/* Verify-btn end  */}
             </div>
-            {/* *******************************Resend OTP and Verify btn end******************************* */}
           </form>
-          {/* ********************************form-section end********************************  */}
         </div>
-        {/* ************************right-container end**************************  */}
       </Container>
     </React.Fragment>
   );
