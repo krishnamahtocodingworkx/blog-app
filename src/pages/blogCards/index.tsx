@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 // import Ocean from "../../assets/images/Ocean.jpg";
 import Menu from "../../components/Menu";
 import { Box } from "@mui/material";
-import AxiosClient from "../../services/AxiosClient";
+import { authAPIServices } from "../../services/AxiosClient";
 
 // const myBlogs = [
 //   {
@@ -36,7 +36,7 @@ const BlogCards: React.FC = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await AxiosClient.get("/api/blogs");
+        const response = await authAPIServices.get("/api/blogs");
         console.log("Fetched blogs:", response.data);
         dispatch(setBlogs(response.data.result));
       } catch (error) {

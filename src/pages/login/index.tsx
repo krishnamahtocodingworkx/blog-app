@@ -19,6 +19,7 @@ import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
+import { loginApiServices } from "../../services/AxiosClient";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -42,10 +43,30 @@ const Login: React.FC = () => {
         .min(8, "Password must be at least 8 characters")
         .required("Password is required"),
     }),
-    onSubmit: (values) => {
-      dispatch(login(values.email));
-      console.log("Logging in with", values);
-      navigate("/home");
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        const response = await loginApiServices.post("/api/v1/user/login", {
+          email: values.email,
+          password: values.password,
+        });
+        if (response.data && response.data.code === 200) {
+          const token = response.data.data.token;
+          console.log("Login successful. Token:", token);
+          dispatch(
+            login({
+              email: response.data.data.email,
+              token: response.data.data.token,
+            })
+          );
+          navigate("/home");
+        } else {
+          setErrors({ email: "Login failed. Please check your credentials." });
+        }
+      } catch (error: any) {
+        setErrors({ email: error?.response?.data?.message || "Login failed." });
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 

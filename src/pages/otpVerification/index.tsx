@@ -16,11 +16,17 @@ import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { loginApiServices } from "../../services/AxiosClient";
 
 const OtpVerification: React.FC = () => {
   // const email = sessionStorage.getItem("email");
-  const email = useSelector((state: RootState) => state.auth.email);
+  const { email } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  React.useEffect(() => {
+    if (!email) {
+      navigate("/forgot-password");
+    }
+  }, [email, navigate]);
 
   console.log("my email ::: ", email);
   const formik = useFormik({
@@ -32,9 +38,29 @@ const OtpVerification: React.FC = () => {
         .required("OTP is required")
         .matches(/^\d{4}$/, "OTP must be exactly 4 digits"),
     }),
-    onSubmit: (values) => {
-      console.log("Submitted OTP:", values.otp);
-      navigate("/reset-password");
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        const response = await loginApiServices.post(
+          "/api/v1/user/verify-email",
+          {
+            email,
+            otp: values.otp,
+          }
+        );
+        if (response.data?.code === 200) {
+          navigate("/reset-password");
+        } else {
+          setErrors({
+            otp: response.data?.message || "OTP verification failed.",
+          });
+        }
+      } catch (error: any) {
+        setErrors({
+          otp: error?.response?.data?.message || "OTP verification failed.",
+        });
+      } finally {
+        setSubmitting(false);
+      }
     },
   });
 

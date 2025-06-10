@@ -13,13 +13,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/slices/authSlice";
+// import { useDispatch } from "react-redux";
+// import { login } from "../../redux/slices/authSlice";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
+import { loginApiServices } from "../../services/AxiosClient";
 
 const ResetPassword: React.FC = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
 
@@ -40,11 +41,26 @@ const ResetPassword: React.FC = () => {
         .required("Confirm Password is required")
         .oneOf([Yup.ref("password")], "Passwords must match"),
     }),
-    onSubmit: (values) => {
-      if (values.password === values.confirmPassword) {
-        console.log("Resetting password with", values.password);
-        dispatch(login(""));
-        navigate("/home");
+    onSubmit: async (values, { setSubmitting, setErrors }) => {
+      try {
+        const response = await loginApiServices.post(
+          "/api/v1/user/reset-password",
+          {
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+          }
+        );
+        if (response.data && response.data.code === 200) {
+          navigate("/home");
+        } else {
+          setErrors({ password: response.data.message || "Reset failed." });
+        }
+      } catch (error: any) {
+        setErrors({
+          password: error?.response?.data?.message || "Reset failed.",
+        });
+      } finally {
+        setSubmitting(false);
       }
     },
   });
