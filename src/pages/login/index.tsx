@@ -20,6 +20,19 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 import { loginApiServices } from "../../services/AxiosClient";
+import { loginStyle } from "./style";
+import { STRING } from "../../utils/string";
+import { loginValidationSchema } from "../../utils/validationSchema";
+import { loginInitialValues } from "../../utils/data";
+import { ENDPOINTS } from "../../utils/endPoints";
+import { authServices } from "../../services/authServices";
+import { ROUTES } from "../../routes/routesName";
+
+/**
+ * @name Login
+ * @description JSX for login page
+ * @returns Login component
+ */
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -31,21 +44,19 @@ const Login: React.FC = () => {
   };
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      password: Yup.string()
-        .min(8, "Password must be at least 8 characters")
-        .required("Password is required"),
-    }),
+    initialValues: loginInitialValues,
+    validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
+      // try {
+      //   const res = await authServices.login(values, () => {
+      //     navigate("/home");
+      //   });
+      //   // do other thing
+      // } catch (error) {
+      //   console.log("login :", error);
+      // }
       try {
-        const response = await loginApiServices.post("/api/v1/user/login", {
+        const response = await loginApiServices.post(ENDPOINTS.LOGIN, {
           email: values.email,
           password: values.password,
         });
@@ -58,7 +69,7 @@ const Login: React.FC = () => {
               token: response.data.data.token,
             })
           );
-          navigate("/home");
+          navigate(ROUTES.home);
         } else {
           setErrors({ email: "Login failed. Please check your credentials." });
         }
@@ -71,171 +82,157 @@ const Login: React.FC = () => {
   });
 
   return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* parent-container start  */}
-      <Container
+    <Container sx={loginStyle.container}>
+      {/* left-container */}
+      <Tutorial />
+
+      {/* right-container  */}
+      <div
         style={{
           // border: "1px solid black",
-          height: "100vh",
-          display: "flex",
-          justifyContent: "space-between",
+          padding: "20px",
+          margin: "50px",
         }}
       >
-        {/* left-container */}
-        <Tutorial />
-
-        {/* right-container  */}
-        <div
+        {/* Title Component  */}
+        <Title />
+        {/* signin heading  */}
+        <Typography
+          variant="h6"
+          gutterBottom
+          align="left"
           style={{
             // border: "1px solid black",
-            padding: "20px",
-            margin: "50px",
+            display: "flex",
+            justifyContent: "flex-start",
+            marginBottom: "20px",
           }}
         >
-          {/* Title Component  */}
-          <Title />
-          {/* signin heading  */}
-          <Typography
-            variant="h6"
-            gutterBottom
-            align="left"
+          {STRING.loginHeading}
+        </Typography>
+        {/* ********************************form-section start********************************  */}
+        <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
+          {/* *************************form-field for email start*******************************  */}
+          <div
+            style={
+              {
+                // border: "1px solid black",
+              }
+            }
+          >
+            {/* email-label  */}
+            <Typography variant="subtitle1" gutterBottom>
+              Email Address
+            </Typography>
+            {/* email-TextField  */}
+            <TextField
+              sx={{
+                // Root class for the input field
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "10px",
+                  height: "40px",
+                },
+              }}
+              fullWidth
+              placeholder={STRING.emailPlaceholder}
+              variant="outlined"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </div>
+          {/* ****************************form-field for email end ***************************************  */}
+
+          {/* *************************form-field for password start************************************* */}
+          <div
+            style={{
+              // border: "1px solid black",
+              marginTop: "16px",
+            }}
+          >
+            {/* password-label  */}
+            <Typography variant="subtitle1" gutterBottom>
+              Password
+            </Typography>
+            {/* password-TextField  */}
+            <TextField
+              sx={{
+                // Root class for the input field
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "10px",
+                  height: "40px",
+                },
+              }}
+              fullWidth
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter Password"
+              variant="outlined"
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        edge="end"
+                        aria-label="toggle password visibility"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
+            />
+          </div>
+          {/* *************************form-field for password end************************************* */}
+
+          {/* form-field for forgot-password and login-btn start */}
+          <div
             style={{
               // border: "1px solid black",
               display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "20px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "50px",
             }}
           >
-            Sign In to your account
-          </Typography>
-          {/* ********************************form-section start********************************  */}
-          <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
-            {/* *************************form-field for email start*******************************  */}
-            <div
-              style={
-                {
-                  // border: "1px solid black",
-                }
-              }
+            <MuiLink
+              component={RouterLink}
+              to="/forgot-password"
+              underline="hover"
+              variant="body2"
+              style={{ padding: "8px" }}
             >
-              {/* email-label  */}
-              <Typography variant="subtitle1" gutterBottom>
-                Email Address
-              </Typography>
-              {/* email-TextField  */}
-              <TextField
-                sx={{
-                  // Root class for the input field
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "10px",
-                    height: "40px",
-                  },
-                }}
-                fullWidth
-                placeholder="Enter Email Address"
-                variant="outlined"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </div>
-            {/* ****************************form-field for email end ***************************************  */}
-
-            {/* *************************form-field for password start************************************* */}
-            <div
+              Forgot password?
+            </MuiLink>
+            {/* login-btn  */}
+            <Button
+              type="submit"
+              variant="contained"
               style={{
-                // border: "1px solid black",
-                marginTop: "16px",
+                float: "inline-end",
+                padding: "8px 50px",
+                borderRadius: "10px",
               }}
+              disabled={!(formik.isValid && formik.dirty)}
             >
-              {/* password-label  */}
-              <Typography variant="subtitle1" gutterBottom>
-                Password
-              </Typography>
-              {/* password-TextField  */}
-              <TextField
-                sx={{
-                  // Root class for the input field
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "10px",
-                    height: "40px",
-                  },
-                }}
-                fullWidth
-                type={showPassword ? "text" : "password"}
-                placeholder="Enter Password"
-                variant="outlined"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.password && Boolean(formik.errors.password)
-                }
-                helperText={formik.touched.password && formik.errors.password}
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={togglePasswordVisibility}
-                          edge="end"
-                          aria-label="toggle password visibility"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  },
-                }}
-              />
-            </div>
-            {/* *************************form-field for password end************************************* */}
-
-            {/* form-field for forgot-password and login-btn start */}
-            <div
-              style={{
-                // border: "1px solid black",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                marginTop: "50px",
-              }}
-            >
-              <MuiLink
-                component={RouterLink}
-                to="/forgot-password"
-                underline="hover"
-                variant="body2"
-                style={{ padding: "8px" }}
-              >
-                Forgot password?
-              </MuiLink>
-              {/* login-btn  */}
-              <Button
-                type="submit"
-                variant="contained"
-                style={{
-                  float: "inline-end",
-                  padding: "8px 50px",
-                  borderRadius: "10px",
-                }}
-                disabled={!(formik.isValid && formik.dirty)}
-              >
-                Login
-              </Button>
-            </div>
-            {/* form-field for forgot-password and login-btn end */}
-          </form>
-          {/* **********************************form-section end**********************************  */}
-        </div>
-      </Container>
-      {/* parent-container end  */}
-    </React.Fragment>
+              Login
+            </Button>
+          </div>
+          {/* form-field for forgot-password and login-btn end */}
+        </form>
+        {/* **********************************form-section end**********************************  */}
+      </div>
+    </Container>
   );
 };
 

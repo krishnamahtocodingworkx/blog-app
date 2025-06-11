@@ -6,15 +6,21 @@ import * as Yup from "yup";
 import "../../index.css";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { loginApiServices } from "../../services/AxiosClient";
+import { ROUTES } from "../../routes/routesName";
 
 const OtpVerification: React.FC = () => {
   const { email, id } = useSelector((state: RootState) => state.auth);
-  const storedId = id || sessionStorage.getItem("userId");
   const navigate = useNavigate();
+  // if (!id || id.length) {
+  //   console.log("id :", id);
+  //   navigate("/");
+  //   // <Navigate to={ROUTES.login} />;
+  // }
+  const storedId = id || sessionStorage.getItem("userId");
 
   React.useEffect(() => {
     if (!email) {

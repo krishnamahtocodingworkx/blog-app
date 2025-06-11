@@ -10,12 +10,13 @@ import AddBlog from "../components/AddBlog";
 import BlogList from "../components/BlogList";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
+import { ROUTES } from "./routesName";
 
 const AppRoutes: React.FC = () => (
   <BrowserRouter>
     <Routes>
       <Route
-        path="/"
+        path={ROUTES.login}
         element={
           <PublicRoute>
             <Login />
@@ -23,7 +24,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/forgot-password"
+        path={ROUTES.forgotPassword}
         element={
           <PublicRoute>
             <ForgotPassword />
@@ -31,7 +32,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/otp-verification"
+        path={ROUTES.otpVerification}
         element={
           <PublicRoute>
             <OtpVerification />
@@ -47,7 +48,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/home"
+        path={ROUTES.home}
         element={
           <PrivateRoute>
             <Home />

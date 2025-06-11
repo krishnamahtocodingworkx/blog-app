@@ -31,6 +31,7 @@ const ResetPassword: React.FC = () => {
   };
 
   const { id } = useSelector((state: RootState) => state.auth);
+  
   const storedId = id || sessionStorage.getItem("userId");
 
   const formik = useFormik({
