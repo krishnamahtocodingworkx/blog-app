@@ -51,10 +51,12 @@ const BlogCards: React.FC = () => {
       <Navbar />
       <Box
         sx={{
+          mt: { xs: "56px", sm: "64px" },
           display: "flex",
           flexDirection: "row",
           alignItems: "flex-start",
           minHeight: "calc(100vh - 64px)",
+          bgcolor: "rgba(239, 239, 239, 1)",
         }}
       >
         <Menu />

@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import logo from "../assets/images/logo.jpg";
 import dp from "../assets/images/dp.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
 import { RootState } from "../redux/store";
@@ -29,8 +29,10 @@ function Navbar() {
     useSelector((state: RootState) => state.auth.token) ||
     localStorage.getItem("token");
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const handleMenuOpen = (
+    event: React.MouseEvent<HTMLElement | SVGSVGElement>
+  ) => {
+    setAnchorEl(event.currentTarget as HTMLElement);
   };
 
   const handleMenuClose = () => {
@@ -61,62 +63,80 @@ function Navbar() {
 
   return (
     <AppBar
-      position="static"
+      position="fixed"
       color="default"
-      elevation={1}
+      // elevation={0}
       sx={{
         "& .MuiToolbar-root": {
           bgcolor: "rgba(255, 255, 255, 1)",
         },
       }}
     >
-      <Toolbar>
-        <Typography
-          variant="h6"
+      <Toolbar
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          minHeight: { xs: 56, sm: 64 },
+          px: { xs: 1, sm: 2 },
+        }}
+      >
+        {/* Logo and Title */}
+        <Box
           sx={{
-            flexGrow: 1,
-            fontWeight: 700,
             display: "flex",
             alignItems: "center",
             gap: "10px",
           }}
         >
-          <img width="50" src={logo} alt="logo" />
-          Blog Book
-        </Typography>
-
-        {/* Navigation Links */}
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2, mr: 3 }}>
+          <img width="40" src={logo} alt="logo" />
           <Typography
-            component={Link}
-            to="/home"
+            variant="h6"
             sx={{
-              textDecoration: "none",
-              color: "text.primary",
-              fontWeight: 500,
-              mx: 1,
-              "&:hover": { color: "primary.main" },
+              fontWeight: 700,
+              fontSize: { xs: "1rem", sm: "1.25rem" },
+              letterSpacing: 1,
             }}
           >
-            Home
+            Blog Book
           </Typography>
         </Box>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-          <Box
-            sx={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+        {/* Profile/Avatar Section */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+          }}
+        >
+          <Avatar
+            src={user.photo.dp}
+            alt={user.name}
+            sx={{
+              width: { xs: 28, sm: 32, md: 36 },
+              height: { xs: 28, sm: 32, md: 36 },
+              mr: { xs: 0, sm: 1 },
+              cursor: "pointer",
+            }}
             onClick={handleMenuOpen}
+          />
+          <Typography
+            variant="body1"
+            color="textPrimary"
+            sx={{
+              display: { xs: "none", sm: "block" },
+              mr: 0.5,
+              fontSize: { sm: "1rem", md: "1.1rem" },
+            }}
           >
-            <Avatar
-              src={user.photo.dp}
-              alt={user.name}
-              sx={{ width: 32, height: 32, mr: 1 }}
-            />
-            <Typography variant="body1" color="textPrimary" sx={{ mr: 0.5 }}>
-              {user.name}
-            </Typography>
-            <ArrowDropDownIcon />
-          </Box>
+            {user.name}
+          </Typography>
+          <ArrowDropDownIcon
+            sx={{ cursor: "pointer" }}
+            onClick={handleMenuOpen}
+          />
           <Menu
             anchorEl={anchorEl}
             open={Boolean(anchorEl)}

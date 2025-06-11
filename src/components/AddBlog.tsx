@@ -98,9 +98,16 @@ const AddBlog: React.FC = () => {
   };
 
   return (
-    <Box sx={{ minHeight: "100vh" }}>
+    <Box sx={{ minHeight: "100vh", bgcolor: "rgba(239, 239, 239, 1)" }}>
       <Navbar />
-      <Box sx={{ display: "flex" }}>
+      <Box
+        sx={{
+          mt: { xs: "56px", sm: "64px" },
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          minHeight: "calc(100vh - 56px)",
+        }}
+      >
         <Menu />
         <Box
           sx={{
@@ -108,19 +115,20 @@ const AddBlog: React.FC = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "flex-start",
-            pt: 0.5,
+            pt: 2,
             minHeight: "calc(100vh - 64px)",
+            px: { xs: 1, sm: 2 },
           }}
         >
           <Paper
-            elevation={3}
+            elevation={0}
             sx={{
-              p: 4,
-              width: 900,
+              p: { xs: 2, sm: 4 },
+              width: { xs: "100%", sm: 600, md: 800, lg: 900 },
+              maxWidth: "100%",
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
-              bgcolor: "#fff",
             }}
           >
             <Typography
@@ -305,6 +313,7 @@ const AddBlog: React.FC = () => {
                               textTransform: "none",
                               mb: 1,
                               bgcolor: "#fff",
+                              width: { xs: "100%", sm: "auto" },
                             }}
                           >
                             Choose file to upload
@@ -347,6 +356,7 @@ const AddBlog: React.FC = () => {
                           mt: 1,
                           bgcolor: "#1976d2",
                           color: "#fff",
+                          width: { xs: "100%", sm: "auto" },
                           "&:hover": {
                             bgcolor: "#1565c0",
                           },
@@ -367,7 +377,7 @@ const AddBlog: React.FC = () => {
                     fontWeight: "bold",
                     bgcolor: "green",
                     color: "#fff",
-                    width: "15%",
+                    width: { xs: "100%", sm: "40%", md: "20%" },
                     "&:hover": {
                       bgcolor: "#388e3c",
                     },

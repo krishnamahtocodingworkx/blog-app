@@ -15,6 +15,7 @@ import {
   InputAdornment,
   Typography,
   Toolbar,
+  GlobalStyles,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilterListIcon from "@mui/icons-material/FilterList";
@@ -36,7 +37,7 @@ const BlogList: React.FC = () => {
 
   // Table state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(9);
 
   // Search/filter state
   const [search, setSearch] = useState("");
@@ -134,16 +135,63 @@ const BlogList: React.FC = () => {
 
   return (
     <>
+      <GlobalStyles
+        styles={{
+          ".MuiTablePagination-actions": { display: "none" },
+        }}
+      />
       <Navbar />
-      <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <Box
+        sx={{
+          mt: { xs: "56px", sm: "64px" },
+          display: "flex",
+          minHeight: "100vh",
+          flexDirection: { xs: "column", sm: "row" },
+          bgcolor: "rgba(239, 239, 239, 1)",
+        }}
+      >
         <Menu />
-        <Box sx={{ flex: 1, p: 3 }}>
-          <Paper sx={{ p: 2 }}>
-            <Toolbar sx={{ justifyContent: "space-between", mb: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 600 }}>
+        <Box
+          sx={{
+            flex: 1,
+            p: { xs: 1, sm: 3 },
+            width: "100%",
+            minWidth: 0,
+          }}
+        >
+          <Paper
+            elevation={0}
+            sx={{
+              p: { xs: 1, sm: 2 },
+              border: "none",
+              boxShadow: "none",
+              bgcolor: "#fff",
+            }}
+          >
+            <Toolbar
+              sx={{
+                flexDirection: { xs: "column", sm: "row" },
+                alignItems: { xs: "stretch", sm: "center" },
+                justifyContent: "space-between",
+                mb: 2,
+                gap: { xs: 2, sm: 0 },
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 600, mb: { xs: 1, sm: 0 } }}
+              >
                 Blog List
               </Typography>
-              <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: { xs: "column", sm: "row" },
+                  gap: 2,
+                  alignItems: { xs: "stretch", sm: "center" },
+                  width: { xs: "100%", sm: "auto" },
+                }}
+              >
                 <TextField
                   size="small"
                   variant="outlined"
@@ -157,27 +205,39 @@ const BlogList: React.FC = () => {
                       </InputAdornment>
                     ),
                   }}
+                  sx={{ width: { xs: "100%", sm: "200px" } }}
                 />
                 <Button
                   variant="outlined"
                   startIcon={<FilterListIcon />}
                   onClick={() => setFilterOpen((open) => !open)}
+                  sx={{ width: { xs: "100%", sm: "auto" } }}
                 >
                   Filter
                 </Button>
                 {filterOpen && (
-                  <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: { xs: "column", sm: "row" },
+                      gap: 1,
+                      alignItems: { xs: "stretch", sm: "center" },
+                      width: { xs: "100%", sm: "auto" },
+                    }}
+                  >
                     <TextField
                       size="small"
                       variant="outlined"
                       placeholder="Filter by title…"
                       value={filterValue}
                       onChange={(e) => setFilterValue(e.target.value)}
+                      sx={{ width: { xs: "100%", sm: "180px" } }}
                     />
                     <Button
                       variant="contained"
                       color="primary"
                       onClick={handleApplyFilter}
+                      sx={{ width: { xs: "100%", sm: "auto" } }}
                     >
                       Apply
                     </Button>
@@ -185,6 +245,7 @@ const BlogList: React.FC = () => {
                       variant="outlined"
                       color="secondary"
                       onClick={handleClearFilter}
+                      sx={{ width: { xs: "100%", sm: "auto" } }}
                     >
                       Clear
                     </Button>
@@ -197,99 +258,128 @@ const BlogList: React.FC = () => {
                 )}
               </Box>
             </Toolbar>
-            <TableContainer>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>S.No</TableCell>
-                    <TableCell>Blog Title</TableCell>
-                    <TableCell>Created Date</TableCell>
-                    <TableCell>Actions</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {paginatedBlogs.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={4} align="center">
-                        No blogs found.
-                      </TableCell>
+            <Box sx={{ width: "100%", overflowX: "auto" }}>
+              <TableContainer>
+                <Table sx={{ minWidth: 600 }}>
+                  <TableHead>
+                    <TableRow sx={{ bgcolor: "rgba(240, 242, 246, 1)" }}>
+                      <TableCell>S.No</TableCell>
+                      <TableCell>Blog Title</TableCell>
+                      <TableCell>Created Date</TableCell>
+                      <TableCell>Actions</TableCell>
                     </TableRow>
-                  ) : (
-                    paginatedBlogs.map((blog: any, idx: number) => {
-                      return (
-                        <TableRow key={blog.id}>
-                          <TableCell>{page * rowsPerPage + idx + 1}</TableCell>
-                          <TableCell>{blog.title}</TableCell>
-                          <TableCell>
-                            {blog.createdAt
-                              ? new Date(blog.createdAt).toLocaleDateString()
-                              : "-"}
-                          </TableCell>
-                          <TableCell>
-                            <IconButton
-                              color="primary"
-                              onClick={() => handleEdit(blog)}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton
-                              color="error"
-                              onClick={() => handleDelete(blog.id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {paginatedBlogs.length === 0 ? (
+                      <TableRow>
+                        <TableCell colSpan={4} align="center">
+                          No blogs found.
+                        </TableCell>
+                      </TableRow>
+                    ) : (
+                      paginatedBlogs.map((blog: any, idx: number) => {
+                        return (
+                          <TableRow key={blog.id}>
+                            <TableCell>
+                              {page * rowsPerPage + idx + 1}
+                            </TableCell>
+                            <TableCell>{blog.title}</TableCell>
+                            <TableCell>
+                              {blog.createdAt
+                                ? new Date(blog.createdAt).toLocaleDateString()
+                                : "-"}
+                            </TableCell>
+                            <TableCell>
+                              <IconButton
+                                color="primary"
+                                onClick={() => handleEdit(blog)}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                              <IconButton
+                                color="error"
+                                onClick={() => handleDelete(blog.id)}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </Paper>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { xs: "stretch", sm: "center" },
+              justifyContent: "space-between",
+              mt: 2,
+              gap: { xs: 2, sm: 0 },
+              px: 2,
+              pb: 2,
+            }}
+          >
+            <TablePagination
+              component="div"
+              count={filteredBlogs.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              rowsPerPageOptions={[5, 9, 10, 25]}
+              labelRowsPerPage="Rows per page"
+              sx={{ width: { xs: "100%", sm: "auto" } }}
+            />
             <Box
               sx={{
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                mt: 2,
+                gap: 1,
+                justifyContent: { xs: "center", sm: "flex-end" },
               }}
             >
-              <TablePagination
-                component="div"
-                count={filteredBlogs.length}
-                page={page}
-                onPageChange={handleChangePage}
-                rowsPerPage={rowsPerPage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                rowsPerPageOptions={[5, 10, 25]}
-                labelRowsPerPage="Rows per page"
-              />
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <Button
-                  variant="outlined"
-                  onClick={() => setPage((p) => Math.max(0, p - 1))}
-                  disabled={page === 0}
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="outlined"
-                  onClick={() =>
-                    setPage((p) =>
-                      p < Math.ceil(filteredBlogs.length / rowsPerPage) - 1
-                        ? p + 1
-                        : p
-                    )
-                  }
-                  disabled={
-                    page >= Math.ceil(filteredBlogs.length / rowsPerPage) - 1
-                  }
-                >
-                  Next
-                </Button>
-              </Box>
+              <Button
+                variant="outlined"
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={page === 0}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "rgba(37, 204, 140, 1)",
+                    color: "#fff",
+                    borderColor: "rgba(37, 204, 140, 1)",
+                  },
+                }}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outlined"
+                onClick={() =>
+                  setPage((p) =>
+                    p < Math.ceil(filteredBlogs.length / rowsPerPage) - 1
+                      ? p + 1
+                      : p
+                  )
+                }
+                disabled={
+                  page >= Math.ceil(filteredBlogs.length / rowsPerPage) - 1
+                }
+                sx={{
+                  "&:hover": {
+                    bgcolor: "rgba(37, 204, 140, 1)",
+                    color: "#fff",
+                    borderColor: "rgba(37, 204, 140, 1)",
+                  },
+                }}
+              >
+                Next
+              </Button>
             </Box>
-          </Paper>
+          </Box>
         </Box>
       </Box>
       <Dialog open={editOpen} onClose={handleEditClose}>

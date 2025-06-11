@@ -8,7 +8,12 @@ import { useTheme } from "@mui/material/styles";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import AddBoxIcon from "@mui/icons-material/AddBox";
+import MenuIcon from "@mui/icons-material/Menu";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { Link, useLocation } from "react-router-dom";
+import logo from "../assets/images/logo.jpg";
 
 const menuItems = [
   { icon: <ListAltIcon />, text: "BlogList", path: "/blog-list" },
@@ -19,19 +24,31 @@ const menuItems = [
 const Menu: React.FC = () => {
   const theme = useTheme();
   const location = useLocation();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-  return (
+  const menuContent = (
     <Box
       sx={{
+        mt: { xs: "56px", sm: "20px" },
+        ml: { xs: "56px", sm: "20px" },
         width: 220,
-        minHeight: "100vh",
+        height: "100vh",
         bgcolor: "rgba(255, 255, 255, 1)",
-        borderRight: `1px solid ${theme.palette.divider}`,
         display: "flex",
         flexDirection: "column",
         py: 2,
+        px: 2,
+        boxSizing: "border-box",
       }}
+      role="presentation"
+      onClick={isMobile ? () => setDrawerOpen(false) : undefined}
     >
+      {isMobile && (
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <img src={logo} alt="logo" width={60} />
+        </Box>
+      )}
       <List sx={{ flex: 1 }}>
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -73,6 +90,40 @@ const Menu: React.FC = () => {
         })}
       </List>
     </Box>
+  );
+
+  return (
+    <>
+      {isMobile ? (
+        <>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={() => setDrawerOpen(true)}
+            sx={{ m: 1, position: "fixed", top: 10, left: 10 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            anchor="left"
+            open={drawerOpen}
+            onClose={() => setDrawerOpen(false)}
+            ModalProps={{ keepMounted: true }}
+            sx={{
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: 220,
+              },
+            }}
+          >
+            {menuContent}
+          </Drawer>
+        </>
+      ) : (
+        menuContent
+      )}
+    </>
   );
 };
 
