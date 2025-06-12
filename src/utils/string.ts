@@ -5,4 +5,5 @@ export const STRING = {
   forgotPassword: "Forgot password?",
   resetPasswordInfo: "You can reset your password here",
   homeWelcome: "Welcome to our blog !",
+  blogListHeading: "Blog List",
 };

@@ -1,35 +1,18 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TablePagination,
-  IconButton,
-  TextField,
-  Button,
-  InputAdornment,
-  Typography,
-  Toolbar,
-  GlobalStyles,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, Paper, Typography, Toolbar, GlobalStyles } from "@mui/material";
 import Navbar from "./Navbar";
 import Menu from "./Menu";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/store";
-import { deleteBlog, updateBlog } from "../redux/slices/blogSlice";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
+import { updateBlog } from "../redux/slices/blogSlice";
+import Pagination from "./Pagination";
+import PrevNextBtn from "./PrevNextBtn";
+import DialogEdit from "./DialogEdit";
+import DialogDelete from "./DialogDelete";
+import SearchBar from "./SearchBar";
+import FilterBlogs from "./FilterBlogs";
+import BlogsTable from "./BlogsTable";
+import { STRING } from "../utils/string";
 
 const BlogList: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,22 +20,46 @@ const BlogList: React.FC = () => {
 
   // Pagination state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [paginatedBlogs, setPaginatedBlogs] = useState<any[]>([]);
 
+  // Search/filter state
+  const [search, setSearch] = useState<string>("");
+  const [filterMode, setFilterMode] = useState<boolean>(false);
+
+  // Filtered blogs state
+  const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
+
+  // Filtering/searching logic
+  useEffect(() => {
+    let filtered = blogs;
+    if (search.trim()) {
+      filtered = filtered.filter((blog: any) =>
+        blog.title.toLowerCase().includes(search.toLowerCase())
+      );
+    }
+    setFilteredBlogs(filtered);
+    setPage(0); // Reset to first page on search/filter change
+  }, [blogs, search]);
+
+  // Pagination logic
   useEffect(() => {
     setPaginatedBlogs(
-      blogs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      filteredBlogs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
     );
-  }, [blogs, page, rowsPerPage]);
+  }, [filteredBlogs, page, rowsPerPage]);
 
-  const totalPages = Math.ceil(blogs.length / rowsPerPage) || 1;
+  const totalPages = Math.ceil(filteredBlogs.length / rowsPerPage) || 1;
 
   // Edit dialog state
   const [editOpen, setEditOpen] = React.useState(false);
   const [editBlog, setEditBlog] = React.useState<any>(null);
   const [editTitle, setEditTitle] = React.useState("");
   const [editDate, setEditDate] = React.useState("");
+
+  // Delete dialog state
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [deleteBlog, setDeleteBlog] = React.useState<any>(null);
 
   // Actions
   const handleEdit = (blog: any) => {
@@ -62,10 +69,17 @@ const BlogList: React.FC = () => {
     setEditOpen(true);
   };
 
-  const handleDelete = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this blog?")) {
-      dispatch(deleteBlog(id));
+  const handleDeleteClick = (blog: any) => {
+    setDeleteBlog(blog);
+    setDeleteOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (deleteBlog) {
+      dispatch(deleteBlog(deleteBlog.id));
     }
+    setDeleteOpen(false);
+    setDeleteBlog(null);
   };
 
   const handleEditClose = () => {
@@ -87,6 +101,11 @@ const BlogList: React.FC = () => {
     setEditBlog(null);
   };
 
+  const handleDeleteClose = () => {
+    setDeleteOpen(false);
+    setDeleteBlog(null);
+  };
+
   return (
     <>
       <GlobalStyles
@@ -104,6 +123,7 @@ const BlogList: React.FC = () => {
           bgcolor: "rgba(239, 239, 239, 1)",
         }}
       >
+        {/* menu start */}
         <Box
           sx={{
             height: "100vh",
@@ -114,6 +134,7 @@ const BlogList: React.FC = () => {
         >
           <Menu />
         </Box>
+        {/* menu end */}
         <Box
           sx={{
             flex: 1,
@@ -144,9 +165,8 @@ const BlogList: React.FC = () => {
                 variant="h6"
                 sx={{ fontWeight: 600, mb: { xs: 1, sm: 0 } }}
               >
-                Blog List
+                {STRING.blogListHeading}
               </Typography>
-              {/* Filter UI only, no logic */}
               <Box
                 sx={{
                   display: "flex",
@@ -156,80 +176,33 @@ const BlogList: React.FC = () => {
                   width: { xs: "100%", sm: "auto" },
                 }}
               >
-                <TextField
-                  size="small"
-                  variant="outlined"
-                  placeholder="Search any blog"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon />
-                      </InputAdornment>
-                    ),
-                  }}
-                  sx={{ width: { xs: "100%", sm: "200px" } }}
-                  disabled
+                <SearchBar
+                  value={search}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setSearch(e.target.value)
+                  }
+                  placeholder={
+                    filterMode ? "Filter keyword" : "Search any blog"
+                  }
                 />
-                <Button
-                  variant="outlined"
-                  startIcon={<FilterListIcon />}
-                  sx={{ width: { xs: "100%", sm: "auto" } }}
-                  disabled
-                >
-                  Filter
-                </Button>
+                <FilterBlogs
+                  filterMode={filterMode}
+                  setFilterMode={setFilterMode}
+                />
               </Box>
             </Toolbar>
+
             <Box sx={{ width: "100%", overflowX: "auto" }}>
-              <TableContainer>
-                <Table sx={{ minWidth: 600 }}>
-                  <TableHead>
-                    <TableRow sx={{ bgcolor: "rgba(240, 242, 246, 1)" }}>
-                      <TableCell>S.No</TableCell>
-                      <TableCell>Blog Title</TableCell>
-                      <TableCell>Created Date</TableCell>
-                      <TableCell>Actions</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {paginatedBlogs.length === 0 ? (
-                      <TableRow>
-                        <TableCell colSpan={4} align="center">
-                          No blogs found.
-                        </TableCell>
-                      </TableRow>
-                    ) : (
-                      paginatedBlogs.map((blog: any, idx: number) => (
-                        <TableRow key={blog.id}>
-                          <TableCell>{page * rowsPerPage + idx + 1}</TableCell>
-                          <TableCell>{blog.title}</TableCell>
-                          <TableCell>
-                            {blog.createdAt
-                              ? new Date(blog.createdAt).toLocaleDateString()
-                              : "-"}
-                          </TableCell>
-                          <TableCell>
-                            <IconButton
-                              color="primary"
-                              onClick={() => handleEdit(blog)}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                            <IconButton
-                              color="error"
-                              onClick={() => handleDelete(blog.id)}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      ))
-                    )}
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <BlogsTable
+                filteredBlogs={paginatedBlogs}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                handleEdit={handleEdit}
+                handleDeleteClick={handleDeleteClick}
+              />
             </Box>
           </Paper>
+
           <Box
             sx={{
               display: "flex",
@@ -242,81 +215,39 @@ const BlogList: React.FC = () => {
               pb: 2,
             }}
           >
-            <TablePagination
-              component="div"
+            <Pagination
               count={blogs.length}
               page={page}
-              onPageChange={(event, newPage) => setPage(newPage)}
               rowsPerPage={rowsPerPage}
+              onPageChange={(_event, newPage) => setPage(newPage)}
               onRowsPerPageChange={(event) => {
                 setRowsPerPage(parseInt(event.target.value, 10));
                 setPage(0);
               }}
-              rowsPerPageOptions={[5, 10, 15]}
-              labelRowsPerPage="Rows per page"
-              sx={{ width: { xs: "100%", sm: "auto" } }}
             />
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                mt: 2,
-                gap: 2,
-              }}
-            >
-              <Button
-                variant="outlined"
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                disabled={page === 0}
-              >
-                Previous
-              </Button>
-              <Typography variant="body2" sx={{ alignSelf: "center" }}>
-                Page {page + 1} of {totalPages}
-              </Typography>
-              <Button
-                variant="outlined"
-                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-                disabled={page >= totalPages - 1}
-              >
-                Next
-              </Button>
-            </Box>
+            <PrevNextBtn
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+            />
           </Box>
         </Box>
       </Box>
-      <Dialog open={editOpen} onClose={handleEditClose}>
-        <DialogTitle>Edit Blog</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Blog Title"
-            type="text"
-            fullWidth
-            variant="outlined"
-            value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
-          />
-          <TextField
-            margin="dense"
-            label="Created Date"
-            type="date"
-            fullWidth
-            variant="outlined"
-            value={editDate}
-            onChange={(e) => setEditDate(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleEditClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleEditSave} color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogEdit
+        open={editOpen}
+        editTitle={editTitle}
+        editDate={editDate}
+        setEditTitle={setEditTitle}
+        setEditDate={setEditDate}
+        onClose={handleEditClose}
+        onSave={handleEditSave}
+      />
+      <DialogDelete
+        open={deleteOpen}
+        onClose={handleDeleteClose}
+        onConfirm={handleDeleteConfirm}
+        blogTitle={deleteBlog?.title}
+      />
     </>
   );
 };
