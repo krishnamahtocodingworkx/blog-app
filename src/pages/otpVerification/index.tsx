@@ -3,7 +3,7 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import { Container, Button, Typography, Box } from "@mui/material";
 import { useFormik } from "formik";
 import "../../index.css";
-import Tutorial from "../../components/Tutorial";
+import LeftContainer from "../../components/LeftContainer";
 import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -74,7 +74,7 @@ const OtpVerification: React.FC = () => {
           justifyContent: "space-between",
         }}
       >
-        <Tutorial />
+        <LeftContainer />
 
         <Box
           sx={{

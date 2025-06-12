@@ -13,7 +13,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import Tutorial from "../../components/Tutorial";
+import LeftContainer from "../../components/LeftContainer";
 import Title from "../../components/Title";
 import { resetPasswordServices } from "../../services/resetPassword";
 import { resetPasswordInitialValues } from "../../utils/data";
@@ -73,7 +73,7 @@ const ResetPassword: React.FC = () => {
         }}
       >
         {/* left-container component */}
-        <Tutorial />
+        <LeftContainer />
 
         {/* ************************right-container start**************************  */}
         <Box

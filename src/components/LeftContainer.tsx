@@ -3,7 +3,7 @@ import { Button, Typography, Box } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
-const Tutorial: React.FC = () => {
+const LeftContainer: React.FC = () => {
   return (
     <>
       {/* ***************************left-container start**********************  */}
@@ -117,4 +117,4 @@ const Tutorial: React.FC = () => {
     </>
   );
 };
-export default Tutorial;
+export default LeftContainer;

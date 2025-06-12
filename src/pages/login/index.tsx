@@ -15,7 +15,6 @@ import { useFormik } from "formik";
 import { loginValidationSchema } from "../../utils/validationSchema";
 import { loginInitialValues } from "../../utils/data";
 import "../../index.css";
-import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -23,6 +22,7 @@ import { login } from "../../redux/slices/authSlice";
 import { authServices } from "../../services/auth";
 import { STRING } from "../../utils/string";
 import { ROUTES } from "../../routes/routesName";
+import LeftContainer from "../../components/LeftContainer";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
         }}
       >
         {/* left-container */}
-        <Tutorial />
+        <LeftContainer />
 
         {/* right-container  */}
         <Box

@@ -13,7 +13,7 @@ import {
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useFormik } from "formik";
-import Tutorial from "../../components/Tutorial";
+import LeftContainer from "../../components/LeftContainer";
 import Title from "../../components/Title";
 import { forgotPasswordValidationSchema } from "../../utils/validationSchema";
 import { forgotPasswordInitialValues } from "../../utils/data";
@@ -63,7 +63,7 @@ const ForgotPassword: React.FC = () => {
         }}
       >
         {/* left-container */}
-        <Tutorial />
+        <LeftContainer />
 
         {/* right-container  */}
         <Box
