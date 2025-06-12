@@ -133,6 +133,9 @@ const BlogList: React.FC = () => {
     setPage(0);
   };
 
+  // Total pages for pagination
+  const totalPages = Math.ceil(filteredBlogs.length / rowsPerPage);
+
   return (
     <>
       <GlobalStyles
@@ -347,43 +350,25 @@ const BlogList: React.FC = () => {
             <Box
               sx={{
                 display: "flex",
-                gap: 1,
-                justifyContent: { xs: "center", sm: "flex-end" },
+                justifyContent: "center",
+                mt: 2,
+                gap: 2,
               }}
             >
               <Button
                 variant="outlined"
-                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                disabled={page === 0}
-                sx={{
-                  "&:hover": {
-                    bgcolor: "rgba(37, 204, 140, 1)",
-                    color: "#fff",
-                    borderColor: "rgba(37, 204, 140, 1)",
-                  },
-                }}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+                disabled={page === 1}
               >
                 Previous
               </Button>
+              <Typography variant="body2" sx={{ alignSelf: "center" }}>
+                Page {page} of {totalPages}
+              </Typography>
               <Button
                 variant="outlined"
-                onClick={() =>
-                  setPage((p) =>
-                    p < Math.ceil(filteredBlogs.length / rowsPerPage) - 1
-                      ? p + 1
-                      : p
-                  )
-                }
-                disabled={
-                  page >= Math.ceil(filteredBlogs.length / rowsPerPage) - 1
-                }
-                sx={{
-                  "&:hover": {
-                    bgcolor: "rgba(37, 204, 140, 1)",
-                    color: "#fff",
-                    borderColor: "rgba(37, 204, 140, 1)",
-                  },
-                }}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
               >
                 Next
               </Button>
