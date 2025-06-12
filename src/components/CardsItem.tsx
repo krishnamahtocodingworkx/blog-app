@@ -32,7 +32,13 @@ const CardsItem: React.FC = () => {
           return (
             <Card
               key={blog.id}
-              sx={{ width: 390, borderRadius: 3, boxShadow: 3 }}
+              sx={{
+                width: { xs: "100%", sm: "calc(33% - 32px)" },
+                minWidth: 280,
+                maxWidth: 390,
+                flex: "1 1 calc(33% - 32px)",
+                borderRadius: 3,
+              }}
             >
               <CardMedia
                 component="img"

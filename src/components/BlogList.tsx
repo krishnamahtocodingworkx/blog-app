@@ -150,7 +150,16 @@ const BlogList: React.FC = () => {
           bgcolor: "rgba(239, 239, 239, 1)",
         }}
       >
-        <Menu />
+        <Box
+          sx={{
+            height: "100vh",
+            minHeight: "100%",
+            position: "sticky",
+            top: { xs: "56px", sm: "64px" },
+          }}
+        >
+          <Menu />
+        </Box>
         <Box
           sx={{
             flex: 1,

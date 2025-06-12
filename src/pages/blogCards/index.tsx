@@ -29,13 +29,23 @@ const BlogCards: React.FC = () => {
       <Navbar />
       <Box
         sx={{
+          bgcolor: "rgba(239, 239, 239, 1)",
+          mt: { xs: "56px", sm: "64px" },
           display: "flex",
-          flexDirection: "row",
-          alignItems: "flex-start",
-          minHeight: "calc(100vh - 64px)",
+          flexDirection: { xs: "column", sm: "row" },
+          minHeight: "100vh",
         }}
       >
-        <Menu />
+        <Box
+          sx={{
+            height: "100vh",
+            minHeight: "100%",
+            position: "sticky",
+            top: { xs: "56px", sm: "64px" },
+          }}
+        >
+          <Menu />
+        </Box>
         <Box sx={{ flex: 1, px: 3 }}>
           <Typography
             variant="h3"

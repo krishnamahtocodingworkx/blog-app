@@ -108,7 +108,16 @@ const AddBlog: React.FC = () => {
           minHeight: "calc(100vh - 56px)",
         }}
       >
-        <Menu />
+        <Box
+          sx={{
+            height: "100vh",
+            minHeight: "100%",
+            position: "sticky",
+            top: { xs: "56px", sm: "64px" },
+          }}
+        >
+          <Menu />
+        </Box>
         <Box
           sx={{
             flex: 1,
