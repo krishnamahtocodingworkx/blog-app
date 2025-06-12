@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Paper,
@@ -35,44 +35,24 @@ const BlogList: React.FC = () => {
   const dispatch = useDispatch();
   const blogs = useSelector((state: RootState) => state.blog.blogs);
 
-  // Table state
+  // Pagination state
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(9);
+  const [paginatedBlogs, setPaginatedBlogs] = useState<any[]>([]);
 
-  // Search/filter state
-  const [search, setSearch] = useState("");
-  const [filterOpen, setFilterOpen] = useState(false);
-  const [filterValue, setFilterValue] = useState("");
-  const [appliedFilter, setAppliedFilter] = useState("");
+  useEffect(() => {
+    setPaginatedBlogs(
+      blogs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    );
+  }, [blogs, page, rowsPerPage]);
+
+  const totalPages = Math.ceil(blogs.length / rowsPerPage) || 1;
 
   // Edit dialog state
-  const [editOpen, setEditOpen] = useState(false);
-  const [editBlog, setEditBlog] = useState<any>(null);
-  const [editTitle, setEditTitle] = useState("");
-  const [editDate, setEditDate] = useState("");
-
-  // Handle search and filter (both on blog title)
-  const filteredBlogs = useMemo(() => {
-    let filtered = blogs || [];
-    if (search.trim()) {
-      filtered = filtered.filter((blog: any) =>
-        blog.title.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-    if (appliedFilter.trim()) {
-      filtered = filtered.filter((blog: any) =>
-        blog.title.toLowerCase().includes(appliedFilter.toLowerCase())
-      );
-    }
-    return filtered;
-  }, [blogs, search, appliedFilter]);
-
-  // Pagination
-  const paginatedBlogs = useMemo(
-    () =>
-      filteredBlogs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
-    [filteredBlogs, page, rowsPerPage]
-  );
+  const [editOpen, setEditOpen] = React.useState(false);
+  const [editBlog, setEditBlog] = React.useState<any>(null);
+  const [editTitle, setEditTitle] = React.useState("");
+  const [editDate, setEditDate] = React.useState("");
 
   // Actions
   const handleEdit = (blog: any) => {
@@ -106,35 +86,6 @@ const BlogList: React.FC = () => {
     setEditOpen(false);
     setEditBlog(null);
   };
-
-  // Table handlers
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  // Filter handlers
-  const handleApplyFilter = () => {
-    setAppliedFilter(filterValue);
-    setFilterOpen(false);
-    setPage(0);
-  };
-
-  const handleClearFilter = () => {
-    setFilterValue("");
-    setAppliedFilter("");
-    setFilterOpen(false);
-    setPage(0);
-  };
-
-  // Total pages for pagination
-  const totalPages = Math.ceil(filteredBlogs.length / rowsPerPage);
 
   return (
     <>
@@ -195,6 +146,7 @@ const BlogList: React.FC = () => {
               >
                 Blog List
               </Typography>
+              {/* Filter UI only, no logic */}
               <Box
                 sx={{
                   display: "flex",
@@ -208,8 +160,6 @@ const BlogList: React.FC = () => {
                   size="small"
                   variant="outlined"
                   placeholder="Search any blog"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
@@ -218,56 +168,16 @@ const BlogList: React.FC = () => {
                     ),
                   }}
                   sx={{ width: { xs: "100%", sm: "200px" } }}
+                  disabled
                 />
                 <Button
                   variant="outlined"
                   startIcon={<FilterListIcon />}
-                  onClick={() => setFilterOpen((open) => !open)}
                   sx={{ width: { xs: "100%", sm: "auto" } }}
+                  disabled
                 >
                   Filter
                 </Button>
-                {filterOpen && (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: { xs: "column", sm: "row" },
-                      gap: 1,
-                      alignItems: { xs: "stretch", sm: "center" },
-                      width: { xs: "100%", sm: "auto" },
-                    }}
-                  >
-                    <TextField
-                      size="small"
-                      variant="outlined"
-                      placeholder="Filter by title…"
-                      value={filterValue}
-                      onChange={(e) => setFilterValue(e.target.value)}
-                      sx={{ width: { xs: "100%", sm: "180px" } }}
-                    />
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleApplyFilter}
-                      sx={{ width: { xs: "100%", sm: "auto" } }}
-                    >
-                      Apply
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={handleClearFilter}
-                      sx={{ width: { xs: "100%", sm: "auto" } }}
-                    >
-                      Clear
-                    </Button>
-                  </Box>
-                )}
-                {appliedFilter && !filterOpen && (
-                  <Typography variant="body2" color="primary">
-                    Filter: {appliedFilter}
-                  </Typography>
-                )}
               </Box>
             </Toolbar>
             <Box sx={{ width: "100%", overflowX: "auto" }}>
@@ -289,35 +199,31 @@ const BlogList: React.FC = () => {
                         </TableCell>
                       </TableRow>
                     ) : (
-                      paginatedBlogs.map((blog: any, idx: number) => {
-                        return (
-                          <TableRow key={blog.id}>
-                            <TableCell>
-                              {page * rowsPerPage + idx + 1}
-                            </TableCell>
-                            <TableCell>{blog.title}</TableCell>
-                            <TableCell>
-                              {blog.createdAt
-                                ? new Date(blog.createdAt).toLocaleDateString()
-                                : "-"}
-                            </TableCell>
-                            <TableCell>
-                              <IconButton
-                                color="primary"
-                                onClick={() => handleEdit(blog)}
-                              >
-                                <EditIcon />
-                              </IconButton>
-                              <IconButton
-                                color="error"
-                                onClick={() => handleDelete(blog.id)}
-                              >
-                                <DeleteIcon />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        );
-                      })
+                      paginatedBlogs.map((blog: any, idx: number) => (
+                        <TableRow key={blog.id}>
+                          <TableCell>{page * rowsPerPage + idx + 1}</TableCell>
+                          <TableCell>{blog.title}</TableCell>
+                          <TableCell>
+                            {blog.createdAt
+                              ? new Date(blog.createdAt).toLocaleDateString()
+                              : "-"}
+                          </TableCell>
+                          <TableCell>
+                            <IconButton
+                              color="primary"
+                              onClick={() => handleEdit(blog)}
+                            >
+                              <EditIcon />
+                            </IconButton>
+                            <IconButton
+                              color="error"
+                              onClick={() => handleDelete(blog.id)}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ))
                     )}
                   </TableBody>
                 </Table>
@@ -338,11 +244,14 @@ const BlogList: React.FC = () => {
           >
             <TablePagination
               component="div"
-              count={filteredBlogs.length}
+              count={blogs.length}
               page={page}
-              onPageChange={handleChangePage}
+              onPageChange={(event, newPage) => setPage(newPage)}
               rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+              onRowsPerPageChange={(event) => {
+                setRowsPerPage(parseInt(event.target.value, 10));
+                setPage(0);
+              }}
               rowsPerPageOptions={[5, 9, 10, 25]}
               labelRowsPerPage="Rows per page"
               sx={{ width: { xs: "100%", sm: "auto" } }}
@@ -357,18 +266,18 @@ const BlogList: React.FC = () => {
             >
               <Button
                 variant="outlined"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
+                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                disabled={page === 0}
               >
                 Previous
               </Button>
               <Typography variant="body2" sx={{ alignSelf: "center" }}>
-                Page {page} of {totalPages}
+                Page {page + 1} of {totalPages}
               </Typography>
               <Button
                 variant="outlined"
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+                disabled={page >= totalPages - 1}
               >
                 Next
               </Button>
