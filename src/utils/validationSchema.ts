@@ -14,3 +14,9 @@ export const forgotPasswordValidationSchema = Yup.object({
     .email("Invalid email address")
     .required("Email is required"),
 });
+
+export const otpVerificationValidationSchema = Yup.object({
+  otp: Yup.string()
+    .required("OTP is required")
+    .matches(/^\d{4}$/, "OTP must be exactly 4 digits"),
+});

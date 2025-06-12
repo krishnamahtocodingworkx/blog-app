@@ -1,26 +1,21 @@
 import * as React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { CssBaseline, Container, Button, Typography } from "@mui/material";
+import { Container, Button, Typography, Box } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import "../../index.css";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { loginApiServices } from "../../services/AxiosClient";
-import { ROUTES } from "../../routes/routesName";
+import { otpVerificationServices } from "../../services/otpVerificationServices";
+import { resendOTPService } from "../../services/resendOTP";
 
 const OtpVerification: React.FC = () => {
   const { email, id } = useSelector((state: RootState) => state.auth);
-  const navigate = useNavigate();
-  // if (!id || id.length) {
-  //   console.log("id :", id);
-  //   navigate("/");
-  //   // <Navigate to={ROUTES.login} />;
-  // }
   const storedId = id || sessionStorage.getItem("userId");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     if (!email) {
@@ -30,9 +25,7 @@ const OtpVerification: React.FC = () => {
 
   const handleResendOtp = async () => {
     try {
-      const response = await loginApiServices.post("/api/v1/user/resend-otp", {
-        email,
-      });
+      const response = await resendOTPService.resend(email || "");
       console.log("Resend OTP Response:", response.data);
     } catch (error) {
       console.error("Resend OTP Error:", error);
@@ -54,15 +47,10 @@ const OtpVerification: React.FC = () => {
           setErrors({ otp: "User ID not found. Please try again." });
           return;
         }
-        const response = await loginApiServices.post(
-          "/api/v1/user/verify-email",
-          {
-            id: storedId,
-            otp: values.otp,
-          }
-        );
-        console.log("Verify Email Response:", response.data);
-
+        const response = await otpVerificationServices.verifyOtp({
+          id: storedId,
+          otp: values.otp,
+        });
         if (response.data?.code === 200) {
           navigate("/reset-password");
         } else {
@@ -82,9 +70,9 @@ const OtpVerification: React.FC = () => {
 
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container
-        style={{
+        disableGutters
+        sx={{
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -92,7 +80,12 @@ const OtpVerification: React.FC = () => {
       >
         <Tutorial />
 
-        <div style={{ padding: "20px", margin: "50px" }}>
+        <Box
+          sx={{
+            p: "20px",
+            m: "50px",
+          }}
+        >
           <Title />
 
           <Typography variant="h6" gutterBottom align="left">
@@ -107,9 +100,13 @@ const OtpVerification: React.FC = () => {
             {email}
           </Typography>
 
-          <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            sx={{ width: "60vh" }}
+          >
             <MuiOtpInput
-              style={{ marginTop: "30px" }}
+              sx={{ mt: 3 }}
               value={formik.values.otp}
               onChange={(value) => formik.setFieldValue("otp", value)}
               onBlur={() => formik.setFieldTouched("otp", true)}
@@ -133,12 +130,12 @@ const OtpVerification: React.FC = () => {
               </Typography>
             )}
 
-            <div
-              style={{
+            <Box
+              sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginTop: "50px",
+                mt: "50px",
               }}
             >
               <Button variant="text" onClick={handleResendOtp}>
@@ -148,17 +145,18 @@ const OtpVerification: React.FC = () => {
               <Button
                 type="submit"
                 variant="contained"
-                style={{
+                sx={{
                   float: "inline-end",
-                  padding: "8px 50px",
+                  px: "50px",
+                  py: "8px",
                   borderRadius: "10px",
                 }}
               >
                 Verify
               </Button>
-            </div>
-          </form>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       </Container>
     </React.Fragment>
   );

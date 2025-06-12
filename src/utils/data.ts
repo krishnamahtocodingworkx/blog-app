@@ -6,3 +6,7 @@ export const loginInitialValues = {
 export const forgotPasswordInitialValues = {
   email: "",
 };
+
+export const otpVerificationInitialValues = {
+  otp: "",
+};
