@@ -20,8 +20,7 @@ import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
-import { loginApiServices } from "../../services/AxiosClient";
-import { ENDPOINTS } from "../../utils/endPoints";
+import { authServices } from "../../services/authServices";
 import { STRING } from "../../utils/string";
 import { ROUTES } from "../../routes/routesName";
 
@@ -39,12 +38,10 @@ const Login: React.FC = () => {
     validationSchema: loginValidationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        const response = await loginApiServices.post(ENDPOINTS.LOGIN, {
-          email: values.email,
-          password: values.password,
-        });
+        const response = await authServices.login(values);
         if (response.data && response.data.code === 200) {
           const token = response.data.data.token;
+          console.log(token);
           dispatch(
             login({
               email: response.data.data.email,
