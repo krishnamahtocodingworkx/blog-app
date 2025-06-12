@@ -40,7 +40,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/reset-password"
+        path={ROUTES.resetPassword}
         element={
           <PublicRoute>
             <ResetPassword />
@@ -56,7 +56,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/blog-cards"
+        path={ROUTES.blogCards}
         element={
           <PrivateRoute>
             <BlogCards />
@@ -64,7 +64,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/add-blog"
+        path={ROUTES.addBlog}
         element={
           <PrivateRoute>
             <AddBlog />
@@ -72,7 +72,7 @@ const AppRoutes: React.FC = () => (
         }
       />
       <Route
-        path="/blog-list"
+        path={ROUTES.blogList}
         element={
           <PrivateRoute>
             <BlogList />

@@ -2,7 +2,6 @@ import * as React from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { Container, Button, Typography, Box } from "@mui/material";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import "../../index.css";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
@@ -11,6 +10,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { otpVerificationServices } from "../../services/otpVerification";
 import { resendOTPService } from "../../services/resendOTP";
+import { otpVerificationInitialValues } from "../../utils/data";
+import { otpVerificationValidationSchema } from "../../utils/validationSchema";
 
 const OtpVerification: React.FC = () => {
   const { email, id } = useSelector((state: RootState) => state.auth);
@@ -33,14 +34,8 @@ const OtpVerification: React.FC = () => {
   };
 
   const formik = useFormik({
-    initialValues: {
-      otp: "",
-    },
-    validationSchema: Yup.object({
-      otp: Yup.string()
-        .required("OTP is required")
-        .matches(/^\d{4}$/, "OTP must be exactly 4 digits"),
-    }),
+    initialValues: otpVerificationInitialValues,
+    validationSchema: otpVerificationValidationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         if (!storedId) {
