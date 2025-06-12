@@ -37,7 +37,7 @@ const BlogList: React.FC = () => {
 
   // Pagination state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(9);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [paginatedBlogs, setPaginatedBlogs] = useState<any[]>([]);
 
   useEffect(() => {
@@ -252,7 +252,7 @@ const BlogList: React.FC = () => {
                 setRowsPerPage(parseInt(event.target.value, 10));
                 setPage(0);
               }}
-              rowsPerPageOptions={[5, 9, 10, 25]}
+              rowsPerPageOptions={[5, 10, 15]}
               labelRowsPerPage="Rows per page"
               sx={{ width: { xs: "100%", sm: "auto" } }}
             />
