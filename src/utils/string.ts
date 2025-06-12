@@ -3,4 +3,5 @@ export const STRING = {
   emailPlaceholder: "Enter Email Address",
   passwordPlaceholder: "Enter Password",
   forgotPassword: "Forgot password?",
+  resetPasswordInfo: "You can reset your password here",
 };

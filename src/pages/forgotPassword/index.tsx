@@ -1,55 +1,46 @@
 import * as React from "react";
+import "../../index.css";
 import { useDispatch } from "react-redux";
 import { setEmail, setId } from "../../redux/slices/authSlice";
 import { loginApiServices } from "../../services/AxiosClient";
 import {
-  CssBaseline,
   Container,
   Button,
   TextField,
   Typography,
   Link as MuiLink,
+  Box,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
-import "../../index.css";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
+import { ENDPOINTS } from "../../utils/endPoints";
+import { forgotPasswordValidationSchema } from "../../utils/validationSchema";
+import { forgotPasswordInitialValues } from "../../utils/data";
+import { STRING } from "../../utils/string";
+import { ROUTES } from "../../routes/routesName";
 
-type Props = {};
-
-const ForgotPassword: React.FC<Props> = () => {
+const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-    }),
+    initialValues: forgotPasswordInitialValues,
+    validationSchema: forgotPasswordValidationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
-        // resend-otp API with email only
         const response = await loginApiServices.post(
-          "/api/v1/user/resend-otp",
-          {
-            email: values.email,
-          }
+          ENDPOINTS.FORGOT_PASSWORD,
+          { email: values.email }
         );
-
         const id = response.data?.data?.id || response.data?.data?._id;
         if (id) {
           dispatch(setEmail(values.email));
           dispatch(setId(id));
           sessionStorage.setItem("userId", id);
-          navigate("/otp-verification");
+          navigate(ROUTES.otpVerification);
         } else {
           setErrors({ email: response.data?.message || "Failed to send OTP." });
         }
@@ -62,137 +53,145 @@ const ForgotPassword: React.FC<Props> = () => {
       }
     },
   });
+
   return (
-    <React.Fragment>
-      <CssBaseline />
-      {/* *****************************parent-container start*************************  */}
-      <Container
-        style={{
-          // border: "1px solid black",
+    <Container
+      maxWidth={false}
+      disableGutters
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: { xs: "column", md: "row" },
+        p: 0,
+        m: 0,
+        bgcolor: "#f5f5f5",
+      }}
+    >
+      {/* left-container */}
+      <Box
+        sx={{
+          display: { xs: "none", md: "flex" },
+          width: { md: 400, lg: 440, xl: 480 },
+          minWidth: 320,
+          maxWidth: 480,
           height: "100vh",
-          display: "flex",
-          justifyContent: "space-between",
+          bgcolor: "#fff",
+          boxShadow: 2,
+          flexShrink: 0,
         }}
       >
-        {/* left-container  */}
         <Tutorial />
+      </Box>
 
-        {/* ************************right-container start**************************  */}
-        <div
-          style={{
-            // border: "1px solid black",
-            padding: "20px",
-            margin: "50px",
+      {/* right-container */}
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          px: { xs: 2, md: 8 },
+          py: { xs: 4, md: 8 },
+          bgcolor: "#fff",
+        }}
+      >
+        <Title />
+        <Typography
+          variant="h6"
+          gutterBottom
+          align="left"
+          sx={{
+            width: "100%",
+            maxWidth: 400,
+            fontWeight: 600,
+            mb: 2.5,
           }}
         >
-          {/* DiveBuddiesTitle Component */}
-          <Title />
-
-          {/* ******************forgot-password heading start*******************  */}
-          <Typography
-            variant="h6"
-            gutterBottom
-            align="left"
-            style={{
-              // border: "1px solid black",
+          {STRING.forgotPassword}
+        </Typography>
+        <Typography
+          variant="body2"
+          gutterBottom
+          align="left"
+          sx={{ width: "100%", maxWidth: 400 }}
+        >
+          {STRING.resetPasswordInfo || "You can reset your password here"}
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={formik.handleSubmit}
+          sx={{
+            width: "100%",
+            maxWidth: 400,
+            bgcolor: "#fff",
+            borderRadius: 3,
+            boxShadow: { xs: 0, sm: 2 },
+            p: { xs: 2, sm: 4 },
+            mt: 3,
+          }}
+        >
+          <Box sx={{ mb: 2 }}>
+            <Typography variant="subtitle1" gutterBottom>
+              Email Address
+            </Typography>
+            <TextField
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  borderRadius: "10px",
+                  height: "40px",
+                },
+              }}
+              fullWidth
+              placeholder={STRING.emailPlaceholder}
+              variant="outlined"
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.email && Boolean(formik.errors.email)}
+              helperText={formik.touched.email && formik.errors.email}
+            />
+          </Box>
+          <Box
+            sx={{
               display: "flex",
-              justifyContent: "flex-start",
-              marginBottom: "20px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mt: 6,
             }}
           >
-            Forgot Password?
-          </Typography>
-          {/* ******************forgot-password heading end******************  */}
-
-          {/* ****************************reset password link start*******************************  */}
-          <Typography variant="body2" gutterBottom align="left">
-            You can reset your password here
-          </Typography>
-          {/* ****************************reset password link end*******************************  */}
-
-          {/* ********************************form-section start********************************  */}
-          <form
-            onSubmit={formik.handleSubmit}
-            style={{ width: "60vh", marginTop: "30px" }}
-          >
-            {/* ***************************form-field for email start************************* */}
-            <div
-              style={
-                {
-                  // border: "1px solid black",
-                }
-              }
-            >
-              {/* email-label  */}
-              <Typography variant="subtitle1" gutterBottom>
-                Email Address
-              </Typography>
-              {/* TextField for email input  */}
-              <TextField
-                sx={{
-                  // Root class for the input field
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: "10px",
-                    height: "40px",
-                  },
-                }}
-                fullWidth
-                placeholder="Enter Email Address"
-                variant="outlined"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.email && Boolean(formik.errors.email)}
-                helperText={formik.touched.email && formik.errors.email}
-              />
-            </div>
-            {/* ***************************form-field for email end************************* */}
-
-            {/* back-to login link */}
-            <div
-              style={{
-                // border: "1px solid black",
+            <MuiLink
+              component={RouterLink}
+              to={ROUTES.login}
+              underline="hover"
+              variant="body2"
+              sx={{
                 display: "flex",
-                justifyContent: "space-between",
                 alignItems: "center",
-                marginTop: "50px",
               }}
             >
-              <MuiLink
-                component={RouterLink}
-                to="/"
-                underline="hover"
-                variant="body2"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <KeyboardArrowLeftIcon />
-                Back to Log in
-              </MuiLink>
-              {/* sendOTP-btn  */}
-              <Button
-                type="submit"
-                variant="contained"
-                style={{
-                  float: "inline-end",
-                  padding: "8px 50px",
-                  borderRadius: "10px",
-                }}
-                disabled={!(formik.isValid && formik.dirty)}
-              >
-                Send OTP
-              </Button>
-            </div>
-          </form>
-          {/* ********************************form-section end********************************  */}
-        </div>
-        {/* ************************right-container end**************************  */}
-      </Container>
-      {/* *****************************parent-container end*************************  */}
-    </React.Fragment>
+              <KeyboardArrowLeftIcon />
+              Back to Log in
+            </MuiLink>
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{
+                px: 5,
+                py: 1.5,
+                borderRadius: "10px",
+                fontWeight: 600,
+              }}
+              disabled={!(formik.isValid && formik.dirty)}
+            >
+              Send OTP
+            </Button>
+          </Box>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

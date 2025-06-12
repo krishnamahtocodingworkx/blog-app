@@ -7,6 +7,7 @@ import {
   InputAdornment,
   IconButton,
   Link as MuiLink,
+  Box,
 } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -21,6 +22,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 import { loginApiServices } from "../../services/AxiosClient";
 import { ENDPOINTS } from "../../utils/endPoints";
+import { STRING } from "../../utils/string";
+import { ROUTES } from "../../routes/routesName";
 
 const Login: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -42,7 +45,6 @@ const Login: React.FC = () => {
         });
         if (response.data && response.data.code === 200) {
           const token = response.data.data.token;
-          console.log("Login successful. Token:", token);
           dispatch(
             login({
               email: response.data.data.email,
@@ -65,8 +67,8 @@ const Login: React.FC = () => {
     <React.Fragment>
       {/* parent-container start  */}
       <Container
-        style={{
-          // border: "1px solid black",
+        disableGutters
+        sx={{
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -76,11 +78,10 @@ const Login: React.FC = () => {
         <Tutorial />
 
         {/* right-container  */}
-        <div
-          style={{
-            // border: "1px solid black",
-            padding: "20px",
-            margin: "50px",
+        <Box
+          sx={{
+            p: "20px",
+            m: "50px",
           }}
         >
           {/* Title Component  */}
@@ -90,25 +91,22 @@ const Login: React.FC = () => {
             variant="h6"
             gutterBottom
             align="left"
-            style={{
-              // border: "1px solid black",
+            sx={{
               display: "flex",
               justifyContent: "flex-start",
-              marginBottom: "20px",
+              mb: "20px",
             }}
           >
-            Sign In to your account
+            {STRING.loginHeading}
           </Typography>
           {/* ********************************form-section start********************************  */}
-          <form onSubmit={formik.handleSubmit} style={{ width: "60vh" }}>
+          <Box
+            component="form"
+            onSubmit={formik.handleSubmit}
+            sx={{ width: "60vh" }}
+          >
             {/* *************************form-field for email start*******************************  */}
-            <div
-              style={
-                {
-                  // border: "1px solid black",
-                }
-              }
-            >
+            <Box sx={{ mb: 2 }}>
               {/* email-label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Email Address
@@ -116,14 +114,13 @@ const Login: React.FC = () => {
               {/* email-TextField  */}
               <TextField
                 sx={{
-                  // Root class for the input field
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
                     height: "40px",
                   },
                 }}
                 fullWidth
-                placeholder="Enter Email Address"
+                placeholder={STRING.emailPlaceholder}
                 variant="outlined"
                 name="email"
                 value={formik.values.email}
@@ -132,16 +129,11 @@ const Login: React.FC = () => {
                 error={formik.touched.email && Boolean(formik.errors.email)}
                 helperText={formik.touched.email && formik.errors.email}
               />
-            </div>
+            </Box>
             {/* ****************************form-field for email end ***************************************  */}
 
             {/* *************************form-field for password start************************************* */}
-            <div
-              style={{
-                // border: "1px solid black",
-                marginTop: "16px",
-              }}
-            >
+            <Box sx={{ mt: "16px" }}>
               {/* password-label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Password
@@ -149,7 +141,6 @@ const Login: React.FC = () => {
               {/* password-TextField  */}
               <TextField
                 sx={{
-                  // Root class for the input field
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
                     height: "40px",
@@ -157,7 +148,7 @@ const Login: React.FC = () => {
                 }}
                 fullWidth
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter Password"
+                placeholder={STRING.passwordPlaceholder}
                 variant="outlined"
                 name="password"
                 value={formik.values.password}
@@ -167,62 +158,60 @@ const Login: React.FC = () => {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
                 helperText={formik.touched.password && formik.errors.password}
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={togglePasswordVisibility}
-                          edge="end"
-                          aria-label="toggle password visibility"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  },
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        edge="end"
+                        aria-label="toggle password visibility"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
-            </div>
+            </Box>
             {/* *************************form-field for password end************************************* */}
 
             {/* form-field for forgot-password and login-btn start */}
-            <div
-              style={{
-                // border: "1px solid black",
+            <Box
+              sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginTop: "50px",
+                mt: "50px",
               }}
             >
               <MuiLink
                 component={RouterLink}
-                to="/forgot-password"
+                to={ROUTES.forgotPassword}
                 underline="hover"
                 variant="body2"
-                style={{ padding: "8px" }}
+                sx={{ p: "8px" }}
               >
-                Forgot password?
+                {STRING.forgotPassword}
               </MuiLink>
               {/* login-btn  */}
               <Button
                 type="submit"
                 variant="contained"
-                style={{
-                  float: "inline-end",
-                  padding: "8px 50px",
+                sx={{
+                  px: "50px",
+                  py: "8px",
                   borderRadius: "10px",
+                  float: "inline-end",
                 }}
                 disabled={!(formik.isValid && formik.dirty)}
               >
                 Login
               </Button>
-            </div>
+            </Box>
             {/* form-field for forgot-password and login-btn end */}
-          </form>
+          </Box>
           {/* **********************************form-section end**********************************  */}
-        </div>
+        </Box>
       </Container>
       {/* parent-container end  */}
     </React.Fragment>
