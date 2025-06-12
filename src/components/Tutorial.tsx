@@ -1,5 +1,5 @@
 import bgImage from "../assets/images/bg.jpg";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
@@ -7,9 +7,8 @@ const Tutorial: React.FC = () => {
   return (
     <>
       {/* ***************************left-container start**********************  */}
-      <div
-        style={{
-          // border: "1px solid black",
+      <Box
+        sx={{
           display: "flex",
           position: "relative",
           padding: "20px",
@@ -17,9 +16,8 @@ const Tutorial: React.FC = () => {
         }}
       >
         {/* *************************diving-activities heading start**********************************  */}
-        <div
-          style={{
-            // border: "1px solid rgb(203, 199, 199)",
+        <Box
+          sx={{
             position: "absolute",
             borderRadius: "0 16px 16px 16px",
             backgroundColor: "#fff",
@@ -28,7 +26,7 @@ const Tutorial: React.FC = () => {
           <Typography
             variant="h6"
             gutterBottom
-            style={{
+            sx={{
               border: "1px solid rgb(203, 199, 199)",
               borderRadius: "16px",
               margin: "10px",
@@ -38,28 +36,23 @@ const Tutorial: React.FC = () => {
           >
             Diving Activities
           </Typography>
-        </div>
+        </Box>
         {/* ****************************diving-activities heading end*************************************  */}
 
         {/* ********************backgroundImage start*************************  */}
-        <img
-          width="100%"
-          src={bgImage}
-          alt="bgImage"
-          // style={{ borderTopRightRadius: "5%" }}
-        />
+        <Box component="img" width="100%" src={bgImage} alt="bgImage" />
         {/* ********************backgroundImage end*************************  */}
+
         {/* headingOfBgImage start */}
         <Typography
           variant="h4"
           gutterBottom
-          style={{
+          sx={{
             position: "absolute",
             bottom: "20%",
             display: "flex",
             color: "#fff",
             margin: "16px",
-            // border: "1px solid #fff",
           }}
         >
           Ocean Adventures Await-Dive In!
@@ -67,8 +60,8 @@ const Tutorial: React.FC = () => {
         {/*  headingOfBgImage end */}
 
         {/* *********************************back-btn start******************************  */}
-        <div
-          style={{
+        <Box
+          sx={{
             border: "1px solid rgb(203, 199, 199)",
             position: "absolute",
             bottom: "30px",
@@ -82,8 +75,7 @@ const Tutorial: React.FC = () => {
           <Button
             type="submit"
             variant="contained"
-            style={{
-              // border: "1px solid black",
+            sx={{
               backgroundColor: "#fff",
               color: "black",
               borderRadius: "10px",
@@ -92,12 +84,12 @@ const Tutorial: React.FC = () => {
           >
             <ArrowBackIcon />
           </Button>
-        </div>
+        </Box>
         {/* *********************************back-btn end******************************  */}
 
         {/* *********************************forward-btn start***********************************  */}
-        <div
-          style={{
+        <Box
+          sx={{
             border: "1px solid rgb(203, 199, 199)",
             position: "absolute",
             bottom: "18px",
@@ -111,16 +103,16 @@ const Tutorial: React.FC = () => {
           <Button
             type="submit"
             variant="contained"
-            style={{
+            sx={{
               borderRadius: "10px",
               padding: "8px 30px",
             }}
           >
             <ArrowForwardIcon />
           </Button>
-        </div>
+        </Box>
         {/* *********************************forward-btn end***********************************  */}
-      </div>
+      </Box>
       {/* ***************************left-container end**********************  */}
     </>
   );

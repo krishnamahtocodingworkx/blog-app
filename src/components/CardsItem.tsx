@@ -18,54 +18,28 @@ const CardsItem: React.FC = () => {
         display: "flex",
         flexWrap: "wrap",
         gap: 4,
-        justifyContent: { xs: "center", sm: "flex-start" },
-        alignItems: "stretch",
+        justifyContent: "flex-start",
         mt: 4,
-        width: "100%",
-        p: { xs: 1, sm: 2 },
       }}
     >
       {blogs.length === 0 ? (
-        <Box sx={{ width: "100%", textAlign: "center", mt: 4 }}>
-          <Typography variant="h6" color="text.secondary">
-            No blogs to display.
-          </Typography>
-        </Box>
+        <Typography variant="h6" color="text.secondary">
+          No blogs to display.
+        </Typography>
       ) : (
-        blogs.map((blog) => (
-          <Box
-            key={blog.id}
-            sx={{
-              flex: {
-                xs: "0 1 100%", // 1 per row on mobile
-                sm: "0 1 48%", // 2 per row on tablet
-                md: "0 1 31%", // 3 per row on desktop
-              },
-              maxWidth: {
-                xs: "100%",
-                sm: "48%",
-                md: "31%",
-              },
-              mb: 3,
-              display: "flex",
-            }}
-          >
+        blogs.map((blog) => {
+          // console.log(blog.coverImageUrl);
+          return (
             <Card
-              sx={{
-                width: "100%",
-                borderRadius: 3,
-                boxShadow: 3,
-                display: "flex",
-                flexDirection: "column",
-                height: "100%",
-              }}
+              key={blog.id}
+              sx={{ width: 390, borderRadius: 3, boxShadow: 3 }}
             >
               <CardMedia
                 component="img"
                 image={blog.coverImageUrl}
                 alt={blog.title}
               />
-              <CardContent sx={{ flexGrow: 1 }}>
+              <CardContent>
                 <Typography
                   gutterBottom
                   variant="h6"
@@ -89,8 +63,8 @@ const CardsItem: React.FC = () => {
                 </Button>
               </CardContent>
             </Card>
-          </Box>
-        ))
+          );
+        })
       )}
     </Box>
   );

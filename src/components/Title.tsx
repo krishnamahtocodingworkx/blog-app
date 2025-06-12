@@ -1,24 +1,34 @@
 import logo from "../assets/images/logo.jpg";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+
 const Title: React.FC = () => {
   return (
     <>
-      {/* DiveBuddies image and heading  */}
+      {/* DiveBuddies image and heading */}
       <Typography
         variant="h5"
         gutterBottom
         align="left"
-        style={{
+        sx={{
           fontWeight: "bold",
-          // border: "1px solid black",
           display: "flex",
           justifyContent: "flex-start",
           alignItems: "center",
-          marginBottom: "20px",
-          gap: "10px",
+          mb: 2.5,
+          gap: 2,
         }}
       >
-        <img width="50" src={logo} alt="logo" />
+        <Box
+          component="img"
+          src={logo}
+          alt="logo"
+          sx={{
+            width: 50,
+            height: 50,
+            objectFit: "cover",
+            borderRadius: "8px",
+          }}
+        />
         Blog Book
       </Typography>
     </>
