@@ -39,7 +39,7 @@ const BlogList: React.FC = () => {
       );
     }
     setFilteredBlogs(filtered);
-    setPage(0); // Reset to first page on search/filter change
+    setPage(0);
   }, [blogs, search]);
 
   // Pagination logic
