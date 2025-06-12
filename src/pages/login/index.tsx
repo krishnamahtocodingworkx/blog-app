@@ -20,7 +20,7 @@ import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
-import { authServices } from "../../services/authServices";
+import { authServices } from "../../services/auth";
 import { STRING } from "../../utils/string";
 import { ROUTES } from "../../routes/routesName";
 

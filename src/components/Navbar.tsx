@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../redux/slices/authSlice";
 import { RootState } from "../redux/store";
-import { loginApiServices } from "../services/AxiosClient";
+import { logoutService } from "../services/logout";
 
 const user = {
   name: "Mukul Karnwal",
@@ -41,15 +41,7 @@ function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await loginApiServices.post(
-        "/api/v1/user/logout",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await logoutService.logout(token || "");
       console.log("Logout API response:", response.data);
     } catch (error) {
       console.error("Logout API error:", error);
@@ -65,7 +57,6 @@ function Navbar() {
     <AppBar
       position="fixed"
       color="default"
-      // elevation={0}
       sx={{
         "& .MuiToolbar-root": {
           bgcolor: "rgba(255, 255, 255, 1)",

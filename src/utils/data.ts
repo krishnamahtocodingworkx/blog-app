@@ -10,3 +10,8 @@ export const forgotPasswordInitialValues = {
 export const otpVerificationInitialValues = {
   otp: "",
 };
+
+export const resetPasswordInitialValues = {
+  password: "",
+  confirmPassword: "",
+};

@@ -9,7 +9,7 @@ import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { otpVerificationServices } from "../../services/otpVerificationServices";
+import { otpVerificationServices } from "../../services/otpVerification";
 import { resendOTPService } from "../../services/resendOTP";
 
 const OtpVerification: React.FC = () => {
@@ -51,6 +51,7 @@ const OtpVerification: React.FC = () => {
           id: storedId,
           otp: values.otp,
         });
+        console.log("OTP Verification Response:", response);
         if (response.data?.code === 200) {
           navigate("/reset-password");
         } else {

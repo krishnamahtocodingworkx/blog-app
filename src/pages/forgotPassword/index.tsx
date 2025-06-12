@@ -19,7 +19,7 @@ import { forgotPasswordValidationSchema } from "../../utils/validationSchema";
 import { forgotPasswordInitialValues } from "../../utils/data";
 import { STRING } from "../../utils/string";
 import { ROUTES } from "../../routes/routesName";
-import { forgotPasswordServices } from "../../services/forgotPasswordServices";
+import { forgotPasswordServices } from "../../services/forgotPassword";
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -32,6 +32,7 @@ const ForgotPassword: React.FC = () => {
       try {
         const response = await forgotPasswordServices.sendOtp(values.email);
         const id = response.data?.data?.id || response.data?.data?._id;
+        console.log("id received", id);
         if (id) {
           dispatch(setEmail(values.email));
           dispatch(setId(id));

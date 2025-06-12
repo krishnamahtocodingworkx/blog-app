@@ -1,28 +1,26 @@
 import * as React from "react";
 import {
-  CssBaseline,
   Container,
   Button,
   TextField,
   Typography,
   InputAdornment,
   IconButton,
+  Box,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import "../../index.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-// import { useDispatch } from "react-redux";
-// import { login } from "../../redux/slices/authSlice";
 import Tutorial from "../../components/Tutorial";
 import Title from "../../components/Title";
-import { loginApiServices } from "../../services/AxiosClient";
+import { resetPasswordServices } from "../../services/resetPassword";
+import { resetPasswordInitialValues } from "../../utils/data";
+import { resetPasswordValidationSchema } from "../../utils/validationSchema";
+import "../../index.css";
 
 const ResetPassword: React.FC = () => {
-  // const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
 
@@ -31,33 +29,21 @@ const ResetPassword: React.FC = () => {
   };
 
   const { id } = useSelector((state: RootState) => state.auth);
-  
+
   const storedId = id || sessionStorage.getItem("userId");
 
   const formik = useFormik({
-    initialValues: {
-      password: "",
-    },
-    validationSchema: Yup.object({
-      password: Yup.string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters"),
-      confirmPassword: Yup.string()
-        .required("Confirm Password is required")
-        .oneOf([Yup.ref("password")], "Passwords must match"),
-    }),
+    initialValues: resetPasswordInitialValues,
+    validationSchema: resetPasswordValidationSchema,
     onSubmit: async (values, { setSubmitting, setErrors }) => {
       try {
         if (!storedId) {
           setErrors({ password: "User ID not found. Please try again." });
           return;
         }
-        const response = await loginApiServices.post(
-          "/api/v1/user/reset-password",
-          {
-            id: storedId,
-            password: values.password,
-          }
+        const response = await resetPasswordServices.reset(
+          storedId,
+          values.password
         );
         console.log("Reset Password Response:", response.data);
         if (response.data && response.data.code === 200) {
@@ -77,11 +63,10 @@ const ResetPassword: React.FC = () => {
 
   return (
     <React.Fragment>
-      <CssBaseline />
       {/* *****************************parent-container start*************************  */}
       <Container
-        style={{
-          // border: "1px solid black",
+        disableGutters
+        sx={{
           height: "100vh",
           display: "flex",
           justifyContent: "space-between",
@@ -91,11 +76,10 @@ const ResetPassword: React.FC = () => {
         <Tutorial />
 
         {/* ************************right-container start**************************  */}
-        <div
-          style={{
-            // border: "1px solid black",
-            padding: "20px",
-            margin: "50px",
+        <Box
+          sx={{
+            p: "20px",
+            m: "50px",
           }}
         >
           {/* DiveBuddiesHead Component*/}
@@ -106,11 +90,10 @@ const ResetPassword: React.FC = () => {
             variant="h5"
             gutterBottom
             align="left"
-            style={{
-              // border: "1px solid black",
+            sx={{
               display: "flex",
               justifyContent: "flex-start",
-              marginBottom: "20px",
+              mb: "20px",
             }}
           >
             Reset Password
@@ -118,35 +101,22 @@ const ResetPassword: React.FC = () => {
           {/* **************************resetPassword heading end**************************/}
 
           {/* **************************Enter New Password heading start**************************/}
-          <Typography
-            variant="body1"
-            gutterBottom
-            align="left"
-            style={
-              {
-                // border: "1px solid black"
-              }
-            }
-          >
+          <Typography variant="body1" gutterBottom align="left">
             Enter the new password to secure your account
           </Typography>
           {/* **************************Enter New Password heading end**************************/}
 
           {/* ******************************form-section start********************************* */}
-          <form
+          <Box
+            component="form"
             onSubmit={formik.handleSubmit}
-            style={{
+            sx={{
               width: "60vh",
             }}
           >
             {/* ********************form-field section start********************* */}
             {/* new-password field start */}
-            <div
-              style={{
-                // border: "1px solid black",
-                marginTop: "16px",
-              }}
-            >
+            <Box sx={{ mt: "16px" }}>
               {/* new-password label  */}
               <Typography variant="subtitle1" gutterBottom>
                 New Password
@@ -154,7 +124,6 @@ const ResetPassword: React.FC = () => {
               {/* TextField for new password input  */}
               <TextField
                 sx={{
-                  // Root class for the input field
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
                     height: "40px",
@@ -173,11 +142,11 @@ const ResetPassword: React.FC = () => {
                 }
                 helperText={formik.touched.password && formik.errors.password}
               />
-            </div>
+            </Box>
             {/* new-password field end */}
 
             {/* confirm-password field start  */}
-            <div style={{ paddingTop: "30px" }}>
+            <Box sx={{ pt: "30px" }}>
               {/* confirm-password label  */}
               <Typography variant="subtitle1" gutterBottom>
                 Confirm Password
@@ -185,7 +154,6 @@ const ResetPassword: React.FC = () => {
               {/* TextField for confirm-password input  start */}
               <TextField
                 sx={{
-                  // Root class for the input field
                   "& .MuiOutlinedInput-root": {
                     borderRadius: "10px",
                     height: "40px",
@@ -196,57 +164,63 @@ const ResetPassword: React.FC = () => {
                 placeholder="Enter confirm password"
                 variant="outlined"
                 name="confirmPassword"
+                value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                slotProps={{
-                  input: {
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          onClick={togglePasswordVisibility}
-                          edge="end"
-                          aria-label="toggle password visibility"
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  },
+                error={
+                  formik.touched.confirmPassword &&
+                  Boolean(formik.errors.confirmPassword)
+                }
+                helperText={
+                  formik.touched.confirmPassword &&
+                  formik.errors.confirmPassword
+                }
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={togglePasswordVisibility}
+                        edge="end"
+                        aria-label="toggle password visibility"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
                 }}
               />
               {/* TextField for confirm-password input end */}
-            </div>
+            </Box>
             {/* confirm-password field end  */}
 
             {/* save-btn start */}
-            <div
-              style={{
-                // border: "1px solid black",
+            <Box
+              sx={{
                 display: "flex",
                 justifyContent: "flex-end",
                 alignItems: "center",
-                padding: "8px",
-                marginTop: "20px",
+                p: "8px",
+                mt: "20px",
               }}
             >
               <Button
                 type="submit"
                 variant="contained"
-                style={{
-                  padding: "8px 50px",
+                sx={{
+                  px: "50px",
+                  py: "8px",
                   borderRadius: "10px",
                 }}
-                disabled={!(formik.isValid && formik.dirty)}
               >
                 Save
               </Button>
-            </div>
+            </Box>
             {/* save-btn end */}
 
             {/* ********************form-field section end********************* */}
-          </form>
+          </Box>
           {/* ******************************form-section end********************************* */}
-        </div>
+        </Box>
         {/* ************************right-container end**************************  */}
       </Container>
       {/* *****************************parent-container end*************************  */}
