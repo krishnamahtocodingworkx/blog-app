@@ -2,9 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Box, Paper, Typography, Toolbar, GlobalStyles } from "@mui/material";
 import Navbar from "./Navbar";
 import Menu from "./Menu";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../redux/store";
-import { updateBlog } from "../redux/slices/blogSlice";
 import Pagination from "./Pagination";
 import PrevNextBtn from "./PrevNextBtn";
 import DialogEdit from "./DialogEdit";
@@ -13,94 +10,121 @@ import SearchBar from "./SearchBar";
 import FilterBlogs from "./FilterBlogs";
 import BlogsTable from "./BlogsTable";
 import { STRING } from "../utils/string";
+import { blogService } from "../services/blog";
+import { ENDPOINTS } from "../utils/endPoints";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const BlogList: React.FC = () => {
-  const dispatch = useDispatch();
-  const blogs = useSelector((state: RootState) => state.blog.blogs);
-
   // Pagination state
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [paginatedBlogs, setPaginatedBlogs] = useState<any[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
+
+  // Blogs state
+  const [blogs, setBlogs] = useState<any[]>([]);
 
   // Search/filter state
   const [search, setSearch] = useState<string>("");
   const [filterMode, setFilterMode] = useState<boolean>(false);
 
-  // Filtered blogs state
-  const [filteredBlogs, setFilteredBlogs] = useState<any[]>([]);
-
-  // Filtering/searching logic
-  useEffect(() => {
-    let filtered = blogs;
-    if (search.trim()) {
-      filtered = filtered.filter((blog: any) =>
-        blog.title.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-    setFilteredBlogs(filtered);
-    setPage(0);
-  }, [blogs, search]);
-
-  // Pagination logic
-  useEffect(() => {
-    setPaginatedBlogs(
-      filteredBlogs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-    );
-  }, [filteredBlogs, page, rowsPerPage]);
-
-  const totalPages = Math.ceil(filteredBlogs.length / rowsPerPage) || 1;
-
   // Edit dialog state
-  const [editOpen, setEditOpen] = React.useState(false);
-  const [editBlog, setEditBlog] = React.useState<any>(null);
-  const [editTitle, setEditTitle] = React.useState("");
-  const [editDate, setEditDate] = React.useState("");
+  const [editOpen, setEditOpen] = useState(false);
+  const [setEditBlog] = useState<any>(null);
+  const [editTitle, setEditTitle] = useState("");
+  const [editDate, setEditDate] = useState("");
 
   // Delete dialog state
-  const [deleteOpen, setDeleteOpen] = React.useState(false);
-  const [deleteBlog, setDeleteBlog] = React.useState<any>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteBlog, setDeleteBlog] = useState<any>(null);
 
-  // Actions
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Parse query params for page/limit
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const pageParam = parseInt(params.get("page") || "1", 10) - 1;
+    const limitParam = parseInt(params.get("limit") || "5", 10);
+    setPage(pageParam >= 0 ? pageParam : 0);
+    setRowsPerPage(limitParam > 0 ? limitParam : 5);
+    // eslint-disable-next-line
+  }, [location.search]);
+
+  // Fetch blogs with pagination
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const url = `${ENDPOINTS.BLOGS}?limit=${rowsPerPage}&page=${page + 1}`;
+        const res = await blogService.fetchBlogs?.(url);
+        // Access blogs as result
+        setBlogs(res?.data?.result || []);
+        setTotalCount(res?.data?.total || 0);
+      } catch (err) {
+        setBlogs([]);
+        setTotalCount(0);
+      }
+    };
+    fetchBlogs();
+  }, [page, rowsPerPage]);
+
+  // Pagination handlers
+  const handlePageChange = (newPage: number) => {
+    navigate(`/blog-list?page=${newPage + 1}&limit=${rowsPerPage}`);
+  };
+  const handleRowsPerPageChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const newLimit = parseInt(event.target.value, 10);
+    navigate(`/blog-list?page=1&limit=${newLimit}`);
+  };
+
+  // Search logic
+  const handleSearch = (value: string) => {
+    setSearch(value);
+    setBlogs((prevBlogs) =>
+      prevBlogs.filter((blog: any) =>
+        blog.title?.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+    setPage(0);
+  };
+
+  // Filter logic
+  const handleFilter = (value: string) => {
+    setSearch(value);
+    setBlogs((prevBlogs) =>
+      prevBlogs.filter((blog: any) =>
+        blog.title?.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+    setPage(0);
+  };
+
+  const totalPages = Math.ceil(totalCount / rowsPerPage) || 1;
+
+  // Edit/Delete actions
   const handleEdit = (blog: any) => {
     setEditBlog(blog);
     setEditTitle(blog.title);
     setEditDate(blog.createdAt ? blog.createdAt.slice(0, 10) : "");
     setEditOpen(true);
   };
-
-  const handleDeleteClick = (blog: any) => {
-    setDeleteBlog(blog);
-    setDeleteOpen(true);
-  };
-
-  const handleDeleteConfirm = () => {
-    if (deleteBlog) {
-      dispatch(deleteBlog(deleteBlog.id));
-    }
-    setDeleteOpen(false);
-    setDeleteBlog(null);
-  };
-
   const handleEditClose = () => {
     setEditOpen(false);
     setEditBlog(null);
   };
-
   const handleEditSave = () => {
-    if (editBlog) {
-      dispatch(
-        updateBlog({
-          ...editBlog,
-          title: editTitle,
-          createdAt: editDate,
-        })
-      );
-    }
     setEditOpen(false);
     setEditBlog(null);
   };
-
+  const handleDeleteClick = (blog: any) => {
+    setDeleteBlog(blog);
+    setDeleteOpen(true);
+  };
+  const handleDeleteConfirm = () => {
+    setDeleteOpen(false);
+    setDeleteBlog(null);
+  };
   const handleDeleteClose = () => {
     setDeleteOpen(false);
     setDeleteBlog(null);
@@ -177,7 +201,9 @@ const BlogList: React.FC = () => {
                 <SearchBar
                   value={search}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setSearch(e.target.value)
+                    filterMode
+                      ? handleFilter(e.target.value)
+                      : handleSearch(e.target.value)
                   }
                   placeholder={
                     filterMode ? "Filter keyword" : "Search any blog"
@@ -192,7 +218,7 @@ const BlogList: React.FC = () => {
 
             <Box sx={{ width: "100%", overflowX: "auto" }}>
               <BlogsTable
-                filteredBlogs={paginatedBlogs}
+                filteredBlogs={blogs}
                 page={page}
                 rowsPerPage={rowsPerPage}
                 handleEdit={handleEdit}
@@ -214,18 +240,19 @@ const BlogList: React.FC = () => {
             }}
           >
             <Pagination
-              count={blogs.length}
+              count={totalCount}
               page={page}
               rowsPerPage={rowsPerPage}
-              onPageChange={(_event, newPage) => setPage(newPage)}
-              onRowsPerPageChange={(event) => {
-                setRowsPerPage(parseInt(event.target.value, 10));
-                setPage(0);
-              }}
+              onPageChange={(_event, newPage) => handlePageChange(newPage)}
+              onRowsPerPageChange={handleRowsPerPageChange}
             />
             <PrevNextBtn
               page={page}
-              setPage={setPage}
+              setPage={(newPage) =>
+                handlePageChange(
+                  typeof newPage === "function" ? newPage(page) : newPage
+                )
+              }
               totalPages={totalPages}
             />
           </Box>

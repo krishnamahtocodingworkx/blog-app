@@ -3,7 +3,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 interface PrevNextBtnProps {
   page: number;
-  setPage: React.Dispatch<React.SetStateAction<number>>;
+  setPage: (page: number | ((prev: number) => number)) => void;
   totalPages: number;
 }
 
@@ -12,18 +12,11 @@ const PrevNextBtn: React.FC<PrevNextBtnProps> = ({
   setPage,
   totalPages,
 }) => (
-  <Box
-    sx={{
-      display: "flex",
-      justifyContent: "center",
-      mt: 2,
-      gap: 2,
-    }}
-  >
+  <Box sx={{ display: "flex", justifyContent: "center", mt: 2, gap: 2 }}>
     <Button
       variant="outlined"
-      onClick={() => setPage((p) => Math.max(0, p - 1))}
-      disabled={page === 0}
+      onClick={() => setPage((p: number) => Math.max(0, p - 1))}
+      // disabled={page === 0}
     >
       Previous
     </Button>
@@ -32,8 +25,8 @@ const PrevNextBtn: React.FC<PrevNextBtnProps> = ({
     </Typography>
     <Button
       variant="outlined"
-      onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
-      disabled={page >= totalPages - 1}
+      onClick={() => setPage((p: number) => Math.min(totalPages - 1, p + 1))}
+      // disabled={page >= totalPages - 1}
     >
       Next
     </Button>
