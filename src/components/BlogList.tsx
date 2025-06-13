@@ -123,7 +123,6 @@ const BlogList: React.FC = () => {
           bgcolor: "rgba(239, 239, 239, 1)",
         }}
       >
-        {/* menu start */}
         <Box
           sx={{
             height: "100vh",
@@ -134,7 +133,6 @@ const BlogList: React.FC = () => {
         >
           <Menu />
         </Box>
-        {/* menu end */}
         <Box
           sx={{
             flex: 1,
