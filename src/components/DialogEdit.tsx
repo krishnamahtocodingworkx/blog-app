@@ -10,6 +10,7 @@ import {
 
 interface DialogEditProps {
   open: boolean;
+  editBlog: any;
   editTitle: string;
   editDate: string;
   setEditTitle: (value: string) => void;

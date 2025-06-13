@@ -29,7 +29,7 @@ const BlogList: React.FC = () => {
 
   // Edit dialog state
   const [editOpen, setEditOpen] = useState(false);
-  const [setEditBlog] = useState<any>(null);
+  const [editBlog, setEditBlog] = useState<any>(null);
   const [editTitle, setEditTitle] = useState("");
   const [editDate, setEditDate] = useState("");
 
@@ -114,6 +114,19 @@ const BlogList: React.FC = () => {
     setEditBlog(null);
   };
   const handleEditSave = () => {
+    if (!editBlog) return;
+    setBlogs((prevBlogs) => {
+      const idx = prevBlogs.findIndex((blog) => blog.id === editBlog.id);
+      if (idx === -1) return prevBlogs;
+      const updatedBlog = {
+        ...prevBlogs[idx],
+        title: editTitle,
+        createdAt: editDate,
+      };
+      const newBlogs = [...prevBlogs];
+      newBlogs[idx] = updatedBlog;
+      return newBlogs;
+    });
     setEditOpen(false);
     setEditBlog(null);
   };
@@ -122,6 +135,14 @@ const BlogList: React.FC = () => {
     setDeleteOpen(true);
   };
   const handleDeleteConfirm = () => {
+    if (!deleteBlog) return;
+    console.log("Deleting blog with id:", deleteBlog.id);
+    setBlogs((prevBlogs) =>
+      prevBlogs.filter((blog) => {
+        console.log("Comparing", blog.id, "with", deleteBlog.id);
+        return blog.id !== deleteBlog.id;
+      })
+    );
     setDeleteOpen(false);
     setDeleteBlog(null);
   };
@@ -260,6 +281,7 @@ const BlogList: React.FC = () => {
       </Box>
       <DialogEdit
         open={editOpen}
+        editBlog={editBlog}
         editTitle={editTitle}
         editDate={editDate}
         setEditTitle={setEditTitle}
