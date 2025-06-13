@@ -46,7 +46,7 @@ const OtpVerification: React.FC = () => {
           id: storedId,
           otp: values.otp,
         });
-        console.log("OTP Verification Response:", response);
+        console.log("OTP Verification Response:", response.data);
         if (response.data?.code === 200) {
           navigate("/reset-password");
         } else {
