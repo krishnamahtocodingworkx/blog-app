@@ -17,15 +17,9 @@ import { useDispatch } from "react-redux";
 import { addBlog } from "../redux/slices/blogSlice";
 import { useNavigate } from "react-router-dom";
 import { useFormik, FieldArray, FormikProvider } from "formik";
-import * as Yup from "yup";
-
-const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  coverImage: Yup.mixed().required("Cover image is required"),
-  description: Yup.string()
-    .min(50, "Description must be 50 characters")
-    .required("Description is required"),
-});
+import { addBlogInitialValues } from "../utils/data";
+import { addBlogValidationSchema } from "../utils/validationSchema";
+import { addBlogService } from "../services/addBlog";
 
 const AddBlog: React.FC = () => {
   const dispatch = useDispatch();
@@ -39,22 +33,9 @@ const AddBlog: React.FC = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const formik = useFormik({
-    initialValues: {
-      title: "",
-      coverImage: null as File | null,
-      description: "",
-      author: "",
-      sections: [
-        {
-          heading: "",
-          content: "",
-          image: null as File | null,
-          imagePreview: "",
-        },
-      ],
-    },
-    validationSchema,
-    onSubmit: (values) => {
+    initialValues: addBlogInitialValues,
+    validationSchema: addBlogValidationSchema,
+    onSubmit: async (values) => {
       const blogData = {
         id: Date.now(),
         title: values.title,
@@ -67,11 +48,18 @@ const AddBlog: React.FC = () => {
           image: sectionImagePreviews[idx] || "",
         })),
       };
-      dispatch(addBlog(blogData));
-      setOpenSnackbar(true);
-      setTimeout(() => {
-        navigate("/blog-cards");
-      }, 1200);
+
+      // Call your API service here
+      try {
+        await addBlogService.fetchBlogs();
+        dispatch(addBlog(blogData));
+        setOpenSnackbar(true);
+        setTimeout(() => {
+          navigate("/blog-cards");
+        }, 1200);
+      } catch (error) {
+        console.error("Failed to add blog:", error);
+      }
     },
   });
 

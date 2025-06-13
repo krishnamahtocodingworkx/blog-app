@@ -29,3 +29,11 @@ export const resetPasswordValidationSchema = Yup.object({
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password"), ""], "Passwords must match"),
 });
+
+export const addBlogValidationSchema = Yup.object().shape({
+  title: Yup.string().required("Title is required"),
+  coverImage: Yup.mixed().required("Cover image is required"),
+  description: Yup.string()
+    .min(50, "Description must be 50 characters")
+    .required("Description is required"),
+});
