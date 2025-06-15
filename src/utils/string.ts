@@ -6,4 +6,6 @@ export const STRING = {
   resetPasswordInfo: "You can reset your password here",
   homeWelcome: "Welcome to our blog !",
   blogListHeading: "Blog List",
+  readMoreText: "Read More",
+  noBlogToDisplayText: "No blogs to display.",
 };

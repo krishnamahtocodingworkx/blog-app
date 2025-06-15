@@ -7,6 +7,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { STRING } from "../utils/string";
 
 const CardsItem: React.FC = () => {
   const blogs = useSelector((state: RootState) => state.blog.blogs) || [];
@@ -24,7 +25,7 @@ const CardsItem: React.FC = () => {
     >
       {blogs.length === 0 ? (
         <Typography variant="h6" color="text.secondary">
-          No blogs to display.
+          {STRING.noBlogToDisplayText}
         </Typography>
       ) : (
         blogs.map((blog) => {
@@ -65,7 +66,7 @@ const CardsItem: React.FC = () => {
                     fontWeight: 500,
                   }}
                 >
-                  Read More
+                  {STRING.readMoreText}
                 </Button>
               </CardContent>
             </Card>

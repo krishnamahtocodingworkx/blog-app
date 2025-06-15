@@ -4,8 +4,9 @@ export interface Blog {
   id: number;
   title: string;
   coverImageUrl: string;
+  description?: string;
   createdAt?: string;
-  location?: string;
+  authorName?: string;
 }
 
 interface BlogState {
