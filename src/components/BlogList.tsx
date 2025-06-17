@@ -11,8 +11,8 @@ import FilterBlogs from "./FilterBlogs";
 import BlogsTable from "./BlogsTable";
 import { STRING } from "../utils/string";
 import { blogService } from "../services/blog";
+import { useNavigate } from "react-router-dom";
 import { ENDPOINTS } from "../utils/endPoints";
-import { useNavigate, useLocation } from "react-router-dom";
 export type PaginationType = {
   page: number;
   limit: number;
@@ -29,8 +29,8 @@ const BlogList: React.FC = () => {
 
   // Pagination state
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [totalCount, setTotalCount] = useState(0);
+  const [rowsPerPage] = useState(5);
+  const [totalCount] = useState(0);
 
   // Blogs state
   const [blogs, setBlogs] = useState<any[]>([]);
@@ -50,34 +50,6 @@ const BlogList: React.FC = () => {
   const [deleteBlog, setDeleteBlog] = useState<any>(null);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  // Parse query params for page/limit
-  // useEffect(() => {
-  //   const params = new URLSearchParams(location.search);
-  //   const pageParam = parseInt(params.get("page") || "1", 10) - 1;
-  //   const limitParam = parseInt(params.get("limit") || "5", 10);
-  //   setPage(pageParam >= 0 ? pageParam : 0);
-  //   setRowsPerPage(limitParam > 0 ? limitParam : 5);
-  //   // eslint-disable-next-line
-  // }, [location.search]);
-
-  // // Fetch blogs with pagination
-  // useEffect(() => {
-  //   const fetchBlogs = async () => {
-  //     try {
-  //       const url = `${ENDPOINTS.BLOGS}?limit=${rowsPerPage}&page=${page + 1}`;
-  //       const res = await blogService.fetchBlogs?.({ page: page + 1 });
-  //       // Access blogs as result
-  //       setBlogs(res?.data?.result || []);
-  //       setTotalCount(res?.data?.total || 0);
-  //     } catch (err) {
-  //       setBlogs([]);
-  //       setTotalCount(0);
-  //     }
-  //   };
-  //   fetchBlogs();
-  // }, [page, rowsPerPage]);
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
@@ -110,13 +82,13 @@ const BlogList: React.FC = () => {
 
   // Pagination handlers
   const handlePageChange = (newPage: number) => {
-    navigate(`/blog-list?page=${newPage + 1}&limit=${rowsPerPage}`);
+    navigate(`${ENDPOINTS.BLOGS}?page=${newPage + 1}&limit=${rowsPerPage}`);
   };
   const handleRowsPerPageChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const newLimit = parseInt(event.target.value, 10);
-    navigate(`/blog-list?page=1&limit=${newLimit}`);
+    navigate(`${ENDPOINTS.BLOGS}?page=1&limit=${newLimit}`);
   };
 
   // Search logic
@@ -140,8 +112,6 @@ const BlogList: React.FC = () => {
     );
     setPage(0);
   };
-
-  const totalPages = Math.ceil(totalCount / rowsPerPage) || 1;
 
   // Edit/Delete actions
   const handleEdit = (blog: any) => {

@@ -9,7 +9,11 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import { STRING } from "../utils/string";
 
-const CardsItem: React.FC = () => {
+interface CardsItemProps {
+  blogs: any[];
+}
+
+const CardsItem: React.FC<CardsItemProps> = () => {
   const blogs = useSelector((state: RootState) => state.blog.blogs) || [];
   console.log("Redux blogs:", blogs);
 

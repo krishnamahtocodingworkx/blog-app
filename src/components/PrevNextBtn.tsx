@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import { PaginationType } from "./BlogList"; // Adjust the import path as necessary
+import { PaginationType } from "./BlogList";
 
 interface PrevNextBtnProps {
   page: number;
@@ -20,9 +20,6 @@ const PrevNextBtn: React.FC<PrevNextBtnProps> = ({
         setPagination((prev: PaginationType) => ({ ...prev, page: page - 1 }))
       }
       disabled={page === 1}
-      // Uncomment the following lines to enable pagination functionality
-      // onClick={() => setPage((p: number) => Math.max(0, p - 1))}
-      // disabled={page === 0}
     >
       Previous
     </Button>
@@ -34,7 +31,6 @@ const PrevNextBtn: React.FC<PrevNextBtnProps> = ({
       onClick={() =>
         setPagination((prev: PaginationType) => ({ ...prev, page: page + 1 }))
       }
-      // onClick={() => setPage((p: number) => Math.min(totalPages - 1, p + 1))}
       disabled={page === totalPages}
     >
       Next
