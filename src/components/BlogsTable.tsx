@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { STRING } from "../utils/string";
 
 interface BlogsTableProps {
   filteredBlogs: any[];
@@ -40,7 +41,7 @@ const BlogsTable: React.FC<BlogsTableProps> = ({
         {filteredBlogs.length === 0 ? (
           <TableRow>
             <TableCell colSpan={4} align="center">
-              No blogs found.
+              {STRING.noBlogToDisplayText}
             </TableCell>
           </TableRow>
         ) : (
