@@ -12,7 +12,6 @@ interface PaginationProps {
   onRowsPerPageChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   rowsPerPageOptions?: number[];
   labelRowsPerPage?: string;
-  sx?: object;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -23,7 +22,6 @@ const Pagination: React.FC<PaginationProps> = ({
   onRowsPerPageChange,
   rowsPerPageOptions = [5, 10, 15],
   labelRowsPerPage = "Rows per page",
-  sx = {},
 }) => (
   <TablePagination
     component="div"
@@ -34,7 +32,6 @@ const Pagination: React.FC<PaginationProps> = ({
     onRowsPerPageChange={onRowsPerPageChange}
     rowsPerPageOptions={rowsPerPageOptions}
     labelRowsPerPage={labelRowsPerPage}
-    sx={sx}
   />
 );
 

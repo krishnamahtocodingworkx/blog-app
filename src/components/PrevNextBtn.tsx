@@ -24,7 +24,7 @@ const PrevNextBtn: React.FC<PrevNextBtnProps> = ({
       Previous
     </Button>
     <Typography variant="body2" sx={{ alignSelf: "center" }}>
-      Page {page + 1} of {totalPages}
+      Page {page} of {totalPages}
     </Typography>
     <Button
       variant="outlined"
