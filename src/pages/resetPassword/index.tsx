@@ -19,6 +19,7 @@ import { resetPasswordServices } from "../../services/resetPassword";
 import { resetPasswordInitialValues } from "../../utils/data";
 import { resetPasswordValidationSchema } from "../../utils/validationSchema";
 import "../../index.css";
+import { toast } from "react-toastify";
 
 const ResetPassword: React.FC = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -47,6 +48,7 @@ const ResetPassword: React.FC = () => {
         );
         console.log("Reset Password Response:", response.data);
         if (response.data && response.data.code === 200) {
+          toast.success("Password reset successfully!");
           navigate("/home");
         } else {
           setErrors({ password: response.data.message || "Reset failed." });

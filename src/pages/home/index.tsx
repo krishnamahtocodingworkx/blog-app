@@ -3,8 +3,14 @@ import Navbar from "../../components/Navbar";
 import Menu from "../../components/Menu";
 import { Box, Typography } from "@mui/material";
 import { STRING } from "../../utils/string";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Home: React.FC = () => {
+  useEffect(() => {
+    toast.success("Login success");
+  }, []);
+
   return (
     <>
       <Navbar />
