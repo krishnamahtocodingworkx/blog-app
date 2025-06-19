@@ -11,6 +11,7 @@ import BlogList from "../components/BlogList";
 import PrivateRoute from "./PrivateRoute";
 import PublicRoute from "./PublicRoute";
 import { ROUTES } from "./routesName";
+import Error from "../components/Error";
 
 const AppRoutes: React.FC = () => (
   <BrowserRouter>
@@ -20,6 +21,7 @@ const AppRoutes: React.FC = () => (
         element={
           <PublicRoute>
             <Login />
+            <Error />
           </PublicRoute>
         }
       />
