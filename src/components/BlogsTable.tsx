@@ -11,6 +11,7 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { STRING } from "../utils/string";
+import Shimmer from "./Shimmer";
 
 interface BlogsTableProps {
   filteredBlogs: any[];
@@ -42,6 +43,7 @@ const BlogsTable: React.FC<BlogsTableProps> = ({
           <TableRow>
             <TableCell colSpan={4} align="center">
               {STRING.noBlogToDisplayText}
+              <Shimmer />
             </TableCell>
           </TableRow>
         ) : (

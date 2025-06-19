@@ -7,5 +7,5 @@ export const STRING = {
   homeWelcome: "Welcome to our blog !",
   blogListHeading: "Blog List",
   readMoreText: "Read More",
-  noBlogToDisplayText: "No blogs to display.",
+  noBlogToDisplayText: "Loading...",
 };
