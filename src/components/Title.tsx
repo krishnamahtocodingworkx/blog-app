@@ -1,4 +1,4 @@
-import logo from "../assets/images/logo.jpg";
+import logo from "../assets/images/logo.png";
 import { Typography, Box } from "@mui/material";
 
 const Title: React.FC = () => {
@@ -24,8 +24,8 @@ const Title: React.FC = () => {
           alt="logo"
           sx={{
             width: 50,
-            height: 50,
-            objectFit: "cover",
+            // height: 50,
+            // objectFit: "cover",
             borderRadius: "8px",
           }}
         />
