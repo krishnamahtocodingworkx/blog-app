@@ -16,12 +16,12 @@ import Error from "../components/Error";
 const AppRoutes: React.FC = () => (
   <BrowserRouter>
     <Routes>
+      <Route path="*" element={<Error />} />
       <Route
         path={ROUTES.login}
         element={
           <PublicRoute>
             <Login />
-            <Error />
           </PublicRoute>
         }
       />

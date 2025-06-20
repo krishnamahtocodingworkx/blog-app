@@ -27,7 +27,7 @@ const Error = () => {
         The page you are looking for does not exist or has been moved.
       </Typography>
       <Button variant="contained" color="primary" onClick={() => navigate("/")}>
-        Go to Home
+        Go back to SignIn page
       </Button>
     </Box>
   );

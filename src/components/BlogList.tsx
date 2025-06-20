@@ -272,6 +272,7 @@ const BlogList: React.FC = () => {
             }}
           >
             <Pagination
+              total={pagination.total}
               count={totalCount}
               page={page}
               rowsPerPage={rowsPerPage}
