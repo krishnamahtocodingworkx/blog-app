@@ -20,6 +20,7 @@ import { forgotPasswordInitialValues } from "../../utils/data";
 import { STRING } from "../../utils/string";
 import { ROUTES } from "../../routes/routesName";
 import { forgotPasswordServices } from "../../services/forgotPassword";
+import { toast } from "react-toastify";
 
 const ForgotPassword: React.FC = () => {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ const ForgotPassword: React.FC = () => {
           dispatch(setId(id));
           sessionStorage.setItem("userId", id);
           navigate(ROUTES.otpVerification);
+          toast.success("4 digit code sent to your email");
         } else {
           setErrors({ email: response.data?.message || "Failed to send OTP." });
         }

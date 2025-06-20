@@ -12,6 +12,7 @@ import { otpVerificationServices } from "../../services/otpVerification";
 import { resendOTPService } from "../../services/resendOTP";
 import { otpVerificationInitialValues } from "../../utils/data";
 import { otpVerificationValidationSchema } from "../../utils/validationSchema";
+import { toast } from "react-toastify";
 
 const OtpVerification: React.FC = () => {
   const { email, id } = useSelector((state: RootState) => state.auth);
@@ -28,8 +29,10 @@ const OtpVerification: React.FC = () => {
     try {
       const response = await resendOTPService.resend(email || "");
       console.log("Resend OTP Response:", response.data);
+      toast.success("4 digit code sent to your email");
     } catch (error) {
       console.error("Resend OTP Error:", error);
+      toast.error("OTP OTP verification failed. Please resend your OTP");
     }
   };
 
@@ -48,16 +51,19 @@ const OtpVerification: React.FC = () => {
         });
         console.log("OTP Verification Response:", response.data);
         if (response.data?.code === 200) {
+          toast.success("4 digit code sent to your email");
           navigate("/reset-password");
         } else {
           setErrors({
             otp: response.data?.message || "OTP verification failed.",
           });
+          toast.error("OTP OTP verification failed. Please resend your OTP");
         }
       } catch (error: any) {
         setErrors({
           otp: error?.response?.data?.message || "OTP verification failed.",
         });
+        toast.error("OTP OTP verification failed. Please resend your OTP");
       } finally {
         setSubmitting(false);
       }

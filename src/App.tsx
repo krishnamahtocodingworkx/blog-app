@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <>
       <AppRoutes />
-      <ToastContainer />
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 };
