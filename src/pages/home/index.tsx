@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Menu from "../../components/Menu";
 import { Box, Typography } from "@mui/material";
 import { STRING } from "../../utils/string";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
+
+const checkLogin = async () => {
+  return new Promise<{ success: boolean }>((resolve) =>
+    setTimeout(() => resolve({ success: true }), 500)
+  );
+};
 
 const Home: React.FC = () => {
   useEffect(() => {
-    toast.success("Login success");
+    const fetchLogin = async () => {
+      const response = await checkLogin();
+      if (response.success) {
+        toast.success("Login success");
+      }
+    };
+    fetchLogin();
   }, []);
 
   return (

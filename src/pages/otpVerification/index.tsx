@@ -51,7 +51,7 @@ const OtpVerification: React.FC = () => {
         });
         console.log("OTP Verification Response:", response.data);
         if (response.data?.code === 200) {
-          toast.success("4 digit code sent to your email");
+          toast.success("OTP Verification success");
           navigate("/reset-password");
         } else {
           setErrors({

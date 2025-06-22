@@ -53,10 +53,12 @@ const ResetPassword: React.FC = () => {
         } else {
           setErrors({ password: response.data.message || "Reset failed." });
         }
+        toast.error("Password reset failed! Try again");
       } catch (error: any) {
         setErrors({
           password: error?.response?.data?.message || "Reset failed.",
         });
+        toast.error("Password reset failed! Try again");
       } finally {
         setSubmitting(false);
       }
