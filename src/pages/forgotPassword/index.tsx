@@ -38,7 +38,7 @@ const ForgotPassword: React.FC = () => {
           dispatch(setEmail(values.email));
           dispatch(setId(id));
           sessionStorage.setItem("userId", id);
-          navigate(ROUTES.otpVerification);
+          navigate(ROUTES.otpVerification, { state: { fromUI: true } });
           toast.success("4 digit code sent to your email");
         } else {
           setErrors({ email: response.data?.message || "Failed to send OTP." });

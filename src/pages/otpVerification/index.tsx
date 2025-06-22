@@ -51,13 +51,13 @@ const OtpVerification: React.FC = () => {
         });
         console.log("OTP Verification Response:", response.data);
         if (response.data?.code === 200) {
-          toast.success("OTP Verification success");
           navigate("/reset-password");
+          toast.success("OTP Verification success");
         } else {
           setErrors({
             otp: response.data?.message || "OTP verification failed.",
           });
-          toast.error("OTP OTP verification failed. Please resend your OTP");
+          toast.error("OTP verification failed. Please resend your OTP");
         }
       } catch (error: any) {
         setErrors({
