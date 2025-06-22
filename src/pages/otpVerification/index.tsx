@@ -153,6 +153,7 @@ const OtpVerification: React.FC = () => {
                   py: "8px",
                   borderRadius: "10px",
                 }}
+                disabled={!(formik.isValid && formik.dirty)}
               >
                 Verify
               </Button>
