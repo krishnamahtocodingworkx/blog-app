@@ -48,17 +48,16 @@ const ResetPassword: React.FC = () => {
         );
         console.log("Reset Password Response:", response.data);
         if (response.data && response.data.code === 200) {
-          toast.success("Password reset successfully!");
-          navigate("/home");
+          toast.success("Password reset success!");
+          navigate("/");
         } else {
           setErrors({ password: response.data.message || "Reset failed." });
         }
-        toast.error("Password reset failed! Try again");
       } catch (error: any) {
         setErrors({
           password: error?.response?.data?.message || "Reset failed.",
         });
-        toast.error("Password reset failed! Try again");
+        toast.error("Password reset failed!");
       } finally {
         setSubmitting(false);
       }

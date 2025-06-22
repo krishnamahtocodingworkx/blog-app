@@ -8,6 +8,13 @@ interface PublicRouteProps {
 
 const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const location = useLocation();
+  console.log(
+    "location.state:",
+    location.state,
+    "pathname:",
+    location.pathname
+  );
+
   if (
     !location.state?.fromUI &&
     location.pathname !== ROUTES.login &&
@@ -15,6 +22,7 @@ const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   ) {
     return <Navigate to={ROUTES.login} replace />;
   }
+
   return <>{children}</>;
 };
 
