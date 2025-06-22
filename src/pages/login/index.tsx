@@ -9,7 +9,6 @@ import {
   Link as MuiLink,
   Box,
 } from "@mui/material";
-import { Link as RouterLink } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import { loginValidationSchema } from "../../utils/validationSchema";
@@ -31,6 +30,10 @@ const Login: React.FC = () => {
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
+  };
+  const handleForgotPassword = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(ROUTES.forgotPassword, { state: { fromUI: true } });
   };
 
   const formik = useFormik({
@@ -182,8 +185,8 @@ const Login: React.FC = () => {
               }}
             >
               <MuiLink
-                component={RouterLink}
-                to={ROUTES.forgotPassword}
+                component="button"
+                onClick={handleForgotPassword}
                 underline="hover"
                 variant="body2"
                 sx={{ p: "8px" }}
